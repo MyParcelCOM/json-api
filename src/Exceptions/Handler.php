@@ -6,31 +6,29 @@ use Exception;
 
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * @var ResponseFactory
-     */
+    /** @var ResponseFactory */
     protected $responseFactory;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $debug;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $contactLink;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     protected $logger;
+
+    /** @var string */
+    protected $appName;
 
     /**
      * Set the Response Factory.
@@ -85,14 +83,34 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * Set the name of the running app.
+     *
+     * @param string $appName
+     * @return $this
+     */
+    public function setAppName(string $appName)
+    {
+        $this->appName = $appName;
+
+        return $this;
+    }
+
+    /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $exception
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Request   $request
+     * @param  Exception $exception
+     * @return JsonResponse
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof MaintenanceModeException) {
+            return $this->responseFactory->json(
+                $this->getMaintenanceJsonResponse($exception, $request),
+                Response::HTTP_SERVICE_UNAVAILABLE
+            );
+        }
+
         if ($exception instanceof NotFoundHttpException) {
             $exception = new NotFoundException(
                 "The endpoint could not be found."
@@ -108,7 +126,7 @@ class Handler extends ExceptionHandler
 
             return $this->responseFactory->json([
                 'errors' => [
-                    $error
+                    $error,
                 ],
             ], $exception->getStatus());
         }
@@ -121,6 +139,26 @@ class Handler extends ExceptionHandler
             ],
             Response::HTTP_INTERNAL_SERVER_ERROR
         );
+    }
+
+    /**
+     * @param MaintenanceModeException $exception
+     * @param Request                  $request
+     * @return array
+     */
+    private function getMaintenanceJsonResponse(MaintenanceModeException $exception, $request)
+    {
+        if ($request->path() === '/') {
+            return [
+                'title'  => $this->appName,
+                'status' => 'Service Unavailable',
+            ];
+        }
+
+        $error = $this->getDefaultError($exception);
+        $error['status'] = (string)Response::HTTP_SERVICE_UNAVAILABLE;
+
+        return ['errors' => [$error]];
     }
 
     /**
