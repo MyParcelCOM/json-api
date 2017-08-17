@@ -95,7 +95,6 @@ class Handler extends ExceptionHandler
         return $this;
     }
 
-
     /**
      * Render an exception into an HTTP response.
      *
@@ -106,7 +105,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof MaintenanceModeException) {
-            return response()->json(
+            return $this->responseFactory->json(
                 $this->getMaintenanceJsonResponse($exception, $request),
                 Response::HTTP_SERVICE_UNAVAILABLE
             );
@@ -156,7 +155,10 @@ class Handler extends ExceptionHandler
             ];
         }
 
-        return ['errors' => [$this->getDefaultError($exception)]];
+        $error = $this->getDefaultError($exception);
+        $error['status'] = (string)Response::HTTP_SERVICE_UNAVAILABLE;
+
+        return ['errors' => [$error]];
     }
 
     /**

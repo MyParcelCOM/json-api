@@ -5,6 +5,7 @@ namespace MyParcelCom\Exceptions\Tests;
 use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Mockery;
@@ -22,6 +23,8 @@ class HandlerTest extends TestCase
     /** @var Request */
     protected $request;
 
+    /** @var string */
+    protected $appName = 'Test app';
 
     public function setUp()
     {
@@ -34,7 +37,8 @@ class HandlerTest extends TestCase
             ->andReturnUsing([$this, 'mockResponse']);
 
         $this->handler = (new Handler(Mockery::mock(Container::class)))
-            ->setResponseFactory($factory);
+            ->setResponseFactory($factory)
+            ->setAppName($this->appName);
     }
 
     public function tearDown()
@@ -149,6 +153,36 @@ class HandlerTest extends TestCase
 
         // Mockery didn't throw any errors, so the test succeeded.
         $this->assertTrue(true);
+    }
+
+    /**
+     * Test whether a correct response is generated when a MaintenanceModeException is handled.
+     *
+     * @test
+     */
+    public function testMainenanceModeHandling()
+    {
+        // Can't mock exceptions, they have final methods.
+        $exception = Mockery::mock(MaintenanceModeException::class);
+        $request =  Mockery::mock(Request::class, ['path' => '/']);
+        $response = $this->handler->render($request, $exception);
+        $json = $response->getData();
+
+        $this->assertArrayHasKey('title', $json, 'When in maintenance mode response on \'/\' does not contain a title');
+        $this->assertEquals($this->appName, $json['title'], 'When in maintenance mode response on \'/\' contains an incorrect title');
+
+        $this->assertArrayHasKey('status', $json, 'When in maintenance mode response on \'/\' does not contain a status');
+
+        $this->assertEquals(503, $response->getStatus(), 'Maintenance status code was not 503');
+
+
+        $request =  Mockery::mock(Request::class, ['path' => '/some/other/path']);
+        $response = $this->handler->render($request, $exception);
+        $json = $response->getData();
+
+        $this->checkJson($json);
+        $this->assertEquals(503, $response->getStatus(), 'Maintenance status code was not 503');
+        $this->assertEquals('503', reset($json['errors'])['status'], 'Maintenance status code was not 503');
     }
 
 
