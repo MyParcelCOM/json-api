@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Mockery;
 use MyParcelCom\Exceptions\AbstractJsonApiException;
 use MyParcelCom\Exceptions\Handler;
-use MyParcelCom\Exceptions\JsonApiExceptionInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -222,4 +221,3 @@ class HandlerTest extends TestCase
         };
     }
 }
-
