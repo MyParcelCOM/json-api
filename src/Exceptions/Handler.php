@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Intouch\Newrelic\Newrelic;
 
 class Handler extends ExceptionHandler
 {
@@ -101,7 +102,7 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request $request
+     * @param  Request   $request
      * @param  Exception $exception
      * @return JsonResponse
      */
@@ -146,14 +147,14 @@ class Handler extends ExceptionHandler
 
     /**
      * @param MaintenanceModeException $exception
-     * @param Request $request
+     * @param Request                  $request
      * @return array
      */
     private function getMaintenanceJsonResponse(MaintenanceModeException $exception, $request)
     {
         if ($request->path() === '/') {
             return [
-                'title' => $this->appName,
+                'title'  => $this->appName,
                 'status' => 'Service Unavailable',
             ];
         }
@@ -174,8 +175,8 @@ class Handler extends ExceptionHandler
     {
         $error = [
             "status" => (string)Response::HTTP_INTERNAL_SERVER_ERROR,
-            "code" => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["code"],
-            "title" => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["title"],
+            "code"   => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["code"],
+            "title"  => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["title"],
             "detail" => "Something went wrong. Please try again. If the problem persists, contact support.",
         ];
 
@@ -229,8 +230,8 @@ class Handler extends ExceptionHandler
     {
         return [
             'exception' => get_class($exception),
-            'message' => $exception->getMessage(),
-            'trace' => $exception->getTrace(),
+            'message'   => $exception->getMessage(),
+            'trace'     => $exception->getTrace(),
         ];
     }
 }
