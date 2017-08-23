@@ -214,10 +214,13 @@ class Handler extends ExceptionHandler
      * Set Newrelic
      *
      * @param Newrelic $newrelic
+     * @return $this
      */
     public function setNewrelic(Newrelic $newrelic)
     {
         $this->newrelic = $newrelic;
+
+        return $this;
     }
 
     /**
