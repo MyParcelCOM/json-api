@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Intouch\Newrelic\Newrelic;
 
 class Handler extends ExceptionHandler
 {
@@ -29,6 +30,9 @@ class Handler extends ExceptionHandler
 
     /** @var string */
     protected $appName;
+
+    /** @var Newrelic */
+    protected $newrelic;
 
     /**
      * Set the Response Factory.
@@ -195,11 +199,28 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e): void
     {
+        if (isset($this->newrelic)) {
+            $this->newrelic->noticeError($e->getMessage(), $e);
+        }
+
         if (!isset($this->logger)) {
             return;
         }
 
         $this->logger->error($e->getMessage(), $e->getTrace());
+    }
+
+    /**
+     * Set Newrelic
+     *
+     * @param Newrelic $newrelic
+     * @return $this
+     */
+    public function setNewrelic(Newrelic $newrelic)
+    {
+        $this->newrelic = $newrelic;
+
+        return $this;
     }
 
     /**
