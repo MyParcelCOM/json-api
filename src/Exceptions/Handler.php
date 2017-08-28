@@ -10,9 +10,9 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Intouch\Newrelic\Newrelic;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Intouch\Newrelic\Newrelic;
 
 class Handler extends ExceptionHandler
 {
@@ -174,10 +174,10 @@ class Handler extends ExceptionHandler
     private function getDefaultError(Exception $exception): array
     {
         $error = [
-            "status" => (string)Response::HTTP_INTERNAL_SERVER_ERROR,
-            "code"   => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["code"],
-            "title"  => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR["title"],
-            "detail" => "Something went wrong. Please try again. If the problem persists, contact support.",
+            'status' => (string)Response::HTTP_INTERNAL_SERVER_ERROR,
+            'code'   => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR['code'],
+            'title'  => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR['title'],
+            'detail' => 'Something went wrong. Please try again. If the problem persists, contact support.',
         ];
 
         if (isset($this->contactLink)) {

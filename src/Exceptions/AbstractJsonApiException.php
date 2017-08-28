@@ -6,55 +6,39 @@ use Exception;
 
 abstract class AbstractJsonApiException extends Exception implements JsonApiExceptionInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $id;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $links;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $status;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $errorCode;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $detail;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $source;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $meta;
 
     /**
      * AbstractJsonApiException constructor.
      *
-     * @param string         $detail
-     * @param array          $errorType
-     * @param int            $status
-     * @param Throwable|null $previous
+     * @param string          $detail
+     * @param array           $errorType
+     * @param int             $status
+     * @param \Throwable|null $previous
      */
-    public function __construct(string $detail, array $errorType, int $status, Throwable $previous = null)
+    public function __construct(string $detail, array $errorType, int $status, \Throwable $previous = null)
     {
         $this->setDetail($detail);
         $this->setErrorCode($errorType['code']);
