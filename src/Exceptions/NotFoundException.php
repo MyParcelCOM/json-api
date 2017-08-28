@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 class NotFoundException extends AbstractJsonApiException
 {
     /**
-     * @param string         $detail
-     * @param Throwable|null $previous
+     * @param string          $detail
+     * @param \Throwable|null $previous
      */
-    public function __construct(string $detail, Throwable $previous = null)
+    public function __construct(string $detail, \Throwable $previous = null)
     {
         parent::__construct(
             $detail,

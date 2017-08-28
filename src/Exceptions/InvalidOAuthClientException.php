@@ -14,11 +14,11 @@ class InvalidOAuthClientException extends AbstractJsonApiException
     /**
      * InvalidOAuthClientException constructor.
      *
-     * @param string         $detail
-     * @param array          $errorType
-     * @param Throwable|null $previous
+     * @param string          $detail
+     * @param array           $errorType
+     * @param \Throwable|null $previous
      */
-    public function __construct(string $detail, array $errorType, Throwable $previous = null)
+    public function __construct(string $detail, array $errorType, \Throwable $previous = null)
     {
         parent::__construct($detail, $errorType, Response::HTTP_FORBIDDEN, $previous);
     }

@@ -6,34 +6,34 @@ interface JsonApiExceptionInterface
 {
     // General errors *salute* 10000 - 10999
     const NOT_FOUND = [
-        "code"  => "10000",
-        "title" => "Not Found",
+        'code'  => '10000',
+        'title' => 'Not Found',
     ];
 
     const INTERNAL_SERVER_ERROR = [
-        "code"  => "10001",
-        "title" => "Internal Server Error",
+        'code'  => '10001',
+        'title' => 'Internal Server Error',
     ];
 
     // OAuth related errors 14000 - 14999
     const OAUTH_CLIENT_INVALID_CREDENTIALS = [
-        "code"  => "14000",
-        "title" => "Invalid OAuth Client Credentials",
+        'code'  => '14000',
+        'title' => 'Invalid OAuth Client Credentials',
     ];
 
     const OAUTH_INVALID_SCOPE = [
-        "code"  => "14001",
-        "title" => "Scope Not Available To Client",
+        'code'  => '14001',
+        'title' => 'Scope Not Available To Client',
     ];
 
     const OAUTH_INVALID_TOKEN = [
-        "code"  => "14002",
-        "title" => "Access token is invalid",
+        'code'  => '14002',
+        'title' => 'Access token is invalid',
     ];
 
     const OAUTH_SERVER_EXCEPTION = [
-        "code"  => "14050",
-        "title" => "Unable To Process OAuth Request",
+        'code'  => '14050',
+        'title' => 'Unable To Process OAuth Request',
     ];
 
     /**

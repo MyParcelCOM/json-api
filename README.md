@@ -12,25 +12,12 @@ Shared library for exceptions and exception handling.
 - [Commands](#commands)
 
 ### Installation
-The library uses Docker to run php and composer. To install Docker, follow the steps below for your preferred OS.
+The library uses Docker to run php and composer. To install Docker, follow the steps in the [wiki](https://staging-wiki.myparcel.com/development/docker/).
 
-#### Mac
-Install Docker for Mac from [https://docs.docker.com/docker-for-mac/install/](https://docs.docker.com/docker-for-mac/install/).
-
-#### Windows
-Install Docker for Windows from [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/).
-
-#### Linux
-Install Docker by running the following command:
+### Setup
+To setup the project, run the following command:
 ```bash
-curl -sSL https://get.docker.com/ | sh
-```
-
-Then install Docker Compose by following the instructions [here](https://github.com/docker/compose/releases).
-
-Finally assign yourself to the Docker group:
-```bash
-sudo usermod -aG docker $(whoami)
+./mp.sh composer install
 ```
 
 ### Commands
