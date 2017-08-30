@@ -18,7 +18,7 @@ class AuthException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::OAUTH_SERVER_EXCEPTION,
+            JsonApiExceptionInterface::AUTH_SERVER_EXCEPTION,
             $status,
             $previous
         );

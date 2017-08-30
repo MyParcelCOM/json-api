@@ -16,7 +16,7 @@ class InvalidClientException extends AbstractJsonApiException
     {
         parent::__construct(
             "The supplied client credentials are invalid or the client does not have access to this grant type.",
-            JsonApiExceptionInterface::OAUTH_INVALID_CLIENT,
+            JsonApiExceptionInterface::AUTH_INVALID_CLIENT,
             Response::HTTP_FORBIDDEN
         );
     }
