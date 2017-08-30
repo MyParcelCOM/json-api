@@ -7,7 +7,7 @@ namespace MyParcelCom\Exceptions;
  *
  * @package App\Exceptions
  */
-class OAuthException extends AbstractJsonApiException
+class AuthException extends AbstractJsonApiException
 {
     /**
      * GenericOAuthException constructor.

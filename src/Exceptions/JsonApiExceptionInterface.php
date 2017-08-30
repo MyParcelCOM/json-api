@@ -15,23 +15,23 @@ interface JsonApiExceptionInterface
         'title' => 'Internal Server Error',
     ];
 
-    // OAuth related errors 14000 - 14999
-    const OAUTH_INVALID_CLIENT = [
+    // Auth related errors 14000 - 14999
+    const AUTH_INVALID_CLIENT = [
         'code'  => '14000',
         'title' => 'Invalid OAuth Client',
     ];
 
-    const OAUTH_INVALID_SCOPE = [
+    const AUTH_INVALID_SCOPE = [
         'code'  => '14001',
         'title' => 'Scope Not Available To Client',
     ];
 
-    const OAUTH_INVALID_TOKEN = [
+    const AUTH_INVALID_TOKEN = [
         'code'  => '14002',
         'title' => 'Access token is invalid',
     ];
 
-    const OAUTH_SERVER_EXCEPTION = [
+    const AUTH_SERVER_EXCEPTION = [
         'code'  => '14050',
         'title' => 'Unable To Process OAuth Request',
     ];

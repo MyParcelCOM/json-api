@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package App\Exceptions
  */
-class InvalidOAuthClientException extends AbstractJsonApiException
+class InvalidClientException extends AbstractJsonApiException
 {
     /**
      * InvalidOAuthClientException constructor.
