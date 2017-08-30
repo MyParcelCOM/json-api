@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This exception is thrown when a scope is either not available at all,
  * or unavailable for the chosen grant type.
- *
- * @package App\Exceptions
  */
 class InvalidScopeException extends AbstractJsonApiException
 {

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This exception is thrown when a token is invalid.
  */
-class InvalidTokenException extends AbstractJsonApiException
+class InvalidAccessTokenException extends AbstractJsonApiException
 {
     /**
      * @param string          $detail

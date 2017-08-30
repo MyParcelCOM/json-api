@@ -1,11 +1,6 @@
 # MyParcel.com Exceptions
 Shared library for exceptions and exception handling.
 
-## TODO
-- [x] Setup Laravel repo.
-- [ ] Add initial exceptions and handler.
-- [ ] Add tests.
-
 ## Content
 - [Installation](#installation)
 - [Setup](#setup)
