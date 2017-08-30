@@ -16,9 +16,9 @@ interface JsonApiExceptionInterface
     ];
 
     // OAuth related errors 14000 - 14999
-    const OAUTH_CLIENT_INVALID_CREDENTIALS = [
+    const OAUTH_INVALID_CLIENT = [
         'code'  => '14000',
-        'title' => 'Invalid OAuth Client Credentials',
+        'title' => 'Invalid OAuth Client',
     ];
 
     const OAUTH_INVALID_SCOPE = [

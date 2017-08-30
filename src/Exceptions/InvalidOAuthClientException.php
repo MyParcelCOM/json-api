@@ -13,13 +13,13 @@ class InvalidOAuthClientException extends AbstractJsonApiException
 {
     /**
      * InvalidOAuthClientException constructor.
-     *
-     * @param string          $detail
-     * @param array           $errorType
-     * @param \Throwable|null $previous
      */
-    public function __construct(string $detail, array $errorType, \Throwable $previous = null)
+    public function __construct()
     {
-        parent::__construct($detail, $errorType, Response::HTTP_FORBIDDEN, $previous);
+        parent::__construct(
+            "The supplied client credentials are invalid or the client does not have access to this grant type.",
+            JsonApiExceptionInterface::OAUTH_INVALID_CLIENT,
+            Response::HTTP_FORBIDDEN
+        );
     }
 }
