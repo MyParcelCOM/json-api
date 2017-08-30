@@ -20,7 +20,7 @@ class InvalidScopeException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::OAUTH_INVALID_SCOPE,
+            JsonApiExceptionInterface::AUTH_INVALID_SCOPE,
             Response::HTTP_FORBIDDEN,
             $previous
         );

@@ -17,7 +17,7 @@ class InvalidAccessTokenException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::OAUTH_INVALID_TOKEN,
+            JsonApiExceptionInterface::AUTH_INVALID_TOKEN,
             Response::HTTP_UNAUTHORIZED,
             $previous
         );
