@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is thrown when a resource cannot be found.
- *
- * @package App\Exceptions
  */
 class NotFoundException extends AbstractJsonApiException
 {

@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is throws when the client cannot be validated by its id and secret.
- *
- * @package App\Exceptions
  */
 class InvalidClientException extends AbstractJsonApiException
 {

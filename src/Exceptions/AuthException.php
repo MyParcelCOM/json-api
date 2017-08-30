@@ -4,8 +4,6 @@ namespace MyParcelCom\Exceptions;
 
 /**
  * This exception is a replacement for the OAuthServerException used by the League package.
- *
- * @package App\Exceptions
  */
 class AuthException extends AbstractJsonApiException
 {
