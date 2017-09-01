@@ -15,6 +15,11 @@ interface JsonApiExceptionInterface
         'title' => 'Internal Server Error',
     ];
 
+    const RESOURCE_NOT_FOUND = [
+        'code'  => '10002',
+        'title' => 'Resource Not Found',
+    ];
+
     // Auth related errors 14000 - 14999
     const AUTH_INVALID_CLIENT = [
         'code'  => '14000',
