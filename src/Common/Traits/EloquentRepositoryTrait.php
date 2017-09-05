@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\PostNl\Repository\Traits;
+namespace MyParcelCom\Common\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use MyParcelCom\Common\Contracts\ResultSetInterface;
