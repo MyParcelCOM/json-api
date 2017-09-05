@@ -28,7 +28,7 @@ for GitHub.
 ### Commands
 The following commands are available:
 - `./mp.sh composer <args>` - Run composer inside the container.
-- `./mp.sh php <args>` - Run any command on the ElasticSearch container.
+- `./mp.sh php <args>` - Run any command on the php container.
 - `./mp.sh test <args>` - Run the PHPUnit tests.
 
 #### Composer commands
