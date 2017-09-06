@@ -36,7 +36,7 @@ abstract class AbstractTransformer
         ]);
     }
 
-        /**
+    /**
      * Transform the model relationships to JSON Api output.
      *
      * @param mixed $model
