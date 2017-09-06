@@ -35,39 +35,12 @@ abstract class AbstractTransformer
             'relationships' => $this->getRelationships($model),
         ]);
     }
-    
-    /**
+
+        /**
      * Transform the model relationships to JSON Api output.
      *
      * @param mixed $model
      * @param bool  $withLinks
-     * @return array transformed relationships
-     */
-    protected function transformRelationship($model, $withLinks = false): array
-    {
-        $transformer = $this->transformerFactory->createFromModel($model);
-        $relationship = $transformer->transformIdentifier($model);
-
-        if ($withLinks) {
-            $relationship = ['links' => ['self' => $transformer->getLinks($model)['self']], 'data' => $relationship];
-        }
-
-        return $relationship;
-    }
-
-    /**
-     * @param $model
-     * @return array
-     */
-    protected function getAttributesFromModel($model)
-    {
-        return $this->transformerFactory->createFromModel($model)->getAttributes($model);
-    }
-
-    /**
-     * Transform the model relationships to JSON Api output.
-     *
-     * @param mixed $model
      * @return array transformed relationships
      */
     protected function transformRelationship($model, $withLinks = false): array
