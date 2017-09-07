@@ -2,6 +2,7 @@
 
 namespace MyParcelCom\Transformers;
 
+use MyParcelCom\Common\Contracts\MetaInterface;
 use MyParcelCom\Common\Http\Paginator;
 
 class TransformerResource
@@ -17,6 +18,12 @@ class TransformerResource
 
     /** @var array */
     protected $data = [];
+
+    /** @var array */
+    protected $meta = [];
+
+    /** @var MetaInterface[] */
+    protected $metaObjects = [];
 
     /**
      * @param array $resources
@@ -53,6 +60,23 @@ class TransformerResource
     }
 
     /**
+     * @param array|MetaInterface $meta
+     * @return $this
+     */
+    public function addMeta($meta)
+    {
+        if (is_array($meta)) {
+            $this->meta = array_merge_recursive($meta, $this->meta);
+        } elseif ($meta instanceof MetaInterface) {
+            $this->metaObjects = $meta;
+        } else {
+            throw new TransformerException('Invalid meta object added, expected array or MetaInterface, got: ' . get_class($meta));
+        }
+
+        return $this;
+    }
+
+    /**
      * Transform the data to a json api formatted array.
      *
      * @return array
@@ -74,8 +98,13 @@ class TransformerResource
             $includes = array_merge($includes, $resource->getIncluded($this->requestedIncludes, $includes));
         }
 
+        $meta = $this->meta;
+        foreach ($this->metaObjects as $metaObject) {
+            $meta = array_merge_recursive($meta, $metaObject->getMeta());
+        }
+
         $res['data'] = $data;
-        $res['meta'] = ['total_pages' => $this->paginator->getCount()];
+        $res['meta'] = ['total_pages' => $this->paginator->getCount()] + $meta;
 
         if ($includes) {
             $res['includes'] = array_unique($includes, SORT_REGULAR); // remove duplicates
