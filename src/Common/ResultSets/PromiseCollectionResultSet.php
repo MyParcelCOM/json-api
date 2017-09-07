@@ -17,8 +17,6 @@ class PromiseCollectionResultSet implements ResultSetInterface
     protected $limit;
     /** @var int */
     protected $offset;
-    /** @var int */
-    protected $count;
 
     /**
      * @param PromiseInterface[] ...$promises
@@ -53,18 +51,14 @@ class PromiseCollectionResultSet implements ResultSetInterface
      */
     public function count(): int
     {
-        if (isset($this->count)) {
-            return $this->count;
-        }
-
         $this->wait();
 
-        $this->count = 0;
+        $count = 0;
         foreach ($this->data as $data) {
-            $this->count += count($data);
+            $count += count($data);
         }
 
-        return $this->count;
+        return $count;
     }
 
     /**
