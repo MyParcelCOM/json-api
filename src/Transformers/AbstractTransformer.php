@@ -61,7 +61,24 @@ abstract class AbstractTransformer
      */
     protected function getAttributesFromModel($model)
     {
+        if (!$model) {
+            return null;
+        }
+
         return $this->transformerFactory->createFromModel($model)->getAttributes($model);
+    }
+
+    /**
+     * @param DateTime|null $dateTime
+     * @return int|null
+     */
+    protected function getTimestamp(?DateTime $dateTime): ?int
+    {
+        if (!$dateTime) {
+            return null;
+        }
+
+        return $dateTime->getTimestamp();
     }
 
     /**
