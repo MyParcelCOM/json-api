@@ -2,6 +2,7 @@
 
 namespace MyParcelCom\Transformers;
 
+use DateTime;
 use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
 
 abstract class AbstractTransformer
@@ -57,9 +58,9 @@ abstract class AbstractTransformer
 
     /**
      * @param $model
-     * @return array
+     * @return array|null
      */
-    protected function getAttributesFromModel($model)
+    protected function getAttributesFromModel($model): ?array
     {
         if (!$model) {
             return null;
