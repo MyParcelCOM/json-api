@@ -8,7 +8,7 @@ class TransformerCollection
 {
     protected $collection;
     protected $transformerFactory;
-    protected $transformer;
+    private $transformerItems;
 
     /**
      * @param TransformerFactory $transformerFactory
@@ -18,9 +18,6 @@ class TransformerCollection
     {
         $this->collection = $collection;
         $this->transformerFactory = $transformerFactory;
-        if (isset($collection[0])) {
-            $this->transformer = $transformerFactory->createFromModel($collection[0]);
-        }
     }
 
     /**
@@ -32,8 +29,8 @@ class TransformerCollection
     {
         $data = [];
 
-        foreach ($this->collection as $resource) {
-            $data[] = (new TransformerItem($this->transformerFactory, $resource))->getData();
+        foreach ($this->getTransformerItems() as $item) {
+            $data[] = $item->getData();
         }
 
         return $data;
@@ -48,12 +45,32 @@ class TransformerCollection
      */
     public function getIncluded(array $relationships = [], array $alreadyIncluded = []): array
     {
-        $data = [];
+        $included = [];
 
-        foreach ($this->collection as $resource) {
-            $data = array_merge($data, (new TransformerItem($this->transformerFactory, $resource))->getIncluded($relationships, $alreadyIncluded));
+        foreach ($this->getTransformerItems() as $item) {
+            $included = array_merge($included, $item->getIncluded($relationships, $alreadyIncluded));
         }
 
-        return $data;
+        return $included;
+    }
+
+    /**
+     * Get a collection of TransformerItems created from the resource passed at construction.
+     *
+     * @return Collection
+     */
+    protected function getTransformerItems(): Collection
+    {
+        if (isset($this->transformerItems)) {
+            return $this->transformerItems;
+        }
+
+        $this->transformerItems = new Collection();
+
+        foreach ($this->collection as $resource) {
+            $this->transformerItems->push(new TransformerItem($this->transformerFactory, $resource));
+        }
+
+        return $this->transformerItems;
     }
 }

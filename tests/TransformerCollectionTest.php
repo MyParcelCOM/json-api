@@ -102,19 +102,28 @@ class TransformerCollectionTest extends TestCase
 
     /**
      * get an iterator
-     * @param  array  $items iterator items
+     *
+     * @param  array $items iterator items
      * @return \Iterator
      */
     public function getIteratorMock(array $items)
     {
-        $iteratorMock = $this->getMockBuilder(\Iterator::class)->setMethods(array('rewind', 'valid', 'current', 'key', 'next'))->getMockForAbstractClass();
+        $iteratorMock = $this->getMockBuilder(\Iterator::class)->setMethods([
+            'rewind',
+            'valid',
+            'current',
+            'key',
+            'next',
+        ])->getMockForAbstractClass();
         $this->mockIteratorItems($iteratorMock, $items);
+
         return $iteratorMock;
     }
 
 
     /**
      * add items to the iterator
+     *
      * @param  \Iterator $iterator
      * @param  array     $items iterator items
      * @param  boolean   $includeCallsToKey
