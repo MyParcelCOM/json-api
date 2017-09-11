@@ -43,7 +43,7 @@ abstract class AbstractTransformer
      * @param array $array
      * @return array
      */
-    public function arrayDeepFilter(array $array): array
+    private function arrayDeepFilter(array $array): array
     {
         $array = array_filter($array, function ($var) {
             return ($var !== null);
