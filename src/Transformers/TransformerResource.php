@@ -62,6 +62,7 @@ class TransformerResource
     /**
      * @param array|MetaInterface $meta
      * @return $this
+     * @throws TransformerException
      */
     public function addMeta($meta)
     {

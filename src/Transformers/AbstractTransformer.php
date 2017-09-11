@@ -27,7 +27,7 @@ abstract class AbstractTransformer
     {
         $this->validateModel($model);
 
-        return array_filter([
+        return $this->array_deep_filter([
             'id'            => $this->getId($model),
             'type'          => $this->getType(),
             'attributes'    => $this->getAttributes($model),
@@ -35,6 +35,31 @@ abstract class AbstractTransformer
             'links'         => $this->getLinks($model),
             'relationships' => $this->getRelationships($model),
         ]);
+    }
+
+    /**
+     * Do a deep filter on an array to remove all null values
+     *
+     * @param array $array
+     * @return array
+     */
+    public function array_deep_filter(array $array): array
+    {
+        $array = array_filter($array);
+        foreach ($array as $key => $subPart) {
+            if (is_array($subPart)) {
+
+                $filterd = $this->array_deep_filter($subPart);
+
+                if (count($filterd) < 1) {
+                    unset($array[$key]);
+                } else {
+                    $array[$key] = $filterd;
+                }
+            }
+        }
+
+        return $array;
     }
 
     /**
