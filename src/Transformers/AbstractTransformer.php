@@ -49,12 +49,10 @@ abstract class AbstractTransformer
         foreach ($array as $key => $subPart) {
             if (is_array($subPart)) {
 
-                $filterd = $this->array_deep_filter($subPart);
+                $array[$key] = $this->array_deep_filter($subPart);
 
-                if (count($filterd) < 1) {
+                if (count($array[$key]) < 1) {
                     unset($array[$key]);
-                } else {
-                    $array[$key] = $filterd;
                 }
             }
         }
