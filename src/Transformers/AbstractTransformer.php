@@ -27,7 +27,7 @@ abstract class AbstractTransformer
     {
         $this->validateModel($model);
 
-        return $this->array_deep_filter([
+        return $this->arrayDeepFilter([
             'id'            => $this->getId($model),
             'type'          => $this->getType(),
             'attributes'    => $this->getAttributes($model),
@@ -43,13 +43,13 @@ abstract class AbstractTransformer
      * @param array $array
      * @return array
      */
-    public function array_deep_filter(array $array): array
+    public function arrayDeepFilter(array $array): array
     {
         $array = array_filter($array);
         foreach ($array as $key => $subPart) {
             if (is_array($subPart)) {
 
-                $array[$key] = $this->array_deep_filter($subPart);
+                $array[$key] = $this->arrayDeepFilter($subPart);
 
                 if (count($array[$key]) < 1) {
                     unset($array[$key]);
