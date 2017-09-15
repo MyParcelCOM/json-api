@@ -61,7 +61,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set the id for this occurrence of the exception.
      *
-     * @param  string $id
+     * @param string $id
      * @return JsonApiExceptionInterface
      */
     public function setId(string $id): JsonApiExceptionInterface
@@ -84,7 +84,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set the links related to the exception.
      *
-     * @param  array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
+     * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
      * @return JsonApiExceptionInterface
      */
     public function setLinks(array $links): JsonApiExceptionInterface
@@ -107,7 +107,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set the http status code for the request.
      *
-     * @param  string $status
+     * @param string $status
      * @return JsonApiExceptionInterface
      */
     public function setStatus(string $status): JsonApiExceptionInterface
@@ -131,7 +131,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
      * Set the application specific error code.
      * This should be retrieved from one of the defined constants.
      *
-     * @param  string $errorCode
+     * @param string $errorCode
      * @return JsonApiExceptionInterface
      */
     public function setErrorCode(string $errorCode): JsonApiExceptionInterface
@@ -155,7 +155,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
      * Set the description linked to the code.
      * This should be retrieved from one of the defined constants.
      *
-     * @param  string $title
+     * @param string $title
      * @return JsonApiExceptionInterface
      */
     public function setTitle(string $title): JsonApiExceptionInterface
@@ -178,7 +178,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set the detailed message for the server.
      *
-     * @param  string $detail
+     * @param string $detail
      * @return JsonApiExceptionInterface
      */
     public function setDetail(string $detail): JsonApiExceptionInterface
@@ -201,7 +201,7 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set an array containing references to the source of the error.
      *
-     * @param  array $source
+     * @param array $source
      * @return JsonApiExceptionInterface
      */
     public function setSource(array $source): JsonApiExceptionInterface
@@ -224,12 +224,26 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     /**
      * Set meta object containing non-standard meta-information about the error.
      *
-     * @param  array $meta
+     * @param array $meta
      * @return JsonApiExceptionInterface
      */
     public function setMeta(array $meta): JsonApiExceptionInterface
     {
         $this->meta = $meta;
+
+        return $this;
+    }
+
+    /**
+     * Add meta values to the existing meta object.
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @return JsonApiExceptionInterface
+     */
+    public function addMeta(string $key, $value): JsonApiExceptionInterface
+    {
+        $this->meta[$key] = $value;
 
         return $this;
     }
