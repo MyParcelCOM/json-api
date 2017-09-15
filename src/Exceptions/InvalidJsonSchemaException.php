@@ -22,7 +22,9 @@ class InvalidJsonSchemaException extends AbstractJsonApiException
             $previous
         );
 
-        $this->setLinks(['https://docs.myparcel.com/api-specification']);
+        $this->setLinks([
+            'specification' => 'https://docs.myparcel.com/api-specification',
+        ]);
         $this->addMeta('json_schema_errors', $errors);
     }
 }
