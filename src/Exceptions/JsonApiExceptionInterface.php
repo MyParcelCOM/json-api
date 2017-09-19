@@ -20,6 +20,11 @@ interface JsonApiExceptionInterface
         'title' => 'Resource Not Found',
     ];
 
+    const INVALID_JSON_SCHEMA = [
+        'code'  => '10003',
+        'title' => 'Invalid JSON Schema',
+    ];
+
     // Auth related errors 14000 - 14999
     const AUTH_INVALID_CLIENT = [
         'code'  => '14000',
