@@ -48,7 +48,9 @@ class PromiseResultSet implements ResultSetInterface
     private function wait(): void
     {
         if (!isset($this->data)) {
-            $this->data = $this->promise->wait();
+            $this->data = new Collection(
+                $this->promise->wait()
+            );
         }
     }
 
