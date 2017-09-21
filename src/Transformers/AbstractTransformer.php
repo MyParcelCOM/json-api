@@ -114,8 +114,6 @@ abstract class AbstractTransformer
      */
     protected function transformRelationshipsForIds(array $ids, $model): array
     {
-        $this->validateModel($model);
-
         return array_map(
             function ($id) use ($model) {
                 return $this->transformRelationship(new $model(['id' => $id]));
