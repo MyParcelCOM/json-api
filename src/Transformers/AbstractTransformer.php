@@ -155,7 +155,32 @@ abstract class AbstractTransformer
     {
         $this->validateModel($model);
 
-        return [];
+        return array_filter([
+            'self'    => $this->getSelfLink($model),
+            'related' => $this->getRelatedLink($model),
+        ]);
+    }
+
+    /**
+     * @param mixed $model
+     * @return string
+     */
+    public function getSelfLink($model): string
+    {
+        $this->validateModel($model);
+
+        return '';
+    }
+
+    /**
+     * @param mixed $model
+     * @return string
+     */
+    public function getRelatedLink($model): string
+    {
+        $this->validateModel($model);
+
+        return '';
     }
 
     /**
