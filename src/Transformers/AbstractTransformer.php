@@ -49,7 +49,7 @@ abstract class AbstractTransformer
         $relationship = $transformer->transformIdentifier($model);
 
         if ($withLinks) {
-            $relationship = ['links' => ['self' => $transformer->getLinks($model)['self']], 'data' => $relationship];
+            $relationship = ['links' => ['related' => $transformer->getRelatedLink($model)], 'data' => $relationship];
         }
 
         return $relationship;
