@@ -166,6 +166,8 @@ abstract class AbstractTransformer
     }
 
     /**
+     * Get a link to the model
+     *
      * @param mixed $model
      * @return string
      */
@@ -177,6 +179,8 @@ abstract class AbstractTransformer
     }
 
     /**
+     * Get a link to the relation
+     *
      * @param mixed $model
      * @return string
      */
