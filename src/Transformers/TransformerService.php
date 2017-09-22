@@ -26,10 +26,19 @@ class TransformerService
     }
 
     /**
-     * @param ResultSetInterface $set
+     * @param $model
      * @return TransformerResource
      */
-    public function transformResultSet(ResultSetInterface $set): TransformerResource
+    public function transformModel($model): TransformerResource
+    {
+        return $this->transform($model)->singleResult();
+    }
+
+    /**
+     * @param  $set
+     * @return TransformerResource
+     */
+    public function transformResultSet( $set): TransformerResource
     {
         return $this->transform($set->first())->singleResult();
     }
@@ -37,10 +46,10 @@ class TransformerService
     /**
      * Transform a result set to JSON Api output.
      *
-     * @param ResultSetInterface[] $sets
+     * @param [] $sets
      * @return TransformerResource
      */
-    public function transformResultSets(ResultSetInterface ...$sets): TransformerResource
+    public function transformResultSets( ...$sets): TransformerResource
     {
         $collections = [];
 
