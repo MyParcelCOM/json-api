@@ -25,6 +25,17 @@ interface JsonApiExceptionInterface
         'title' => 'Invalid JSON Schema',
     ];
 
+    // External API related errors 13000 - 13999
+    const CLIENT_REQUEST_ERROR = [
+        'code'  => '13001',
+        'title' => 'External Client Error',
+    ];
+
+    const CARRIER_API_ERROR = [
+        'code'  => '13002',
+        'title' => 'Carrier API Error',
+    ];
+
     // Auth related errors 14000 - 14999
     const AUTH_INVALID_CLIENT = [
         'code'  => '14000',
