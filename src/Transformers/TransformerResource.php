@@ -2,7 +2,6 @@
 
 namespace MyParcelCom\Transformers;
 
-use MyParcelCom\Common\Contracts\MetaInterface;
 use MyParcelCom\Common\Http\Paginator;
 
 class TransformerResource
@@ -23,13 +22,10 @@ class TransformerResource
     protected $includes = [];
 
     /** @var array */
+
     protected $meta = [];
-
-    /** @var array */
-    protected $metaObjects = [];
-
     /** @var bool */
-    protected $singleResult = false;
+    protected $multipleResult = false;
 
     /**
      * @param array $resources
@@ -40,12 +36,12 @@ class TransformerResource
     }
 
     /**
-     * @param bool $singleResult
-     * @return TransformerResource
+     * @param bool $multipleResult
+     * @return $this
      */
-    public function singleResult($singleResult = true): self
+    public function multipleResult($multipleResult = true): self
     {
-        $this->singleResult = $singleResult;
+        $this->multipleResult = $multipleResult;
 
         return $this;
     }
@@ -77,7 +73,7 @@ class TransformerResource
     }
 
     /**
-     * @param array|MetaInterface $meta
+     * @param array $meta
      * @return $this
      * @throws TransformerException
      */
@@ -85,8 +81,6 @@ class TransformerResource
     {
         if (is_array($meta)) {
             $this->meta = array_merge_recursive($meta, $this->meta);
-        } elseif ($meta instanceof MetaInterface) {
-            $this->metaObjects = $meta;
         } else {
             throw new TransformerException('Invalid meta object added, expected array or MetaInterface, got: ' . get_class($meta));
         }
@@ -100,10 +94,10 @@ class TransformerResource
     public function toArray(): array
     {
         $this->prepareData();
-        if($this->singleResult){
-            return $this->toArraySingle();
-        }else{
+        if($this->multipleResult){
             return $this->toArrayMultiple();
+        }else{
+            return $this->toArraySingle();
         }
     }
 
