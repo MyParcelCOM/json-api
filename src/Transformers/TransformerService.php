@@ -31,7 +31,7 @@ class TransformerService
      */
     public function transformModel($model): TransformerResource
     {
-        return $this->transform($model)->singleResult();
+        return $this->transform($model);
     }
 
     /**
@@ -40,7 +40,7 @@ class TransformerService
      */
     public function transformResultSet( $set): TransformerResource
     {
-        return $this->transform($set->first())->singleResult();
+        return $this->transform($set->first());
     }
 
     /**
@@ -77,7 +77,7 @@ class TransformerService
             $this->paginator->addTotal($count);
         }
 
-        return $this->transform(...$collections);
+        return $this->transform(...$collections)->multipleResult();
     }
 
     /**
