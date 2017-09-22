@@ -125,7 +125,7 @@ class Handler extends ExceptionHandler
             $error = (new JsonApiErrorTransformer())->transform($exception);
 
             if ($this->debug === true) {
-                $error['meta'] = array_merge($error['meta'] ?? [], $this->getDebugMeta($exception));
+                $error['meta']['debug'] = $this->getDebugMeta($exception);
             }
 
             return $this->responseFactory->json([
@@ -185,7 +185,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($this->debug === true) {
-            $error['meta'] = $this->getDebugMeta($exception);
+            $error['meta']['debug'] = $this->getDebugMeta($exception);
         }
 
         return $error;
