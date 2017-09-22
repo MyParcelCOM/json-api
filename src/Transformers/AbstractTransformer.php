@@ -75,7 +75,12 @@ abstract class AbstractTransformer
         $relationship = $transformer->transformIdentifier($model);
 
         if ($withLinks) {
-            $relationship = ['links' => ['self' => $transformer->getLinks($model)['self']], 'data' => $relationship];
+            $relationship = [
+                'links' => [
+                    'related' => $transformer->getLink($model),
+                ],
+                'data'  => $relationship,
+            ];
         }
 
         return $relationship;
@@ -182,16 +187,17 @@ abstract class AbstractTransformer
         $this->validateModel($model);
 
         return array_filter([
-            'self'    => $this->getSelfLink($model),
-            'related' => $this->getRelatedLink($model),
+            'self' => $this->getLink($model),
         ]);
     }
 
     /**
+     * Get a link to the model
+     *
      * @param mixed $model
      * @return string
      */
-    public function getSelfLink($model): string
+    public function getLink($model): string
     {
         $this->validateModel($model);
 
@@ -199,10 +205,12 @@ abstract class AbstractTransformer
     }
 
     /**
+     * Get a link to the relation
+     *
      * @param mixed $model
      * @return string
      */
-    public function getRelatedLink($model): string
+    public function getRelationLink($model): string
     {
         $this->validateModel($model);
 

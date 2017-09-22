@@ -20,17 +20,34 @@ class TransformerResource
     protected $data = [];
 
     /** @var array */
+    protected $includes = [];
+
+    /** @var array */
     protected $meta = [];
 
-    /** @var MetaInterface[] */
+    /** @var array */
     protected $metaObjects = [];
+
+    /** @var bool */
+    protected $singleResult = false;
 
     /**
      * @param array $resources
      */
-    public function __construct(array $resources)
+    public function __construct($resources)
     {
         $this->resources = $resources;
+    }
+
+    /**
+     * @param bool $singleResult
+     * @return TransformerResource
+     */
+    public function singleResult($singleResult = true): self
+    {
+        $this->singleResult = $singleResult;
+
+        return $this;
     }
 
     /**
@@ -78,43 +95,80 @@ class TransformerResource
     }
 
     /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $this->prepareData();
+        if($this->singleResult){
+            return $this->toArraySingle();
+        }else{
+            return $this->toArrayMultiple();
+        }
+    }
+
+    /**
      * Transform the data to a json api formatted array.
      *
      * @return array
      * @throws TransformerException
      */
-    public function toArray(): array
+    public function toArrayMultiple(): array
     {
-        $data = [];
-        $includes = [];
-
         if (!$this->paginator) {
             throw new TransformerException('No paginator set for transformer resource');
         }
 
+        $res['data'] = $this->data;
+        $res['meta'] = ['total_pages' => $this->paginator->getCount()] + $this->meta;
+
+        if ($this->includes) {
+            $res['includes'] = array_unique($this->includes, SORT_REGULAR); // remove duplicates
+        }
+
         $links = $this->paginator->getLinks();
-
-        foreach ($this->resources as $resource) {
-            $data = array_merge($data, $resource->getData());
-            $includes = array_merge($includes, $resource->getIncluded($this->requestedIncludes, $includes));
-        }
-
-        $meta = $this->meta;
-        foreach ($this->metaObjects as $metaObject) {
-            $meta = array_merge_recursive($meta, $metaObject->getMeta());
-        }
-
-        $res['data'] = $data;
-        $res['meta'] = ['total_pages' => $this->paginator->getCount()] + $meta;
-
-        if ($includes) {
-            $res['includes'] = array_unique($includes, SORT_REGULAR); // remove duplicates
-        }
-
         if ($links) {
             $res['links'] = $links;
         }
 
         return $res;
+    }
+
+    /**
+     * Transform the data to a json api formatted array.
+     *
+     * @return array
+     * @throws TransformerException
+     */
+    public function toArraySingle(): array
+    {
+        $res['data'] = $this->data;
+
+        if($this->meta){
+            $res['meta'] = $this->meta;
+        }
+
+        if ($this->includes) {
+            $res['includes'] = $this->includes;
+        }
+
+        return $res;
+    }
+
+    /**
+     * @return void
+     */
+    public function prepareData(): void
+    {
+        foreach ($this->resources as $resource) {
+            $this->data = array_merge($this->data, $resource->getData());
+            $this->includes = array_merge($this->includes, $resource->getIncluded($this->requestedIncludes, $this->includes));
+        }
+
+        $this->includes = array_unique($this->includes, SORT_REGULAR); // remove duplicates
+
+        foreach ($this->metaObjects as $metaObject) {
+            $this->meta = array_merge_recursive($this->meta, $metaObject->getMeta());
+        }
     }
 }

@@ -26,6 +26,15 @@ class TransformerService
     }
 
     /**
+     * @param ResultSetInterface $set
+     * @return TransformerResource
+     */
+    public function transformResultSet(ResultSetInterface $set): TransformerResource
+    {
+        return $this->transform($set->first())->singleResult();
+    }
+
+    /**
      * Transform a result set to JSON Api output.
      *
      * @param ResultSetInterface[] $sets
@@ -59,7 +68,7 @@ class TransformerService
             $this->paginator->addTotal($count);
         }
 
-        return $this->transform(...$collections)->setRequestedIncludes($this->includes)->setPaginator($this->paginator);
+        return $this->transform(...$collections);
     }
 
     /**
@@ -80,8 +89,6 @@ class TransformerService
             }
         }
 
-        $resource = new TransformerResource($items);
-
-        return $resource;
+        return (new TransformerResource($items))->setRequestedIncludes($this->includes)->setPaginator($this->paginator);
     }
 }
