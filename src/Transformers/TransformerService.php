@@ -26,6 +26,15 @@ class TransformerService
     }
 
     /**
+     * @param $model
+     * @return TransformerResource
+     */
+    public function transformModel($model): TransformerResource
+    {
+        return $this->transform($model)->singleResult();
+    }
+
+    /**
      * @param  $set
      * @return TransformerResource
      */
