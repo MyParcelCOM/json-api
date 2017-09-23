@@ -50,9 +50,7 @@ abstract class AbstractTransformer
         });
         foreach ($array as $key => $subPart) {
             if (is_array($subPart)) {
-
                 $array[$key] = $this->arrayDeepFilter($subPart);
-
                 if (count($array[$key]) < 1) {
                     unset($array[$key]);
                 }

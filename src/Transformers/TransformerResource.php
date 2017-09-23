@@ -160,9 +160,5 @@ class TransformerResource
         }
 
         $this->includes = array_unique($this->includes, SORT_REGULAR); // remove duplicates
-
-        foreach ($this->metaObjects as $metaObject) {
-            $this->meta = array_merge_recursive($this->meta, $metaObject->getMeta());
-        }
     }
 }
