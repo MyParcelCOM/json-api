@@ -2,29 +2,26 @@
 
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COMPOSE="docker-compose"
-DO="run --rm php"
+DO="run --rm"
 
 if [ $# -gt 0 ]; then
-  # Run composer commands.
-  if [ "$1" == "composer" ]; then
+
+  # run subscript when found
+  if [ -f "mp/$1.sh" ]; then
+    SCRIPT="$1"
     shift 1
 
-    ${COMPOSE} ${DO} composer "$@"
+    ./mp/${SCRIPT}.sh "$@"
 
-  # Run php tests.
-  elif [ "$1" == "test" ]; then
-    shift 1
-
-    ${COMPOSE} ${DO} composer test "$@"
-
-  # Run php commands.
+  # run docker container commands
   elif [ "$1" == "php" ]; then
     shift 1
 
-    ${COMPOSE} ${DO} "$@"
+    ${COMPOSE} ${DO} php "$@"
 
-  # Run docker-compose commands.
+  # default to docker-compose
   else
     ${COMPOSE} "$@"
   fi
+
 fi
