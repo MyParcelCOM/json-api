@@ -91,7 +91,7 @@ class TransformerResource
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getData(): array
     {
         $this->prepareData();
         if($this->multipleResult){
