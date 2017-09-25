@@ -4,8 +4,9 @@ namespace MyParcelCom\Transformers;
 
 use Illuminate\Support\Collection;
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
-use MyParcelCom\Common\Contracts\ResultSetInterface;
 use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\Model\Builder;
+use MyParcelCom\Model\Model;
 
 class TransformerService
 {
@@ -18,6 +19,9 @@ class TransformerService
     /** @var array */
     protected $includes;
 
+    /** @var bool */
+    protected $multipleResult;
+
     public function __construct(JsonApiRequestInterface $request, TransformerFactory $transformerFactory)
     {
         $this->transformerFactory = $transformerFactory;
@@ -26,30 +30,12 @@ class TransformerService
     }
 
     /**
-     * @param $model
-     * @return TransformerResource
-     */
-    public function transformModel($model): TransformerResource
-    {
-        return $this->transform($model);
-    }
-
-    /**
-     * @param  $set
-     * @return TransformerResource
-     */
-    public function transformResultSet( $set): TransformerResource
-    {
-        return $this->transform($set->first());
-    }
-
-    /**
-     * Transform a result set to JSON Api output.
+     * Transform a builder to JSON Api output.
      *
-     * @param [] $sets
-     * @return TransformerResource
+     * @param Builder[] $sets
+     * @return array
      */
-    public function transformResultSets( ...$sets): TransformerResource
+    public function transformResources(Builder ...$sets): array
     {
         $collections = [];
 
@@ -77,27 +63,35 @@ class TransformerService
             $this->paginator->addTotal($count);
         }
 
-        return $this->transform(...$collections)->multipleResult();
+        $this->multipleResult = true;
+        return $this->transformResource(...$collections);
     }
 
     /**
      * Transform the data to JSON Api.
      *
-     * @param mixed $data the data we are transforming
-     * @return TransformerResource
+     * @param Model|Collection[] $data
+     * @return array
+     * @throws TransformerException
      */
-    protected function transform(...$data): TransformerResource
+    public function transformResource( ...$data): array
     {
         $items = [];
 
         foreach ($data as $datum) {
             if ($datum instanceof Collection) {
                 $items[] = $this->transformerFactory->createTransformerCollection($datum);
-            } else {
+            } elseif ($datum instanceof Model) {
                 $items[] = $this->transformerFactory->createTransformerItem($datum);
+            }else{
+                throw new TransformerException('Cant transform model of type ' . get_class($datum));
             }
         }
 
-        return (new TransformerResource($items))->setRequestedIncludes($this->includes)->setPaginator($this->paginator);
+        return (new TransformerResource($items))
+            ->multipleResult($this->multipleResult)
+            ->setRequestedIncludes($this->includes)
+            ->setPaginator($this->paginator)
+            ->getData();
     }
 }
