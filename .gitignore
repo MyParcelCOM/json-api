@@ -1,5 +1,5 @@
-/.idea
-/vendor
-/build
-/composer.lock
 /.env
+/.idea
+/build
+/vendor
+.DS_Store

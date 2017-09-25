@@ -1,19 +1,13 @@
 {
   "name": "myparcelcom/common",
-  "description": "MyParcel.com package with interfaces and traits that are shared between projects.",
+  "description": "MyParcel.com shared library with common interfaces, traits and utility classes.",
   "homepage": "https://www.myparcel.com",
   "type": "library",
-  "authors": [
-    {
-      "name": "Shady Khattab",
-      "email": "shady@myparcel.com"
-    }
-  ],
   "require": {
-    "php": ">=7.1",
-    "illuminate/support": "~5.0",
+    "guzzlehttp/promises": "^1.0",
     "illuminate/database": "~5.0",
-    "guzzlehttp/promises": "^1.0"
+    "illuminate/support": "~5.0",
+    "php": ">=7.1"
   },
   "autoload": {
     "psr-4": {
@@ -21,9 +15,9 @@
     }
   },
   "require-dev": {
+    "mockery/mockery": "0.9.*",
     "phpunit/phpunit": "^6.3",
-    "squizlabs/php_codesniffer": "^3.0",
-    "mockery/mockery": "0.9.*"
+    "squizlabs/php_codesniffer": "^3.0"
   },
   "autoload-dev": {
     "psr-4": {
