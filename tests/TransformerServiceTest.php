@@ -7,6 +7,7 @@ use Mockery;
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
 use MyParcelCom\Common\Contracts\ResultSetInterface;
 use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\Transformers\Tests\Stubs\ResourcesInterfaceStub;
 use MyParcelCom\Transformers\TransformerCollection;
 use MyParcelCom\Transformers\TransformerFactory;
 use MyParcelCom\Transformers\TransformerItem;
@@ -19,7 +20,7 @@ class TransformerServiceTest extends TestCase
     /** @var TransformerService */
     protected $transformerService;
     /** @var ResultSetInterface */
-    protected $resultSet;
+    protected $resources;
 
     /**
      * setup test conditions
@@ -28,12 +29,12 @@ class TransformerServiceTest extends TestCase
     {
         parent::setUp();
 
-        $paginator = Mockery::mock(Paginator::class, ['getStart' => 0, 'getPerPage' => 1, 'addTotal' => 2]);
+        $paginator = Mockery::mock(Paginator::class, ['getStart' => 0, 'getPerPage' => 1, 'addTotal' => 2, 'getCount' => 2, 'getLinks'=>[]]);
         $request = Mockery::mock(JsonApiRequestInterface::class, ['getPaginator' => $paginator, 'getIncludes' => []]);
 
-        $this->resultSet = Mockery::mock(ResultSetInterface::class, ['count' => 0, 'get' => Mockery::mock(Collection::class, ['count' => 0])]);
-        $this->resultSet->shouldReceive('limit')->andReturnSelf();
-        $this->resultSet->shouldReceive('offset')->andReturnSelf();
+        $this->resources = Mockery::mock(ResultSetInterface::class, ['count' => 0, 'get' => Mockery::mock(Collection::class, ['count' => 0])]);
+        $this->resources->shouldReceive('limit')->andReturnSelf();
+        $this->resources->shouldReceive('offset')->andReturnSelf();
 
         $transformerFactory = Mockery::mock(TransformerFactory::class, [
             'createTransformerCollection' => Mockery::mock(TransformerCollection::class),
@@ -57,7 +58,7 @@ class TransformerServiceTest extends TestCase
      */
     public function testTransformResultSets()
     {
-        $result = $this->transformerService->transformResultSets($this->resultSet);
-        $this->assertInstanceOf(TransformerResource::class, $result);
+        $result = $this->transformerService->transformResources($this->resources);
+        $this->assertInternalType('array', $result);
     }
 }
