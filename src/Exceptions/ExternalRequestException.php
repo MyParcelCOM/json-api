@@ -5,7 +5,7 @@ namespace MyParcelCom\Exceptions;
 /**
  * Thrown when requests to external clients fail.
  */
-class ClientRequestException extends AbstractJsonApiException
+class ExternalRequestException extends AbstractJsonApiException
 {
     /**
      * @param string $detail
@@ -15,7 +15,7 @@ class ClientRequestException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::CLIENT_REQUEST_ERROR,
+            JsonApiExceptionInterface::EXTERNAL_REQUEST_ERROR,
             500,
             $previous
         );
