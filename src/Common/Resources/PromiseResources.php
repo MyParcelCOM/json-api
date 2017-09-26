@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\ResultSets;
+namespace MyParcelCom\Common\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\ResultSetInterface;
+use MyParcelCom\Common\Contracts\ResourcesInterface;
 
-class PromiseResultSet implements ResultSetInterface
+class PromiseResources implements ResourcesInterface
 {
     /** @var PromiseInterface */
     protected $promise;
@@ -56,9 +56,9 @@ class PromiseResultSet implements ResultSetInterface
 
     /**
      * @param int $offset
-     * @return $this
+     * @return ResourcesInterface
      */
-    public function offset(int $offset): self
+    public function offset(int $offset): ResourcesInterface
     {
         $this->offset = $offset;
 
@@ -67,9 +67,9 @@ class PromiseResultSet implements ResultSetInterface
 
     /**
      * @param int $limit
-     * @return $this
+     * @return ResourcesInterface
      */
-    public function limit(int $limit): self
+    public function limit(int $limit): ResourcesInterface
     {
         $this->limit = $limit;
 

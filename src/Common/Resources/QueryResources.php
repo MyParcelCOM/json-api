@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\ResultSets;
+namespace MyParcelCom\Common\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\ResultSetInterface;
+use MyParcelCom\Common\Contracts\ResourcesInterface;
 
-class QueryResultSet implements ResultSetInterface
+
+class QueryResources implements ResourcesInterface
 {
     /** @var Builder */
     protected $builder;
@@ -26,9 +27,9 @@ class QueryResultSet implements ResultSetInterface
      * skip n amount of records
      *
      * @param  int $offset
-     * @return QueryResultSet
+     * @return ResourcesInterface
      */
-    public function offset(int $offset): self
+    public function offset(int $offset): ResourcesInterface
     {
         $this->builder->skip($offset);
 
@@ -39,9 +40,9 @@ class QueryResultSet implements ResultSetInterface
      * take n amount of records
      *
      * @param  int $limit
-     * @return QueryResultSet
+     * @return ResourcesInterface
      */
-    public function limit(int $limit): self
+    public function limit(int $limit): ResourcesInterface
     {
         $this->builder->take($limit);
 

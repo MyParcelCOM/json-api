@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\ResultSets;
+namespace MyParcelCom\Common\Tests\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\ResultSets\QueryResultSet;
+use MyParcelCom\Common\Resources\QueryResources;
 use PHPUnit\Framework\TestCase;
 
-class QueryResultSetTest extends TestCase
+class QueryResourcesTest extends TestCase
 {
-    /** @var QueryResultSet */
+    /** @var QueryResources */
     private $resultSet;
     /** @var Model[] */
     private $data;
@@ -54,7 +54,7 @@ class QueryResultSetTest extends TestCase
 
         $builder->shouldReceive('toBase')->andReturnSelf();
 
-        $this->resultSet = new QueryResultSet($builder);
+        $this->resultSet = new QueryResources($builder);
     }
 
     public function tearDown()

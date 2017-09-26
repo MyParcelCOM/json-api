@@ -1,4 +1,5 @@
 # MyParcel.com Common
+[![GitHub release](https://img.shields.io/github/release/MyParcelCOM/common/all.svg)](https://github.com/MyParcelCOM/common)
 Shared library with common interfaces, traits and utility classes.
 
 ## Content
