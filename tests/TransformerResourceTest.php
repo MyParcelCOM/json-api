@@ -56,13 +56,13 @@ class TransformerResourceTest extends TestCase
     /**
      * @test
      */
-    public function testToArray()
+    public function testGetData()
     {
-        $expectedResult = ["data" => [$this->data], "meta" => ["total_pages" => 0], 'includes' => $this->included];
+        $expectedResult = ["data" => [$this->data], 'includes' => $this->included];
 
         $this->transformerResource->setPaginator($this->paginator);
 
-        $this->assertEquals($expectedResult, $this->transformerResource->toArray());
+        $this->assertEquals($expectedResult, $this->transformerResource->GetData());
     }
 
     /**
@@ -70,39 +70,39 @@ class TransformerResourceTest extends TestCase
      *
      * @test
      */
-    public function testToArrayEmpty()
+    public function testGetDataEmpty()
     {
-        $expectedResult = ["data" => [], "meta" => ["total_pages" => 0]];
+        $expectedResult = ["data" => []];
 
         $emptyTransformerResource = new TransformerResource([]);
         $emptyTransformerResource->setPaginator($this->paginator);
 
-        $this->assertEquals($expectedResult, $emptyTransformerResource->toArray());
+        $this->assertEquals($expectedResult, $emptyTransformerResource->GetData());
     }
 
 
     /**
-     * test ToArray function with no includes
+     * test GetData function with no includes
      */
-    public function testToArrayWithNoIncludes()
+    public function testGetDataWithNoIncludes()
     {
-        $expectedResult = ["data" => [$this->data], "meta" => ["total_pages" => 0]];
+        $expectedResult = ["data" => [$this->data]];
 
         $this->transformerResourceNoIncluded->setRequestedIncludes(['foo']);
         $this->transformerResourceNoIncluded->setPaginator($this->paginator);
 
-        $this->assertEquals($expectedResult, $this->transformerResourceNoIncluded->toArray());
+        $this->assertEquals($expectedResult, $this->transformerResourceNoIncluded->GetData());
     }
 
     /**
-     * test ToArray function wit no paginator
+     * test GetData function wit no paginator
      */
-    public function testToArrayWithNoPaginator()
+    public function testGetDataWithNoPaginator()
     {
         $this->expectException(TransformerException::class);
 
         $expectedResult = ["data" => [$this->data], "meta" => ["total_pages" => 0], 'includes' => $this->included];
 
-        $this->assertEquals($expectedResult, $this->transformerResource->toArray());
+        $this->assertEquals($expectedResult, $this->transformerResource->toArrayMultiple());
     }
 }

@@ -2,11 +2,10 @@
 
 namespace MyParcelCom\Transformers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
 use MyParcelCom\Common\Http\Paginator;
-use MyParcelCom\Model\Builder;
-use MyParcelCom\Model\Model;
 
 class TransformerService
 {
@@ -32,24 +31,24 @@ class TransformerService
     /**
      * Transform a builder to JSON Api output.
      *
-     * @param Builder[] $sets
+     * @param Resources[] $resources
      * @return array
      */
-    public function transformResources(Builder ...$sets): array
+    public function transformResources( ...$resources): array
     {
         $collections = [];
 
         $start = $this->paginator->getStart();
         $size = $this->paginator->getPerPage();
 
-        // find the current page records from multiple sets
-        foreach ($sets as $set) {
-            $count = $set->count();
+        // find the current page records from multiple resources
+        foreach ($resources as $resource) {
+            $count = $resource->count();
             // if there is more to print
             if ($size > 0) {
-                $set->offset($start)->limit($size);
+                $resource->offset($start)->limit($size);
 
-                $collection = $set->get();
+                $collection = $resource->get();
 
                 if (count($collection) > 0) {
                     $collections[] = $collection;
@@ -64,6 +63,7 @@ class TransformerService
         }
 
         $this->multipleResult = true;
+
         return $this->transformResource(...$collections);
     }
 
@@ -74,7 +74,7 @@ class TransformerService
      * @return array
      * @throws TransformerException
      */
-    public function transformResource( ...$data): array
+    public function transformResource(...$data): array
     {
         $items = [];
 
@@ -83,7 +83,7 @@ class TransformerService
                 $items[] = $this->transformerFactory->createTransformerCollection($datum);
             } elseif ($datum instanceof Model) {
                 $items[] = $this->transformerFactory->createTransformerItem($datum);
-            }else{
+            } else {
                 throw new TransformerException('Cant transform model of type ' . get_class($datum));
             }
         }
