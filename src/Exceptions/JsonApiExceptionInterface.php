@@ -25,6 +25,11 @@ interface JsonApiExceptionInterface
         'title' => 'Invalid JSON Schema',
     ];
 
+    const INVALID_REQUEST_HEADER = [
+        'code'  => '10004',
+        'title' => 'Invalid Request Header',
+    ];
+
     // External API related errors 13000 - 13999
     const CLIENT_REQUEST_ERROR = [
         'code'  => '13001',
