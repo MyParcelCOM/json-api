@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\ResultSets;
+namespace MyParcelCom\Common\Tests\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\ResultSets\PromiseResultSet;
+use MyParcelCom\Common\Resources\PromiseResources;
 use PHPUnit\Framework\TestCase;
 
-class PromiseResultSetTest extends TestCase
+class PromiseResourcesTest extends TestCase
 {
     public function tearDown()
     {
@@ -19,7 +19,7 @@ class PromiseResultSetTest extends TestCase
     /** @test */
     public function testGet()
     {
-        $resultSet = new PromiseResultSet(
+        $resultSet = new PromiseResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -39,7 +39,7 @@ class PromiseResultSetTest extends TestCase
     /** @test */
     public function testCount()
     {
-        $resultSet = new PromiseResultSet(
+        $resultSet = new PromiseResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -54,7 +54,7 @@ class PromiseResultSetTest extends TestCase
     /** @test */
     public function testOffset()
     {
-        $resultSet = new PromiseResultSet(
+        $resultSet = new PromiseResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -76,7 +76,7 @@ class PromiseResultSetTest extends TestCase
     /** @test */
     public function testLimit()
     {
-        $resultSet = new PromiseResultSet(
+        $resultSet = new PromiseResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])

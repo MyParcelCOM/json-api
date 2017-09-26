@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\ResultSets;
+namespace MyParcelCom\Common\Tests\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\ResultSets\PromiseCollectionResultSet;
+use MyParcelCom\Common\Resources\PromiseCollectionResources;
 use PHPUnit\Framework\TestCase;
 
-class PromiseCollectionResultSetTest extends TestCase
+class PromiseCollectionResourcesTest extends TestCase
 {
     public function tearDown()
     {
@@ -19,7 +19,7 @@ class PromiseCollectionResultSetTest extends TestCase
     /** @test */
     public function testGet()
     {
-        $resultSet = new PromiseCollectionResultSet(
+        $resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -39,7 +39,7 @@ class PromiseCollectionResultSetTest extends TestCase
     /** @test */
     public function testCount()
     {
-        $resultSet = new PromiseCollectionResultSet(
+        $resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -54,7 +54,7 @@ class PromiseCollectionResultSetTest extends TestCase
     /** @test */
     public function testOffset()
     {
-        $resultSet = new PromiseCollectionResultSet(
+        $resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -76,7 +76,7 @@ class PromiseCollectionResultSetTest extends TestCase
     /** @test */
     public function testLimit()
     {
-        $resultSet = new PromiseCollectionResultSet(
+        $resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
@@ -97,7 +97,7 @@ class PromiseCollectionResultSetTest extends TestCase
 
     public function testAddPromise()
     {
-        $resultSet = new PromiseCollectionResultSet(
+        $resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
