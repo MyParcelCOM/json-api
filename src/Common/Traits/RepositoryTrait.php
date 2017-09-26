@@ -17,7 +17,6 @@ trait RepositoryTrait
      * Get ALL from this model.
      *
      * @return QueryResources
-     * @throws RepositoryException
      */
     public function getAll(): QueryResources
     {
@@ -28,10 +27,9 @@ trait RepositoryTrait
      * Get a specific model by it's id.
      *
      * @param string $id
-     * @return Model
-     * @throws RepositoryException
+     * @return Model|null
      */
-    public function getById(string $id): Model
+    public function getById(string $id): ?Model
     {
         return $this->getByIds($id)->first();
     }
@@ -46,7 +44,7 @@ trait RepositoryTrait
     {
         $result = $this->baseQuery()->whereKey($ids);
 
-        // TODO if multiple ids some might fil and some might not so we have to do count(ids) vs count results
+        // TODO: when fetching multiple ids, a subset might fail, so we have to compare count(ids) vs count(results)
         if (!$result) {
             throw new RepositoryException('No ' . $this->model . ' found with Ids: ' . $ids);
         }
