@@ -62,9 +62,9 @@ class QueryResources implements ResourcesInterface
     /**
      * get the first or the result set
      *
-     * @return Model
+     * @return Model|null
      */
-    public function first(): Model
+    public function first(): ?Model
     {
         return $this->builder->first();
     }
