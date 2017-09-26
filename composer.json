@@ -21,7 +21,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "myparcelcom/common": "~1.0",
+    "myparcelcom/common": "^0.1.0",
     "illuminate/support": "~5.0"
   },
   "autoload": {
