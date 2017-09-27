@@ -34,7 +34,7 @@ class TransformerService
      * @param Resources[] $resources
      * @return array
      */
-    public function transformResources( ...$resources): array
+    public function transformResources(...$resources): array
     {
         $collections = [];
 
