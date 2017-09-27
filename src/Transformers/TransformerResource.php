@@ -94,9 +94,9 @@ class TransformerResource
     public function getData(): array
     {
         $this->prepareData();
-        if($this->multipleResult){
+        if ($this->multipleResult) {
             return $this->toArrayMultiple();
-        }else{
+        } else {
             return $this->toArraySingle();
         }
     }
@@ -138,7 +138,7 @@ class TransformerResource
     {
         $res['data'] = $this->data;
 
-        if($this->meta){
+        if ($this->meta) {
             $res['meta'] = $this->meta;
         }
 
