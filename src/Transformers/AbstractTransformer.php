@@ -3,6 +3,7 @@
 namespace MyParcelCom\Transformers;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
 
 abstract class AbstractTransformer
