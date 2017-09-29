@@ -85,6 +85,19 @@ abstract class AbstractTransformer
     }
 
     /**
+     * @param Collection $collection
+     * @return array
+     */
+    protected function getCollectionTransform(Collection $collection): array
+    {
+        $result = [];
+        foreach ($collection as $model) {
+            $result[] = $this->transformerFactory->createFromModel($model)->transform($model);
+        }
+        return $result;
+    }
+
+    /**
      * @param $model
      * @return array|null
      */
