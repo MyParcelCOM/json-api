@@ -27,8 +27,7 @@ class PromiseCollectionResources implements ResourcesInterface
     }
 
     /**
-     * Get the data from the result set as a collection, starting at set offset
-     * with a length of given limit.
+     * Get the data from the result set as a collection, starting at set offset with a length of given limit.
      *
      * @return Collection
      */
