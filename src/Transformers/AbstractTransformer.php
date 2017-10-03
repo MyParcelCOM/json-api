@@ -89,7 +89,7 @@ abstract class AbstractTransformer
      * @param Collection $collection
      * @return array
      */
-    protected function TransformCollection(Collection $collection): array
+    protected function transformCollection(Collection $collection): array
     {
         $result = [];
         foreach ($collection as $model) {
