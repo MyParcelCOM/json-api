@@ -114,7 +114,10 @@ class TransformerResource
         }
 
         $res['data'] = $this->data;
-        $res['meta'] = ['total_pages' => $this->paginator->getCount()] + $this->meta;
+        $res['meta'] = [
+                'total_pages' => $this->paginator->getCount(),
+                'total_records' => $this->paginator->getTotal(),
+            ] + $this->meta;
 
         if ($this->includes) {
             $res['includes'] = array_unique($this->includes, SORT_REGULAR); // remove duplicates
