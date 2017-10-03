@@ -29,10 +29,20 @@ class TransformerServiceTest extends TestCase
     {
         parent::setUp();
 
-        $paginator = Mockery::mock(Paginator::class, ['getStart' => 0, 'getPerPage' => 1, 'addTotal' => 2, 'getCount' => 2, 'getLinks'=>[]]);
+        $paginator = Mockery::mock(Paginator::class, [
+            'getTotal'   => 3,
+            'getStart'   => 0,
+            'getPerPage' => 1,
+            'addTotal'   => 2,
+            'getCount'   => 2,
+            'getLinks'   => [],
+        ]);
         $request = Mockery::mock(JsonApiRequestInterface::class, ['getPaginator' => $paginator, 'getIncludes' => []]);
 
-        $this->resources = Mockery::mock(ResultSetInterface::class, ['count' => 0, 'get' => Mockery::mock(Collection::class, ['count' => 0])]);
+        $this->resources = Mockery::mock(ResultSetInterface::class, [
+            'count' => 0,
+            'get'   => Mockery::mock(Collection::class, ['count' => 0]),
+        ]);
         $this->resources->shouldReceive('limit')->andReturnSelf();
         $this->resources->shouldReceive('offset')->andReturnSelf();
 
