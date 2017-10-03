@@ -3,6 +3,7 @@
 namespace MyParcelCom\Transformers;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
 
 abstract class AbstractTransformer
@@ -82,6 +83,19 @@ abstract class AbstractTransformer
         }
 
         return $relationship;
+    }
+
+    /**
+     * @param Collection $collection
+     * @return array
+     */
+    protected function transformCollection(Collection $collection): array
+    {
+        $result = [];
+        foreach ($collection as $model) {
+            $result[] = $this->transformerFactory->createFromModel($model)->transform($model);
+        }
+        return $result;
     }
 
     /**
