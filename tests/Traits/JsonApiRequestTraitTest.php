@@ -3,7 +3,6 @@
 namespace MyParcelCom\Common\Tests\Http;
 
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
-use MyParcelCom\Common\Exceptions\PaginatorException;
 use MyParcelCom\Common\Http\Paginator;
 use MyParcelCom\Common\Traits\JsonApiRequestTrait;
 use PHPUnit\Framework\TestCase;

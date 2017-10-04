@@ -13,6 +13,10 @@ if [ $# -gt 0 ]; then
 
     ./mp/${SCRIPT}.sh "$@"
 
+  elif [ "$1" == "composer" ]; then
+    shift 1
+    ${COMPOSE} ${DO} php composer $@
+
   # run docker container commands
   elif [ "$1" == "php" ]; then
     shift 1
