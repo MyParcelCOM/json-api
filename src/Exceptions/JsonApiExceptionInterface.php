@@ -30,6 +30,11 @@ interface JsonApiExceptionInterface
         'title' => 'Invalid Request Header',
     ];
 
+    const RESOURCE_CANNOT_BE_MODIFIED = [
+        'code'  => '10005',
+        'title' => 'Resource Cannot Be Modified',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
