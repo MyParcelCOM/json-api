@@ -8,12 +8,12 @@ namespace MyParcelCom\Exceptions;
 class ExternalRequestException extends AbstractJsonApiException
 {
     /**
-     * @param int   $status
-     * @param int   $externalStatus
-     * @param array $externalError
-     * @param null  $previous
+     * @param int             $status
+     * @param int             $externalStatus
+     * @param array           $externalError
+     * @param \Throwable|null $previous
      */
-    public function __construct(int $status, int $externalStatus, array $externalError = [], $previous = null)
+    public function __construct(int $status, int $externalStatus, array $externalError = [], \Throwable $previous = null)
     {
         parent::__construct(
             "An error occurred while making a request to an external service. When available, details can be found in the meta of this request. If the problem persists, please contact support.",
