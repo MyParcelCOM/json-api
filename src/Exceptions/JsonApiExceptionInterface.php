@@ -51,6 +51,11 @@ interface JsonApiExceptionInterface
         'title' => 'Carrier API Error',
     ];
 
+    const INVALID_SECRET = [
+        'code'  => '13003',
+        'title' => 'Invalid Secret',
+    ];
+
     // Auth related errors 14000 - 14999
     const AUTH_INVALID_CLIENT = [
         'code'  => '14000',
