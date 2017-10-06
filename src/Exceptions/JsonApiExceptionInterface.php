@@ -35,6 +35,11 @@ interface JsonApiExceptionInterface
         'title' => 'Resource Cannot Be Modified',
     ];
 
+    const INVALID_ERROR_SCHEMA = [
+        'code'  => '10006',
+        'title' => 'Invalid Error Schema',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',

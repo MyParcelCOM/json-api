@@ -82,6 +82,20 @@ abstract class AbstractJsonApiException extends Exception implements JsonApiExce
     }
 
     /**
+     * Add a link to the existing links array.
+     *
+     * @param string $name
+     * @param mixed  $url
+     * @return JsonApiExceptionInterface
+     */
+    public function addLink(string $name, $url): JsonApiExceptionInterface
+    {
+        $this->links[$name] = $url;
+
+        return $this;
+    }
+
+    /**
      * Set the links related to the exception.
      *
      * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
