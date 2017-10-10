@@ -2,7 +2,6 @@
 
 namespace MyParcelCom\Transformers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
 use MyParcelCom\Common\Http\Paginator;
@@ -70,7 +69,7 @@ class TransformerService
     /**
      * Transform the data to JSON Api.
      *
-     * @param Model|Collection[] $data
+     * @param object[]|Collection[] $data
      * @return array
      * @throws TransformerException
      */
@@ -81,10 +80,10 @@ class TransformerService
         foreach ($data as $datum) {
             if ($datum instanceof Collection) {
                 $items[] = $this->transformerFactory->createTransformerCollection($datum);
-            } elseif ($datum instanceof Model) {
+            } elseif (is_object($datum)) {
                 $items[] = $this->transformerFactory->createTransformerItem($datum);
             } else {
-                throw new TransformerException('Cant transform model of type ' . get_class($datum));
+                throw new TransformerException('Cant transform type ' . gettype($datum));
             }
         }
 

@@ -115,7 +115,7 @@ class TransformerResource
 
         $res['data'] = $this->data;
         $res['meta'] = [
-                'total_pages' => $this->paginator->getCount(),
+                'total_pages'   => $this->paginator->getCount(),
                 'total_records' => $this->paginator->getTotal(),
             ] + $this->meta;
 
