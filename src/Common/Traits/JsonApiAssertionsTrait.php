@@ -22,6 +22,7 @@ trait JsonApiAssertionsTrait
     public function assertJsonSchema(string $schemaPath, string $url, array $headers = [], array $body = [], string $method = 'get', int $status = 200)
     {
         $response = $this->json($method, $url, $body, $headers);
+        $response->assertStatus($status);
 
         // Content should adhere to the schema.
         $content = json_decode($response->getContent());
@@ -33,20 +34,21 @@ trait JsonApiAssertionsTrait
         $validator->validate($content, $schema);
 
         $this->assertTrue($validator->isValid(), print_r($validator->getErrors(), true));
-
-        // Response should have correct status.
-        $response->assertStatus($status);
     }
 
     /**
      * @param int    $count
      * @param string $url
      * @param array  $headers
+     * @param int    $status
      * @internal param null|string $accessToken
      */
-    public function assertJsonDataCount(int $count, string $url, array $headers = []): void
+    public function assertJsonDataCount(int $count, string $url, array $headers = [], int $status = 200): void
     {
-        $content = json_decode($this->json('GET', $url, [], $headers)->getContent());
+        $response = $this->json('GET', $url, [], $headers);
+        $response->assertStatus($status);
+
+        $content = json_decode($response->getContent());
 
         $this->assertTrue(property_exists($content, 'data'), 'content has no property "data" for url:' . $url);
         $this->assertCount($count, $content->data, 'data amount is ' . count($content->data) . ' expecting ' . $count . ' for url:' . $url);
