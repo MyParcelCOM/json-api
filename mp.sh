@@ -1,31 +1,25 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
+# init environment variables
+set -o allexport
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COMPOSE="docker-compose"
 DO="run --rm"
+set +o allexport
 
+# run commands
 if [ $# -gt 0 ]; then
-
-  # run subscript when found
-  if [ -f "mp/$1.sh" ]; then
+  if [ -f "mp/$1" ]; then
     SCRIPT="$1"
     shift 1
-
-    ./mp/${SCRIPT}.sh "$@"
-
-  elif [ "$1" == "composer" ]; then
-    shift 1
-    ${COMPOSE} ${DO} php composer $@
-
-  # run docker container commands
-  elif [ "$1" == "php" ]; then
-    shift 1
-
-    ${COMPOSE} ${DO} php "$@"
-
-  # default to docker-compose
+    ./mp/${SCRIPT} "$@"
+  elif [ "$1" == "help" ]; then
+    echo -e "\033[0;30;47m Available commands \033[0m"
+    ls -1 mp
   else
     ${COMPOSE} "$@"
   fi
-
+else
+  ${COMPOSE} ps
 fi

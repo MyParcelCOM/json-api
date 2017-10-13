@@ -5,7 +5,7 @@ services:
     build:
       context: ./docker
       dockerfile: Dockerfile
-    image: myparcel.com/php:v1-dev
+    image: myparcelcom/php:v1-dev
     working_dir: /opt/common
     volumes:
     - .:/opt/common
