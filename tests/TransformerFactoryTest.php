@@ -17,12 +17,10 @@ class TransformerFactoryTest extends TestCase
 {
     /** @var TransformerFactory */
     protected $transformerFactory;
+
     /** @var Model */
     protected $modelMock;
 
-    /**
-     * setup test conditions
-     */
     public function setUp()
     {
         parent::setUp();
@@ -31,43 +29,32 @@ class TransformerFactoryTest extends TestCase
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
     }
 
-    /**
-     * tearDown test conditions
-     */
     public function tearDown()
     {
         parent::tearDown();
         Mockery::close();
     }
 
-    /**
-     * test function CreateFromModel
-     */
+    /** @test */
     public function testCreateFromModel()
     {
         $this->assertInstanceOf(TransformerStub::class, $this->transformerFactory->createFromModel($this->modelMock));
     }
 
-    /**
-     * test function CreateFromModel with Invalid Model
-     */
+    /** @test */
     public function testCreateFromModelWithInvalidModel()
     {
         $this->expectException(TransformerException::class);
         $this->transformerFactory->createFromModel(new \stdClass());
     }
 
-    /**
-     * test function CreateTransformerItem
-     */
+    /** @test */
     public function testCreateTransformerItem()
     {
         $this->assertInstanceOf(TransformerItem::class, $this->transformerFactory->createTransformerItem($this->modelMock));
     }
 
-    /**
-     * test function CreateTransformerCollection
-     */
+    /** @test */
     public function testCreateTransformerCollection()
     {
         $collection = Mockery::mock(Collection::class, ['offsetExists' => false, 'offsetGet' => null]);
