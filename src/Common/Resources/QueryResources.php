@@ -92,4 +92,14 @@ class QueryResources implements ResourcesInterface
 
         return $this->count;
     }
+
+    /**
+     * Returns a copy of the current query builder.
+     *
+     * @return Builder
+     */
+    public function getQuery(): Builder
+    {
+        return clone $this->builder;
+    }
 }
