@@ -6,9 +6,8 @@ use MyParcelCom\Transformers\AbstractTransformer;
 
 class TransformerStub extends AbstractTransformer
 {
-
     /**
-     * @param  mixed $model
+     * @param mixed $model
      * @return string
      */
     public function getId($model): string

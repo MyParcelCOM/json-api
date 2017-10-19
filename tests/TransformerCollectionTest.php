@@ -14,18 +14,19 @@ class TransformerCollectionTest extends TestCase
 {
     /** @var array */
     protected $transformerData;
+
     /** @var array */
     protected $includedResource;
+
     /** @var array */
     protected $includedData;
+
     /** @var TransformerFactory */
     protected $transformerFactory;
+
     /** @var TransformerCollection */
     protected $transformerCollection;
 
-    /**
-     * setup test conditions
-     */
     public function setUp()
     {
         parent::setUp();
@@ -43,9 +44,9 @@ class TransformerCollectionTest extends TestCase
             'createFromModel'       => Mockery::mock(
                 AbstractTransformer::class,
                 [
-                    'getIncluded' => $this->includedData,
+                    'getIncluded'      => $this->includedData,
                     'getRelationships' => $this->transformerData,
-                    'transform' => $this->transformerData,
+                    'transform'        => $this->transformerData,
                 ]
             ),
             'createTransformerItem' => Mockery::mock(TransformerItem::class, ['getData' => $this->includedResource]),
@@ -54,26 +55,19 @@ class TransformerCollectionTest extends TestCase
         $this->transformerCollection = new TransformerCollection($this->transformerFactory, $this->getCollectionMock($this->transformerData));
     }
 
-    /**
-     * tearDown test conditions
-     */
     public function tearDown()
     {
         parent::tearDown();
         Mockery::close();
     }
 
-    /**
-     * test GetData function
-     */
+    /** @test */
     public function testGetData()
     {
         $this->assertEquals([$this->transformerData], $this->transformerCollection->getData());
     }
 
-    /**
-     * test GetIncluded function
-     */
+    /** @test */
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerCollection->getIncluded(['resourceName'], []));
