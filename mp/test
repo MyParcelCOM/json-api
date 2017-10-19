@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-echo -e "\033[0;30;47m Running phpunit $@ \033[0m"
-${COMPOSE} ${DO} php vendor/bin/phpunit "$@"
+[ $# -gt 0 ] && PARAMS=" $@" || PARAMS=""
+echo -e "\033[0;30;47m Running phpunit$PARAMS \033[0m"
+${COMPOSE} run --rm php vendor/bin/phpunit "$@"

@@ -8,8 +8,8 @@ services:
     image: myparcelcom/php:v1-dev
     working_dir: /opt/common
     volumes:
-    - .:/opt/common
-    - composercache:/tmp
+      - .:/opt/common
+      - composercache:/tmp
 
 volumes:
   composercache:
