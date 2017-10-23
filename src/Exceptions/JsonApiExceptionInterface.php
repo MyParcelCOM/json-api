@@ -40,6 +40,11 @@ interface JsonApiExceptionInterface
         'title' => 'Invalid Error Schema',
     ];
 
+    const RESOURCE_CONFLICT = [
+        'code'  => '10007',
+        'title' => 'Resource Conflict',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
