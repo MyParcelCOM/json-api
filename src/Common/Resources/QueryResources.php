@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use MyParcelCom\Common\Contracts\ResourcesInterface;
 
-
 class QueryResources implements ResourcesInterface
 {
     /** @var Builder */
     protected $builder;
+
     /** @var int */
     protected $count;
 
@@ -24,7 +24,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * skip n amount of records
+     * Skip n amount of records.
      *
      * @param  int $offset
      * @return ResourcesInterface
@@ -37,7 +37,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * take n amount of records
+     * Take n amount of records.
      *
      * @param  int $limit
      * @return ResourcesInterface
@@ -50,7 +50,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * get the result set
+     * Get the result set.
      *
      * @return Collection
      */
@@ -60,7 +60,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * get the first or the result set
+     * Get the first or the result set.
      *
      * @return Model|null
      */
@@ -70,7 +70,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * get the ids or the result set
+     * Get the ids or the result set.
      *
      * @return array ids
      */
@@ -80,7 +80,7 @@ class QueryResources implements ResourcesInterface
     }
 
     /**
-     * get the ammount of existing records
+     * Get the amount of existing records.
      *
      * @return int count
      */

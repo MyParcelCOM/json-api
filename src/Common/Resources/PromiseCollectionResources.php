@@ -3,9 +3,9 @@
 namespace MyParcelCom\Common\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use function GuzzleHttp\Promise\unwrap;
 use Illuminate\Support\Collection;
 use MyParcelCom\Common\Contracts\ResourcesInterface;
+use function GuzzleHttp\Promise\unwrap;
 
 class PromiseCollectionResources implements ResourcesInterface
 {

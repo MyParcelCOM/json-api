@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Http;
+namespace MyParcelCom\Common\Tests\Traits;
 
 use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
 use MyParcelCom\Common\Http\Paginator;

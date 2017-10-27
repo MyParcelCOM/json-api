@@ -10,10 +10,13 @@ class PromiseResources implements ResourcesInterface
 {
     /** @var PromiseInterface */
     protected $promise;
+
     /** @var Collection */
     protected $data;
+
     /** @var int */
     protected $offset = 0;
+
     /** @var int */
     protected $limit = 30;
 

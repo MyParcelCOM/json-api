@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use MyParcelCom\Common\Exceptions\RepositoryException;
 use MyParcelCom\Common\Resources\QueryResources;
 
-
 /**
  * Repository generic functions
  */
