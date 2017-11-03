@@ -7,7 +7,7 @@ use JsonSchema\Validator;
 /**
  * This trait can be used to extend the Phpunit assertions inside a Laravel project.
  * The Validator class dependencies should me resolved out of the IoC container.
- * The json schema itself should be resolved out of the IoC container with 'schema.'
+ * The json schema itself should be resolved out of the IoC container with 'schema'.
  */
 trait JsonApiAssertionsTrait
 {
