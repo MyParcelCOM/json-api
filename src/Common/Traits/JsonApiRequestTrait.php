@@ -40,7 +40,6 @@ trait JsonApiRequestTrait
         return explode(',', $this->query('includes', ''));
     }
 
-
     /**
      * Get the sort from the requested url.
      *

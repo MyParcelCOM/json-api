@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use MyParcelCom\Common\Exceptions\RepositoryException;
 use MyParcelCom\Common\Resources\QueryResources;
 
-/**
- * Repository generic functions
- */
 trait RepositoryTrait
 {
     /**
@@ -45,7 +42,7 @@ trait RepositoryTrait
 
         // TODO: when fetching multiple ids, a subset might fail, so we have to compare count(ids) vs count(results)
         if (!$result) {
-            throw new RepositoryException('No ' . $this->model . ' found with Ids: ' . $ids);
+            throw new RepositoryException('No model found with ids ' . implode(', ', $ids));
         }
 
         return new QueryResources($result);
@@ -72,7 +69,18 @@ trait RepositoryTrait
         if (!$this->model) {
             throw new RepositoryException('Error no model set');
         }
+
         return $this->model::query();
     }
 
+    /**
+     * @param Model $model
+     * @return $this
+     */
+    public function delete(Model $model): self
+    {
+        $model->delete();
+
+        return $this;
+    }
 }
