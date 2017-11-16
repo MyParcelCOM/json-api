@@ -74,7 +74,17 @@ interface JsonApiExceptionInterface
 
     const AUTH_INVALID_TOKEN = [
         'code'  => '14002',
-        'title' => 'Access token is invalid',
+        'title' => 'Access Token Is Invalid',
+    ];
+
+    const AUTH_MISSING_TOKEN = [
+        'code'  => '14003',
+        'title' => 'No Access Token Provided',
+    ];
+
+    const AUTH_MISSING_SCOPE = [
+        'code'  => '14004',
+        'title' => 'Access Token Is Invalid',
     ];
 
     const AUTH_SERVER_EXCEPTION = [
