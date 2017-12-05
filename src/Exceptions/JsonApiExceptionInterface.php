@@ -45,6 +45,11 @@ interface JsonApiExceptionInterface
         'title' => 'Resource Conflict',
     ];
 
+    const UNPROCESSABLE_ENTITY = [
+        'code'  => '10008',
+        'title' => 'Unprocessable entity',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
