@@ -5,7 +5,8 @@ namespace MyParcelCom\Exceptions;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * This exception is thrown when a resource cannot be found.
+ * This exception is thrown when the server understands the content type and the syntax of the request entity is correct
+ * but was unable to process the contained instructions.
  */
 class UnprocessableEntityException extends AbstractJsonApiException
 {
