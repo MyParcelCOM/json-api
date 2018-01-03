@@ -140,6 +140,16 @@ abstract class AbstractTransformer
     }
 
     /**
+     * @param string $id
+     * @param mixed $model
+     * @return array
+     */
+    protected function transformRelationshipsForId(string $id, $model): array
+    {
+        return $this->transformRelationship(new $model(['id' => $id]));
+    }
+
+    /**
      * Transform a relationship identifier.
      *
      * @param mixed $model
