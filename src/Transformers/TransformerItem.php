@@ -84,19 +84,19 @@ class TransformerItem
             }
 
             /**
-             * Get the relationship data with key $key from the transformer
+             * Get the relationship data with key from the transformer
              */
             $relationships = $this->transformer->getRelationships($this->resource)[$key]['data'];
 
             /**
-             * If the relationship is not an array of items we put it in an array
+             * If the relationship is not an array we put it in an array
              */
             if(isset($relationships['type'])){
                 $relationships = [$relationships];
             }
 
             /**
-             * We check for all the items if they are not already included else we add them to the list
+             * We check for all the items if they are already included if not we add them to the list
              */
             foreach ($relationships as $relation) {
                 if (!in_array($relation['type'] . '-' . $relation['id'], $valueFilter)) {
