@@ -91,7 +91,7 @@ class TransformerItem
             /**
              * If the relationship is not an array of items we put it in an array
              */
-            if(!is_array($relationships)){
+            if(isset($relationships['type'])){
                 $relationships = [$relationships];
             }
 
