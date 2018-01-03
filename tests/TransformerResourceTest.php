@@ -66,7 +66,7 @@ class TransformerResourceTest extends TestCase
     {
         $expectedResult = [
             'data'     => [$this->data],
-            'includes' => $this->included,
+            'included' => $this->included,
         ];
 
         $this->transformerResource->setPaginator($this->paginator);
@@ -106,7 +106,7 @@ class TransformerResourceTest extends TestCase
         $expectedResult = [
             'data'     => [$this->data],
             'meta'     => ['total_pages' => 0],
-            'includes' => $this->included,
+            'included' => $this->included,
         ];
 
         $this->expectException(TransformerException::class);

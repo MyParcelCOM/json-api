@@ -83,7 +83,13 @@ class TransformerItem
                 continue;
             }
 
-            $relationships = $this->transformer->getRelationships($this->resource)[$key]['data'];
+            $relationship = $this->transformer->getRelationships($this->resource)[$key];
+
+            if(isset($relationship['data'])){
+                $relationships = $this->transformer->getRelationships($this->resource)[$key]['data'];
+            }else{
+                $relationships = $relationship;
+            }
 
             if (isset($relationships['type'])) {
                 $relationships = [$relationships];

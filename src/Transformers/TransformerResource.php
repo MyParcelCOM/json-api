@@ -120,7 +120,7 @@ class TransformerResource
             ] + $this->meta;
 
         if ($this->includes) {
-            $res['includes'] = array_unique($this->includes, SORT_REGULAR); // remove duplicates
+            $res['included'] = array_unique($this->includes, SORT_REGULAR); // remove duplicates
         }
 
         $links = $this->paginator->getLinks();
@@ -146,7 +146,7 @@ class TransformerResource
         }
 
         if ($this->includes) {
-            $res['includes'] = $this->includes;
+            $res['included'] = $this->includes;
         }
 
         return $res;
