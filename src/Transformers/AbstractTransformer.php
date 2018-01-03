@@ -68,7 +68,7 @@ abstract class AbstractTransformer
      * @param bool  $withLinks
      * @return array transformed relationships
      */
-    protected function transformRelationship($model, $withLinks = false): array
+    protected function transformRelationship($model, $withLinks = true): array
     {
         $transformer = $this->transformerFactory->createFromModel($model);
         $relationship = $transformer->transformIdentifier($model);
@@ -95,6 +95,7 @@ abstract class AbstractTransformer
         foreach ($collection as $model) {
             $result[] = $this->transformerFactory->createFromModel($model)->transform($model);
         }
+
         return $result;
     }
 
@@ -127,13 +128,14 @@ abstract class AbstractTransformer
     /**
      * @param array $ids
      * @param mixed $model
+     * @param bool  $withLinks
      * @return array
      */
-    protected function transformRelationshipsForIds(array $ids, $model): array
+    protected function transformRelationshipsForIds(array $ids, $model, $withLinks = false): array
     {
         return array_map(
-            function ($id) use ($model) {
-                return $this->transformRelationship(new $model(['id' => $id]));
+            function ($id) use ($model, $withLinks) {
+                return $this->transformRelationshipsForId($id, $model, $withLinks);
             },
             $ids
         );
@@ -141,12 +143,13 @@ abstract class AbstractTransformer
 
     /**
      * @param string $id
-     * @param mixed $model
+     * @param mixed  $model
+     * @param bool   $withLinks
      * @return array
      */
-    protected function transformRelationshipsForId(string $id, $model): array
+    protected function transformRelationshipsForId(string $id, $model, $withLinks = true): array
     {
-        return $this->transformRelationship(new $model(['id' => $id]));
+        return $this->transformRelationship(new $model(['id' => $id]), $withLinks);
     }
 
     /**
