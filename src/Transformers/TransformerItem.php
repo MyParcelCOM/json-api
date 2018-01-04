@@ -89,7 +89,7 @@ class TransformerItem
             $relationships = $this->transformer->getRelationships($this->resource)[$key]['data'];
 
             /**
-             * If the relationship is not an array we put it in an array
+             * If $relationships is a single item instead of an array of items, we put it in an array.
              */
             if(isset($relationships['type'])){
                 $relationships = [$relationships];
