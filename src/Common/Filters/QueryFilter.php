@@ -2,8 +2,8 @@
 
 namespace MyParcelCom\Common\Filters;
 
-use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\Expression;
 use MyParcelCom\Common\Contracts\FilterInterface;
 
 class QueryFilter implements FilterInterface
@@ -110,7 +110,7 @@ class QueryFilter implements FilterInterface
             array_walk($values, function ($v) use ($columns, $query, $operator) {
                 array_walk($columns, function ($columnName) use ($query, $operator, $v) {
                     $query->orWhere(
-                        Connection::raw('lower(' . $columnName . ')'),
+                        new Expression('lower(' . $columnName . ')'),
                         $operator,
                         $v
                     );
