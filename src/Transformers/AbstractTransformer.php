@@ -65,24 +65,23 @@ abstract class AbstractTransformer
      * Transform the model relationships to JSON Api output.
      *
      * @param mixed $model
-     * @param bool  $withLinks
+     * @param bool  $inDataTag
      * @return array transformed relationships
      */
-    protected function transformRelationship($model, $withLinks = false): array
+    protected function transformRelationship($model, $inDataTag = true): array
     {
         $transformer = $this->transformerFactory->createFromModel($model);
         $relationship = $transformer->transformIdentifier($model);
+        $link = $transformer->getLink($model);
+        $transformed = $inDataTag ? ['data' => $relationship] : $relationship;
 
-        if ($withLinks) {
-            $relationship = [
-                'links' => [
-                    'related' => $transformer->getLink($model),
-                ],
-                'data'  => $relationship,
+        if ($inDataTag && $link && $link !== '') {
+            $transformed['links'] = [
+                'related' => $link,
             ];
         }
 
-        return $relationship;
+        return $transformed;
     }
 
     /**
@@ -95,6 +94,7 @@ abstract class AbstractTransformer
         foreach ($collection as $model) {
             $result[] = $this->transformerFactory->createFromModel($model)->transform($model);
         }
+
         return $result;
     }
 
@@ -125,18 +125,37 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param array $ids
-     * @param mixed $model
+     * @param array  $ids
+     * @param string $class
+     * @param string $relatedLink
      * @return array
      */
-    protected function transformRelationshipsForIds(array $ids, $model): array
+    protected function transformRelationshipForIds(array $ids, string $class, $relatedLink = null): array
     {
-        return array_map(
-            function ($id) use ($model) {
-                return $this->transformRelationship(new $model(['id' => $id]));
-            },
-            $ids
-        );
+        $relation = [
+            'data' => array_map(
+                function ($id) use ($class) {
+                    return $this->transformRelationshipForId($id, $class, false);
+                },
+                $ids
+            ),
+        ];
+        if ($relatedLink) {
+            $relation['links'] = ['related' => $relatedLink];
+        }
+
+        return $relation;
+    }
+
+    /**
+     * @param string $id
+     * @param string $class
+     * @param bool   $inDataTag
+     * @return array
+     */
+    protected function transformRelationshipForId(string $id, string $class, $inDataTag = true): array
+    {
+        return $this->transformRelationship(new $class(['id' => $id]), $inDataTag);
     }
 
     /**
