@@ -2,6 +2,7 @@
 
 namespace MyParcelCom\Common\Filters;
 
+use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use MyParcelCom\Common\Contracts\FilterInterface;
 
@@ -22,38 +23,28 @@ class QueryFilter implements FilterInterface
      * Applies a filter to the current query. Filters given column on given
      * value using given operator.
      *
-     * @param string $column
-     * @param string $operator
-     * @param mixed  $value
+     * @param string|string[] $column
+     * @param string          $operator
+     * @param mixed           $value
      * @return Builder
      */
-    public function apply(string $column, string $operator, $value): Builder
+    public function apply($column, string $operator, $value): Builder
     {
-        [$operator, $value] = $this->prepareOperatorAndValue($operator, $value);
+        [$operator, $values, $columns] = $this->prepareOperatorValueAndColumn($operator, $value, $column);
 
-        if ($value === null) {
-            if ($this->isNegation($operator)) {
-                return $this->query->whereNotNull($column);
-            }
-
-            return $this->query->whereNull($column);
+        if ($values === null) {
+            return $this->filterNullValue($columns, $operator);
         }
 
         if (strpos($operator, 'like') !== false) {
-            return $this->query->where(function (Builder $query) use ($column, $value, $operator) {
-                array_walk($value, function ($v) use ($column, $query, $operator) {
-                    $query->where($column, $operator, $v, 'OR');
-                });
-            });
+            return $this->filterUsingLikeOperator($columns, $operator, $values);
         }
 
-        if (is_array($value)) {
-            $where = 'where' . ($this->isNegation($operator) ? 'Not' : '') . 'In';
-
-            return $this->query->$where($column, $value);
+        if (is_array($values)) {
+            return $this->filterValuesArray($columns, $operator, $values);
         }
 
-        return $this->query->where($column, $operator, $value);
+        return $this->filterQuery($columns, $operator, $values);
     }
 
     /**
@@ -68,13 +59,14 @@ class QueryFilter implements FilterInterface
     }
 
     /**
-     * Normalize the given operator and value.
+     * Normalize the given operator, value and column.
      *
-     * @param string $operator
-     * @param mixed  $value
+     * @param string          $operator
+     * @param mixed           $value
+     * @param string|string[] $column
      * @return array
      */
-    private function prepareOperatorAndValue(string $operator, $value)
+    private function prepareOperatorValueAndColumn(string $operator, $value, $column)
     {
         $operator = strtolower($operator);
 
@@ -82,8 +74,12 @@ class QueryFilter implements FilterInterface
             $value = reset($value);
         }
 
+        if (!is_array($column)) {
+            $column = [$column];
+        }
+
         if ($value === null) {
-            return [$operator, $value];
+            return [$operator, $value, $column];
         }
 
         if (strpos($operator, 'like') !== false) {
@@ -92,10 +88,92 @@ class QueryFilter implements FilterInterface
             }
 
             $value = array_map(function ($v) {
-                return '%' . $v . '%';
+                return '%' . strtolower($v) . '%';
             }, $value);
         }
 
-        return [$operator, $value];
+        return [$operator, $value, $column];
+    }
+
+    /**
+     * Iterate over the values array and search for
+     * the values in each column using the like operator.
+     *
+     * @param array  $columns
+     * @param string $operator
+     * @param array  $values
+     * @return Builder
+     */
+    private function filterUsingLikeOperator(array $columns, string $operator, array $values): Builder
+    {
+        return $this->query->where(function (Builder $query) use ($columns, $values, $operator) {
+            array_walk($values, function ($v) use ($columns, $query, $operator) {
+                array_walk($columns, function ($columnName) use ($query, $operator, $v) {
+                    $query->orWhere(
+                        Connection::raw('lower(' . $columnName . ')'),
+                        $operator,
+                        $v
+                    );
+                });
+            });
+        });
+    }
+
+    /**
+     * Filter for value is or is not null.
+     *
+     * @param array  $columns
+     * @param string $operator
+     * @return Builder
+     */
+    private function filterNullValue(array $columns, string $operator): Builder
+    {
+        return $this->query->where(function (Builder $query) use ($columns, $operator) {
+            array_walk($columns, function ($columnName) use ($query, $operator) {
+                if ($this->isNegation($operator)) {
+                    $query->orWhereNotNull($columnName);
+
+                    return;
+                }
+
+                $query->orWhereNull($columnName);
+            });
+        });
+    }
+
+    /**
+     * Filter for when values is an array.
+     *
+     * @param array  $columns
+     * @param string $operator
+     * @param array  $values
+     * @return Builder
+     */
+    private function filterValuesArray(array $columns, string $operator, array $values): Builder
+    {
+        return $this->query->where(function (Builder $query) use ($columns, $operator, $values) {
+            $where = 'orWhere' . ($this->isNegation($operator) ? 'Not' : '') . 'In';
+
+            array_walk($columns, function ($columnName) use ($query, $operator, $values, $where) {
+                $query->$where($columnName, $values);
+            });
+        });
+    }
+
+    /**
+     * Filter the query for the given values in the given columns.
+     *
+     * @param array  $columns
+     * @param string $operator
+     * @param string $values
+     * @return Builder
+     */
+    public function filterQuery(array $columns, string $operator, string $values):Builder
+    {
+        return $this->query->where(function (Builder $query) use ($columns, $operator, $values) {
+            array_walk($columns, function ($columnName) use ($query, $operator, $values) {
+                $query->orWhere($columnName, $operator, $values);
+            });
+        });
     }
 }

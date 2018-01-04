@@ -2,13 +2,34 @@
 
 namespace MyParcelCom\Common\Tests\Filters;
 
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
+use Illuminate\Database\Query\Processors\PostgresProcessor;
 use Mockery;
 use MyParcelCom\Common\Filters\QueryFilter;
 use PHPUnit\Framework\TestCase;
 
 class QueryFilterTest extends TestCase
 {
+    /** @var QueryFilter */
+    private $queryFilter;
+
+    /** @var Builder */
+    private $query;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $connection = Mockery::mock(ConnectionInterface::class, [
+            'getQueryGrammar'  => new PostgresGrammar(),
+            'getPostProcessor' => new PostgresProcessor(),
+        ]);
+        $this->query = new Builder($connection);
+        $this->queryFilter = new QueryFilter($this->query);
+    }
+
     protected function tearDown()
     {
         parent::tearDown();
@@ -17,260 +38,80 @@ class QueryFilterTest extends TestCase
     }
 
     /** @test */
-    public function testEquals()
+    public function testApplyWhereValueIsNull()
     {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('=', $operator);
-            $this->assertEquals('some_value', $value);
-            $this->assertEquals('and', strtolower($boolean));
+        $this->queryFilter->apply(['column_a', 'column_b'], '!=', null);
+        $this->queryFilter->apply('column_c', 'nOt', null); // Also tests capitalized operator.
 
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '=', 'some_value');
-    }
-
-    /** @test */
-    public function testEqualsArray()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereIn')->andReturnUsing(function ($column, $values, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals(['some_value', 'another_value', 'value_c'], $values);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(false, $not);
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '=', ['some_value', 'another_value', 'value_c']);
-    }
-
-    /** @test */
-    public function testEqualsNull()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereNull')->andReturnUsing(function ($column, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(false, $not);
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '=', null);
-    }
-
-    /** @test */
-    public function testLike()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query) {
-            if (is_callable($column)) {
-                $column($query);
-            } else {
-                $this->assertEquals('column_a', $column);
-                $this->assertEquals('like', $operator);
-                $this->assertEquals('%some_value%', $value);
-                $this->assertEquals('or', strtolower($boolean));
-            }
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', 'like', 'some_value');
-    }
-
-    /** @test */
-    public function testLikeArray()
-    {
-        $query = Mockery::mock(Builder::class);
-        $expectedValues = ['%some_value%', '%another_value%', '%value_c%'];
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query, &$expectedValues) {
-            if (is_callable($column)) {
-                $column($query);
-            } else {
-                $this->assertEquals('column_a', $column);
-                $this->assertEquals('like', $operator);
-                $this->assertArraySubset([$value], $expectedValues);
-                $this->assertEquals('or', strtolower($boolean));
-
-                $expectedValues = array_values(array_diff($expectedValues, [$value]));
-            }
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', 'like', ['some_value', 'another_value', 'value_c']);
-        $this->assertEmpty(
-            $expectedValues,
-            'Not all expected values have been added to the query'
+        $this->assertEquals(
+            'select * where ("column_a" is not null or "column_b" is not null) and ("column_c" is not null)',
+            $this->query->toSql()
         );
     }
 
     /** @test */
-    public function testLikeNull()
+    public function testApplyWhereOperatorIsLike()
     {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereNull')->andReturnUsing(function ($column, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(false, $not);
+        $this->queryFilter->apply(['column_a', 'column_b'], 'LiKe', 'value_a');
+        $this->queryFilter->apply('column_c', 'like', ['value_a', 'value_b']);
+        $this->queryFilter->apply(['column_d', 'column_e'], 'LIKE', ['value_c', 'value_d']);
 
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', 'like', null);
-    }
-
-    /** @test */
-    public function testNotEquals()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('!=', $operator);
-            $this->assertEquals('some_value', $value);
-            $this->assertEquals('and', strtolower($boolean));
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '!=', 'some_value');
-    }
-
-    /** @test */
-    public function testNotEqualsArray()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereIn')->andReturnUsing(function ($column, $values, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals(['some_value', 'another_value', 'value_c'], $values);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(true, $not);
-
-            return $query;
-        })->shouldReceive('whereNotIn')->andReturnUsing(function ($column, $values, $boolean = 'and') use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals(['some_value', 'another_value', 'value_c'], $values);
-            $this->assertEquals('and', strtolower($boolean));
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '!=', ['some_value', 'another_value', 'value_c']);
-    }
-
-    /** @test */
-    public function testNotEqualsNull()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereNull')->andReturnUsing(function ($column, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(true, $not);
-
-            return $query;
-        })->shouldReceive('whereNotNull')->andReturnUsing(function ($column, $boolean = 'and') use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', '!=', null);
-    }
-
-    /** @test */
-    public function testNotLike()
-    {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query) {
-            if (is_callable($column)) {
-                $column($query);
-            } else {
-                $this->assertEquals('column_a', $column);
-                $this->assertEquals('not like', $operator);
-                $this->assertEquals('%some_value%', $value);
-                $this->assertEquals('or', strtolower($boolean));
-            }
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', 'not like', 'some_value');
-    }
-
-    /** @test */
-    public function testNotLikeArray()
-    {
-        $query = Mockery::mock(Builder::class);
-        $expectedValues = ['%some_value%', '%another_value%', '%value_c%'];
-        $query->shouldReceive('where')->andReturnUsing(function ($column, $operator = null, $value = null, $boolean = 'and') use ($query, &$expectedValues) {
-            if (is_callable($column)) {
-                $column($query);
-            } else {
-                $this->assertEquals('column_a', $column);
-                $this->assertEquals('not like', $operator);
-                $this->assertArraySubset([$value], $expectedValues);
-                $this->assertEquals('or', strtolower($boolean));
-
-                $expectedValues = array_values(array_diff($expectedValues, [$value]));
-            }
-
-            return $query;
-        });
-
-        $filter = new QueryFilter($query);
-
-        $filter->apply('column_a', 'not like', ['some_value', 'another_value', 'value_c']);
-        $this->assertEmpty(
-            $expectedValues,
-            'Not all expected values have been added to the query'
+        $this->assertEquals(
+            'select * where (lower(column_a) like ? or lower(column_b) like ?) and (lower(column_c) like ? or lower(column_c) like ?) and (lower(column_d) like ? or lower(column_e) like ? or lower(column_d) like ? or lower(column_e) like ?)',
+            $this->query->toSql()
         );
+
+        $this->assertEquals([
+            '%value_a%',
+            '%value_a%',
+            '%value_a%',
+            '%value_b%',
+            '%value_c%',
+            '%value_c%',
+            '%value_d%',
+            '%value_d%',
+        ], $this->query->getBindings());
     }
 
     /** @test */
-    public function testNotLikeNull()
+    public function testApplyWhereValuesIsArray()
     {
-        $query = Mockery::mock(Builder::class);
-        $query->shouldReceive('whereNull')->andReturnUsing(function ($column, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
-            $this->assertEquals(false, $not);
+        $this->queryFilter->apply('column_a', '=', ['value_a', 'value_b']);
+        $this->queryFilter->apply(['column_b', 'column_c'], '!=', ['value_c', 'value_d']);
+        $this->queryFilter->apply('column_d', 'noT', ['value_e', 'value_f']);
 
-            return $query;
-        })->shouldReceive('whereNotNull')->andReturnUsing(function ($column, $boolean = 'and', $not = false) use ($query) {
-            $this->assertEquals('column_a', $column);
-            $this->assertEquals('and', strtolower($boolean));
+        $this->assertEquals(
+            'select * where ("column_a" in (?, ?)) and ("column_b" not in (?, ?) or "column_c" not in (?, ?)) and ("column_d" not in (?, ?))',
+            $this->query->toSql()
+        );
 
-            return $query;
-        });
+        $this->assertEquals([
+            'value_a',
+            'value_b',
+            'value_c',
+            'value_d',
+            'value_c',
+            'value_d',
+            'value_e',
+            'value_f',
+        ], $this->query->getBindings());
+    }
 
-        $filter = new QueryFilter($query);
+    /** @test */
+    public function testFilterQuery()
+    {
+        $this->queryFilter->apply('column_a', '>', '25');
+        $this->queryFilter->apply(['column_b', 'column_c'], '=', 'value_a');
 
-        $filter->apply('column_a', 'not like', null);
+        $this->assertEquals(
+            'select * where ("column_a" > ?) and ("column_b" = ? or "column_c" = ?)',
+            $this->query->toSql()
+        );
+
+        $this->assertEquals([
+            '25',
+            'value_a',
+            'value_a',
+        ], $this->query->getBindings());
     }
 }
