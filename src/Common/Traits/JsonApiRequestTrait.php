@@ -37,7 +37,7 @@ trait JsonApiRequestTrait
      */
     public function getIncludes(): array
     {
-        return explode(',', $this->query('includes', ''));
+        return explode(',', $this->query('include', ''));
     }
 
     /**

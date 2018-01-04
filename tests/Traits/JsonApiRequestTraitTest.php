@@ -24,11 +24,11 @@ class JsonApiRequestTraitTest extends TestCase
         $this->assertEquals(
             $paginator->getLinks(),
             [
-                'self'  => 'https://some.url.com/resource?page[size]=5&page[number]=3&includes=all,the,things',
-                'next'  => 'https://some.url.com/resource?page[size]=5&page[number]=4&includes=all,the,things',
-                'prev'  => 'https://some.url.com/resource?page[size]=5&page[number]=2&includes=all,the,things',
-                'last'  => 'https://some.url.com/resource?page[size]=5&page[number]=5&includes=all,the,things',
-                'first' => 'https://some.url.com/resource?page[size]=5&page[number]=1&includes=all,the,things',
+                'self'  => 'https://some.url.com/resource?page[size]=5&page[number]=3&include=all,the,things',
+                'next'  => 'https://some.url.com/resource?page[size]=5&page[number]=4&include=all,the,things',
+                'prev'  => 'https://some.url.com/resource?page[size]=5&page[number]=2&include=all,the,things',
+                'last'  => 'https://some.url.com/resource?page[size]=5&page[number]=5&include=all,the,things',
+                'first' => 'https://some.url.com/resource?page[size]=5&page[number]=1&include=all,the,things',
             ]
         );
     }
@@ -82,7 +82,7 @@ class JsonApiRequestTraitTest extends TestCase
             use JsonApiRequestTrait;
 
             private $data = [
-                'includes' => 'all,the,things',
+                'include' => 'all,the,things',
                 'page'     => [
                     'number' => 3,
                     'size'   => 5,
@@ -105,7 +105,7 @@ class JsonApiRequestTraitTest extends TestCase
              */
             public function fullUrl()
             {
-                return 'https://some.url.com/resource?page[size]=5&page[number]=3&includes=all,the,things';
+                return 'https://some.url.com/resource?page[size]=5&page[number]=3&include=all,the,things';
             }
         };
     }
