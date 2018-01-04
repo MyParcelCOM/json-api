@@ -59,7 +59,7 @@ class QueryFilter implements FilterInterface
     }
 
     /**
-     * Normalize the given operator value and column.
+     * Normalize the given operator, value and column.
      *
      * @param string          $operator
      * @param mixed           $value
@@ -155,7 +155,6 @@ class QueryFilter implements FilterInterface
             $where = 'orWhere' . ($this->isNegation($operator) ? 'Not' : '') . 'In';
 
             array_walk($columns, function ($columnName) use ($query, $operator, $values, $where) {
-
                 $query->$where($columnName, $values);
             });
         });

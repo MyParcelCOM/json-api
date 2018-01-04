@@ -112,6 +112,6 @@ class QueryFilterTest extends TestCase
             '25',
             'value_a',
             'value_a',
-            ], $this->query->getBindings());
+        ], $this->query->getBindings());
     }
 }
