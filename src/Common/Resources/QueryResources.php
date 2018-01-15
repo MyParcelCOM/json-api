@@ -15,6 +15,9 @@ class QueryResources implements ResourcesInterface
     /** @var int */
     protected $count;
 
+    /** @var callable[] */
+    protected $eachCallbacks = [];
+
     /**
      * @param Builder $builder the root query
      */
@@ -56,7 +59,13 @@ class QueryResources implements ResourcesInterface
      */
     public function get(): Collection
     {
-        return $this->builder->get(['*']);
+        $collection = $this->builder->get(['*']);
+
+        array_walk($this->eachCallbacks, function (callable $callback) use ($collection) {
+            $collection->each($callback);
+        });
+
+        return $collection;
     }
 
     /**
@@ -101,5 +110,21 @@ class QueryResources implements ResourcesInterface
     public function getQuery(): Builder
     {
         return clone $this->builder;
+    }
+
+    /**
+     * Apply given callback to each item in the collection.
+     *
+     * @note For performance purposes, these callbacks will be executed when
+     *       `get()` is called.
+     *
+     * @param callable $callback
+     * @return QueryResources
+     */
+    public function each(callable $callback): self
+    {
+        $this->eachCallbacks[] = $callback;
+
+        return $this;
     }
 }
