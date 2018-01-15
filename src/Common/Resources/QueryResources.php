@@ -16,7 +16,7 @@ class QueryResources implements ResourcesInterface
     protected $count;
 
     /** @var callable[] */
-    protected $eachCallacks = [];
+    protected $eachCallbacks = [];
 
     /**
      * @param Builder $builder the root query
@@ -61,7 +61,7 @@ class QueryResources implements ResourcesInterface
     {
         $collection = $this->builder->get(['*']);
 
-        array_walk($this->eachCallacks, function (callable $callback) use ($collection) {
+        array_walk($this->eachCallbacks, function (callable $callback) use ($collection) {
             $collection->each($callback);
         });
 
@@ -123,7 +123,7 @@ class QueryResources implements ResourcesInterface
      */
     public function each(callable $callback): self
     {
-        $this->eachCallacks[] = $callback;
+        $this->eachCallbacks[] = $callback;
 
         return $this;
     }
