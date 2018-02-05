@@ -12,10 +12,20 @@ abstract class AbstractTransformer
     protected $transformerFactory;
     protected $type;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, TransformerFactory $transformerFactory)
+    public function __construct(TransformerFactory $transformerFactory)
+    {
+        $this->transformerFactory = $transformerFactory;
+    }
+
+    /**
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return $this
+     */
+    public function setUrlGenerator(UrlGeneratorInterface $urlGenerator): self
     {
         $this->urlGenerator = $urlGenerator;
-        $this->transformerFactory = $transformerFactory;
+
+        return $this;
     }
 
     /**

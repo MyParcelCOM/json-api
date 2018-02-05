@@ -8,14 +8,10 @@ use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
 
 class TransformerFactory
 {
-    /** @var UrlGeneratorInterface */
-    protected $urlGenerator;
+    /** @var array */
+    protected $dependencies = [];
 
-    /**
-     * The transformers associated with the models.
-     *
-     * @var array
-     */
+    /** @var array */
     protected $transformerMap = [];
 
     /**
@@ -26,20 +22,32 @@ class TransformerFactory
     private $transformers = [];
 
     /**
-     * @param UrlGeneratorInterface $urlGenerator
-     */
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
-        $this->urlGenerator = $urlGenerator;
-    }
-
-    /**
      * @param array $mapping
      * @return $this
      */
     public function setMapping(array $mapping): self
     {
         $this->transformerMap = $mapping;
+
+        return $this;
+    }
+
+    /**
+     * @example
+     *  [
+     *      AbstractTransformer::class => [
+     *          'setUrlGenerator' => function () {
+     *              return new UrlGenerator();
+     *          },
+     *      ],
+     *  ]
+     *
+     * @param array $dependencies
+     * @return $this
+     */
+    public function setDependencies(array $dependencies): self
+    {
+        $this->dependencies = $dependencies;
 
         return $this;
     }
@@ -61,11 +69,30 @@ class TransformerFactory
 
         foreach ($this->transformerMap as $class => $transformer) {
             if ($model instanceof $class) {
-                return $this->transformers[$modelClass] = new $transformer($this->urlGenerator, $this);
+                return $this->transformers[$modelClass] = $this->injectDependencies(new $transformer($this));
             }
         }
 
         throw new TransformerException('No transformer found for class ' . get_class($model));
+    }
+
+    /**
+     * @param AbstractTransformer $transformer
+     * @return AbstractTransformer
+     */
+    protected function injectDependencies(AbstractTransformer $transformer): AbstractTransformer
+    {
+        array_walk($this->dependencies, function ($dependencies, $class) use ($transformer) {
+            if (!$transformer instanceof $class) {
+                return;
+            }
+
+            array_walk($dependencies, function ($callable, $setter) use ($transformer) {
+                $transformer->$setter(call_user_func($callable));
+            });
+        });
+
+        return $transformer;
     }
 
     /**
