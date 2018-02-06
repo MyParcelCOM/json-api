@@ -7,6 +7,8 @@
     "guzzlehttp/promises": "^1.0",
     "illuminate/database": "~5.0",
     "illuminate/support": "~5.0",
+    "intouch/newrelic": "^1.0.3",
+    "laravel/framework": "~5.4",
     "php": ">=7.1",
     "justinrainbow/json-schema": "^5.2"
   },
