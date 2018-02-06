@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers\Tests\Stubs;
+namespace MyParcelCom\JsonApi\Tests\Stubs;
 
-use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
-use MyParcelCom\Transformers\AbstractTransformer;
+use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
 class TransformerStub extends AbstractTransformer
 {

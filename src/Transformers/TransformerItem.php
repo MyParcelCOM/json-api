@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Support\Collection;
 
@@ -91,7 +91,7 @@ class TransformerItem
             /**
              * If $relationships is a single item instead of an array of items, we put it in an array.
              */
-            if(isset($relationships['type'])){
+            if (isset($relationships['type'])) {
                 $relationships = [$relationships];
             }
 

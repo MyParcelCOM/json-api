@@ -4,7 +4,7 @@ namespace MyParcelCom\JsonApi\Http\Traits;
 
 use MyParcelCom\JsonApi\Http\Paginator;
 
-trait JsonApiRequestTrait
+trait RequestTrait
 {
     /**
      * Get the pagination from the current url.

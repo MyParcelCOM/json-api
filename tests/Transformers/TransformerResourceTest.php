@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers\Tests;
+namespace MyParcelCom\JsonApi\Transformers\Tests;
 
 use Mockery;
-use MyParcelCom\Common\Http\Paginator;
-use MyParcelCom\Transformers\TransformerException;
-use MyParcelCom\Transformers\TransformerItem;
-use MyParcelCom\Transformers\TransformerResource;
+use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Transformers\TransformerException;
+use MyParcelCom\JsonApi\Transformers\TransformerItem;
+use MyParcelCom\JsonApi\Transformers\TransformerResource;
 use PHPUnit\Framework\TestCase;
 
 class TransformerResourceTest extends TestCase

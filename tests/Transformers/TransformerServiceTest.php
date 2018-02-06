@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers\Tests;
+namespace MyParcelCom\JsonApi\Transformers\Tests;
 
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
-use MyParcelCom\Common\Contracts\ResultSetInterface;
-use MyParcelCom\Common\Http\Paginator;
-use MyParcelCom\Transformers\TransformerCollection;
-use MyParcelCom\Transformers\TransformerFactory;
-use MyParcelCom\Transformers\TransformerItem;
-use MyParcelCom\Transformers\TransformerService;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
+use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Interfaces\ResultSetInterface;
+use MyParcelCom\JsonApi\Transformers\TransformerCollection;
+use MyParcelCom\JsonApi\Transformers\TransformerFactory;
+use MyParcelCom\JsonApi\Transformers\TransformerItem;
+use MyParcelCom\JsonApi\Transformers\TransformerService;
 use PHPUnit\Framework\TestCase;
 
 class TransformerServiceTest extends TestCase
@@ -33,7 +33,7 @@ class TransformerServiceTest extends TestCase
             'getCount'   => 2,
             'getLinks'   => [],
         ]);
-        $request = Mockery::mock(JsonApiRequestInterface::class, [
+        $request = Mockery::mock(RequestInterface::class, [
             'getPaginator' => $paginator,
             'getIncludes'  => [],
         ]);

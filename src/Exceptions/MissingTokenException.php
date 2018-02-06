@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
-class MissingTokenException extends AbstractJsonApiException
+class MissingTokenException extends AbstractException
 {
     public function __construct(\Throwable $previous = null)
     {
         parent::__construct(
             'No access token was provided for the request. Please add this to the \'Authorization: Bearer\' header.',
-            JsonApiExceptionInterface::AUTH_MISSING_TOKEN,
+            self::AUTH_MISSING_TOKEN,
             401,
             $previous
         );

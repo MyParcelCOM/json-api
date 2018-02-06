@@ -108,7 +108,7 @@ interface ExceptionInterface
      * Set the id for this occurrence of the exception.
      *
      * @param  string $id
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setId(string $id): self;
 
@@ -123,7 +123,7 @@ interface ExceptionInterface
      * Set the links related to the exception.
      *
      * @param  array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setLinks(array $links): self;
 
@@ -138,7 +138,7 @@ interface ExceptionInterface
      * Set the http status code for the request.
      *
      * @param  string $status
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setStatus(string $status): self;
 
@@ -154,7 +154,7 @@ interface ExceptionInterface
      * This should be retrieved from one of the defined constants.
      *
      * @param  string $errorCode
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setErrorCode(string $errorCode): self;
 
@@ -170,7 +170,7 @@ interface ExceptionInterface
      * This should be retrieved from one of the defined constants.
      *
      * @param  string $title
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setTitle(string $title): self;
 
@@ -185,7 +185,7 @@ interface ExceptionInterface
      * Set the detailed message for the server.
      *
      * @param  string $detail
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setDetail(string $detail): self;
 
@@ -200,7 +200,7 @@ interface ExceptionInterface
      * Set an array containing references to the source of the error.
      *
      * @param  array $source
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setSource(array $source): self;
 
@@ -215,7 +215,7 @@ interface ExceptionInterface
      * Set meta object containing non-standard meta-information about the error.
      *
      * @param  array $meta
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
     public function setMeta(array $meta): self;
 }

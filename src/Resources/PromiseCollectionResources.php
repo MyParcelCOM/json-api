@@ -1,20 +1,23 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Resources;
+namespace MyParcelCom\JsonApi\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\ResourcesInterface;
+use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 use function GuzzleHttp\Promise\unwrap;
 
 class PromiseCollectionResources implements ResourcesInterface
 {
     /** @var PromiseInterface[] */
     protected $promises = [];
+
     /** @var array */
     protected $data;
+
     /** @var int */
     protected $limit;
+
     /** @var int */
     protected $offset;
 

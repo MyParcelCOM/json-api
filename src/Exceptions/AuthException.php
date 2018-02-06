@@ -1,15 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 /**
  * This exception is a replacement for the OAuthServerException used by the League package.
  */
-class AuthException extends AbstractJsonApiException
+class AuthException extends AbstractException
 {
     /**
-     * GenericOAuthException constructor.
-     *
      * @param string          $detail
      * @param int             $status
      * @param \Throwable|null $previous
@@ -18,7 +16,7 @@ class AuthException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::AUTH_SERVER_EXCEPTION,
+            self::AUTH_SERVER_EXCEPTION,
             $status,
             $previous
         );

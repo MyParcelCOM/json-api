@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class ResourceCannotBeModifiedException extends AbstractJsonApiException
+class ResourceCannotBeModifiedException extends AbstractException
 {
     public function __construct(string $message, \Throwable $previous = null)
     {
         parent::__construct(
             $message,
-            JsonApiExceptionInterface::RESOURCE_CANNOT_BE_MODIFIED,
+            self::RESOURCE_CANNOT_BE_MODIFIED,
             Response::HTTP_LOCKED,
             $previous
         );

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 /**
  * Thrown when a requests to an external service fails.
  */
-class ExternalRequestException extends AbstractJsonApiException
+class ExternalRequestException extends AbstractException
 {
     /**
      * @param int             $status
@@ -17,7 +17,7 @@ class ExternalRequestException extends AbstractJsonApiException
     {
         parent::__construct(
             "An error occurred while making a request to an external service. When available, details can be found in the meta of this request. If the problem persists, please contact support.",
-            JsonApiExceptionInterface::EXTERNAL_REQUEST_ERROR,
+            self::EXTERNAL_REQUEST_ERROR,
             $status,
             $previous
         );

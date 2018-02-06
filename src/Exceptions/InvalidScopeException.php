@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  * not unavailable for the chosen grant type or not attached to the
  * requesting client.
  */
-class InvalidScopeException extends AbstractJsonApiException
+class InvalidScopeException extends AbstractException
 {
     /**
      * @param array           $slugs
@@ -19,7 +19,7 @@ class InvalidScopeException extends AbstractJsonApiException
     {
         parent::__construct(
             "The following scopes are not available to the requesting client: " . implode(", ", $slugs),
-            JsonApiExceptionInterface::AUTH_INVALID_SCOPE,
+            self::AUTH_INVALID_SCOPE,
             Response::HTTP_FORBIDDEN,
             $previous
         );

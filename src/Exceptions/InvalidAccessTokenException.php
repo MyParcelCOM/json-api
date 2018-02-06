@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is thrown when a token is invalid.
  */
-class InvalidAccessTokenException extends AbstractJsonApiException
+class InvalidAccessTokenException extends AbstractException
 {
     /**
      * @param string          $detail
@@ -17,7 +17,7 @@ class InvalidAccessTokenException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::AUTH_INVALID_TOKEN,
+            self::AUTH_INVALID_TOKEN,
             Response::HTTP_UNAUTHORIZED,
             $previous
         );

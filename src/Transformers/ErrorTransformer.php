@@ -1,16 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Exceptions;
+namespace MyParcelCom\JsonApi\Transformers;
 
-class JsonApiErrorTransformer
+use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
+
+class ErrorTransformer
 {
     /**
-     * Transform given JsonApiException into a valid jsonapi response.
+     * Transform given Exception into a valid JSON API response.
      *
-     * @param  JsonApiExceptionInterface $exception
+     * @param  ExceptionInterface $exception
      * @return array
      */
-    public function transform(JsonApiExceptionInterface $exception): array
+    public function transform(ExceptionInterface $exception): array
     {
         return array_filter(
             [

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is thrown when a request header is invalid.
  */
-class InvalidHeaderException extends AbstractJsonApiException
+class InvalidHeaderException extends AbstractException
 {
     /**
      * @param string $detail
@@ -17,7 +17,7 @@ class InvalidHeaderException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::INVALID_REQUEST_HEADER,
+            self::INVALID_REQUEST_HEADER,
             $status
         );
     }

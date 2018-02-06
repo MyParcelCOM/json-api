@@ -1,25 +1,33 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Http;
+namespace MyParcelCom\JsonApi\Http;
 
 class UrlBuilder
 {
     /** @var string */
     protected $url;
+
     /** @var string */
     protected $scheme;
+
     /** @var string */
     protected $host;
+
     /** @var int */
     protected $port;
+
     /** @var string */
     protected $user;
+
     /** @var string */
     protected $password;
+
     /** @var string */
     protected $path;
+
     /** @var array */
     protected $query = [];
+
     /** @var string */
     protected $fragment;
 

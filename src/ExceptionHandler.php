@@ -1,19 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Exceptions;
+namespace MyParcelCom\JsonApi;
 
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Intouch\Newrelic\Newrelic;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
+use MyParcelCom\JsonApi\Exceptions\NotFoundException;
+use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class Handler extends ExceptionHandler
+class ExceptionHandler extends Handler
 {
     /** @var ResponseFactory */
     protected $responseFactory;
@@ -120,8 +123,8 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($exception instanceof JsonApiExceptionInterface) {
-            $error = (new JsonApiErrorTransformer())->transform($exception);
+        if ($exception instanceof ExceptionInterface) {
+            $error = (new ErrorTransformer())->transform($exception);
 
             if ($this->debug === true) {
                 $error['meta']['debug'] = $this->getDebugMeta($exception);
@@ -174,8 +177,8 @@ class Handler extends ExceptionHandler
     {
         $error = [
             'status' => (string)Response::HTTP_INTERNAL_SERVER_ERROR,
-            'code'   => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR['code'],
-            'title'  => JsonApiExceptionInterface::INTERNAL_SERVER_ERROR['title'],
+            'code'   => ExceptionInterface::INTERNAL_SERVER_ERROR['code'],
+            'title'  => ExceptionInterface::INTERNAL_SERVER_ERROR['title'],
             'detail' => 'Something went wrong. Please try again. If the problem persists, contact support.',
         ];
 

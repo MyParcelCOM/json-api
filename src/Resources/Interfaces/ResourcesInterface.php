@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Interfaces;
+namespace MyParcelCom\JsonApi\Resources\Interfaces;
 
 use Illuminate\Support\Collection;
 

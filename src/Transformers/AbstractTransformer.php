@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
-use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
+use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
 
 abstract class AbstractTransformer
 {
@@ -49,7 +49,7 @@ abstract class AbstractTransformer
     }
 
     /**
-     * Do a deep filter on an array to remove all null values
+     * Do a deep filter on an array to remove all null values.
      *
      * @param array $array
      * @return array

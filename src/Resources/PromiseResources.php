@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Resources;
+namespace MyParcelCom\JsonApi\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\ResourcesInterface;
+use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class PromiseResources implements ResourcesInterface
 {

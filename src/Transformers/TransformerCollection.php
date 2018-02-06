@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Support\Collection;
 

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is thrown when a request contains invalid JSON Schema.
  */
-class InvalidJsonSchemaException extends AbstractJsonApiException
+class InvalidJsonSchemaException extends AbstractException
 {
     /**
      * @param array           $errors
@@ -17,7 +17,7 @@ class InvalidJsonSchemaException extends AbstractJsonApiException
     {
         parent::__construct(
             'The supplied data is invalid according to our API Specification. See meta for details.',
-            JsonApiExceptionInterface::INVALID_JSON_SCHEMA,
+            self::INVALID_JSON_SCHEMA,
             Response::HTTP_BAD_REQUEST,
             $previous
         );

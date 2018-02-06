@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers\Tests;
+namespace MyParcelCom\JsonApi\Transformers\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
-use MyParcelCom\Transformers\AbstractTransformer;
-use MyParcelCom\Transformers\TransformerFactory;
-use MyParcelCom\Transformers\TransformerItem;
+use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
+use MyParcelCom\JsonApi\Transformers\TransformerFactory;
+use MyParcelCom\JsonApi\Transformers\TransformerItem;
 use PHPUnit\Framework\TestCase;
 
 class TransformerItemTest extends TestCase

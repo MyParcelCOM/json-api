@@ -9,7 +9,7 @@ use JsonSchema\Validator;
  * The Validator class dependencies should me resolved out of the IoC container.
  * The json schema itself should be resolved out of the IoC container with 'schema'.
  */
-trait JsonApiAssertionsTrait
+trait AssertionsTrait
 {
     /**
      * @param string $schemaPath

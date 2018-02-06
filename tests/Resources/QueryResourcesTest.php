@@ -1,22 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Resources;
+namespace MyParcelCom\JsonApi\Tests\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\Resources\QueryResources;
+use MyParcelCom\JsonApi\Resources\QueryResources;
 use PHPUnit\Framework\TestCase;
 
 class QueryResourcesTest extends TestCase
 {
     /** @var QueryResources */
     private $resultSet;
+
     /** @var Model[] */
     private $data;
+
     /** @var int */
     private $skip = 0;
+
     /** @var int */
     private $take = 30;
 

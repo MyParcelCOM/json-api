@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception is thrown when a resource cannot be found.
  */
-class NotFoundException extends AbstractJsonApiException
+class NotFoundException extends AbstractException
 {
     /**
      * @param string          $detail
@@ -17,7 +17,7 @@ class NotFoundException extends AbstractJsonApiException
     {
         parent::__construct(
             $detail,
-            JsonApiExceptionInterface::NOT_FOUND,
+            self::NOT_FOUND,
             Response::HTTP_NOT_FOUND,
             $previous
         );

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Traits;
+namespace MyParcelCom\JsonApi\Filters\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use MyParcelCom\JsonApi\Filters\QueryFilter;

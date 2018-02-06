@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Resources;
+namespace MyParcelCom\JsonApi\Tests\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\Resources\PromiseResources;
+use MyParcelCom\JsonApi\Resources\PromiseResources;
 use PHPUnit\Framework\TestCase;
 
 class PromiseResourcesTest extends TestCase

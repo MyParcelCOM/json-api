@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
 
 class TransformerFactory
 {

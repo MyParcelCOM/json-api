@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Traits;
+namespace MyParcelCom\JsonApi\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use MyParcelCom\Common\Exceptions\RepositoryException;
-use MyParcelCom\Common\Resources\QueryResources;
+use MyParcelCom\JsonApi\Exceptions\RepositoryException;
+use MyParcelCom\JsonApi\Resources\QueryResources;
 
 trait RepositoryTrait
 {

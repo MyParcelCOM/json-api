@@ -5,7 +5,7 @@ namespace MyParcelCom\JsonApi\Exceptions;
 use Exception;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 
-abstract class AbstractJsonApiException extends Exception implements ExceptionInterface
+abstract class AbstractException extends Exception implements ExceptionInterface
 {
     /** @var string */
     protected $id;
@@ -32,8 +32,6 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
     protected $meta;
 
     /**
-     * AbstractJsonApiException constructor.
-     *
      * @param string          $detail
      * @param array           $errorType
      * @param int             $status
@@ -63,9 +61,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set the id for this occurrence of the exception.
      *
      * @param string $id
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setId(string $id): JsonApiExceptionInterface
+    public function setId(string $id): ExceptionInterface
     {
         $this->id = $id;
 
@@ -87,9 +85,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      *
      * @param string $name
      * @param mixed  $url
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function addLink(string $name, $url): JsonApiExceptionInterface
+    public function addLink(string $name, $url): ExceptionInterface
     {
         $this->links[$name] = $url;
 
@@ -100,9 +98,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set the links related to the exception.
      *
      * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setLinks(array $links): JsonApiExceptionInterface
+    public function setLinks(array $links): ExceptionInterface
     {
         $this->links = $links;
 
@@ -123,9 +121,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set the http status code for the request.
      *
      * @param string $status
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setStatus(string $status): JsonApiExceptionInterface
+    public function setStatus(string $status): ExceptionInterface
     {
         $this->status = $status;
 
@@ -147,9 +145,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * This should be retrieved from one of the defined constants.
      *
      * @param string $errorCode
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setErrorCode(string $errorCode): JsonApiExceptionInterface
+    public function setErrorCode(string $errorCode): ExceptionInterface
     {
         $this->errorCode = $errorCode;
 
@@ -171,9 +169,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * This should be retrieved from one of the defined constants.
      *
      * @param string $title
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setTitle(string $title): JsonApiExceptionInterface
+    public function setTitle(string $title): ExceptionInterface
     {
         $this->title = $title;
 
@@ -194,9 +192,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set the detailed message for the server.
      *
      * @param string $detail
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setDetail(string $detail): JsonApiExceptionInterface
+    public function setDetail(string $detail): ExceptionInterface
     {
         $this->detail = $detail;
 
@@ -217,9 +215,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set an array containing references to the source of the error.
      *
      * @param array $source
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setSource(array $source): JsonApiExceptionInterface
+    public function setSource(array $source): ExceptionInterface
     {
         $this->source = $source;
 
@@ -240,9 +238,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      * Set meta object containing non-standard meta-information about the error.
      *
      * @param array $meta
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function setMeta(array $meta): JsonApiExceptionInterface
+    public function setMeta(array $meta): ExceptionInterface
     {
         $this->meta = $meta;
 
@@ -254,9 +252,9 @@ abstract class AbstractJsonApiException extends Exception implements ExceptionIn
      *
      * @param string $key
      * @param mixed  $value
-     * @return JsonApiExceptionInterface
+     * @return ExceptionInterface
      */
-    public function addMeta(string $key, $value): JsonApiExceptionInterface
+    public function addMeta(string $key, $value): ExceptionInterface
     {
         $this->meta[$key] = $value;
 

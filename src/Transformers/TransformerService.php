@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Support\Collection;
-use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
-use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 
 class TransformerService
 {
@@ -20,7 +20,7 @@ class TransformerService
     /** @var bool */
     protected $multipleResult;
 
-    public function __construct(JsonApiRequestInterface $request, TransformerFactory $transformerFactory)
+    public function __construct(RequestInterface $request, TransformerFactory $transformerFactory)
     {
         $this->transformerFactory = $transformerFactory;
         $this->paginator = $request->getPaginator();

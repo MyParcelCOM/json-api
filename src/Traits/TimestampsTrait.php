@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Traits;
+namespace MyParcelCom\JsonApi\Traits;
 
 use DateTime;
 

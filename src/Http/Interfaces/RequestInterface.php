@@ -4,7 +4,7 @@ namespace MyParcelCom\JsonApi\Http\Interfaces;
 
 use MyParcelCom\JsonApi\Http\Paginator;
 
-interface JsonApiRequestInterface
+interface RequestInterface
 {
     /**
      * Get the pagination from the requested url.

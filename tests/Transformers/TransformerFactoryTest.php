@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers\Tests;
+namespace MyParcelCom\JsonApi\Transformers\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\Common\Contracts\UrlGeneratorInterface;
-use MyParcelCom\Transformers\AbstractTransformer;
-use MyParcelCom\Transformers\Tests\Stubs\TransformerStub;
-use MyParcelCom\Transformers\TransformerCollection;
-use MyParcelCom\Transformers\TransformerException;
-use MyParcelCom\Transformers\TransformerFactory;
-use MyParcelCom\Transformers\TransformerItem;
+use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
+use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
+use MyParcelCom\JsonApi\Transformers\TransformerCollection;
+use MyParcelCom\JsonApi\Transformers\TransformerException;
+use MyParcelCom\JsonApi\Transformers\TransformerFactory;
+use MyParcelCom\JsonApi\Transformers\TransformerItem;
 use PHPUnit\Framework\TestCase;
 
 class TransformerFactoryTest extends TestCase
@@ -37,12 +37,12 @@ class TransformerFactoryTest extends TestCase
                 AbstractTransformer::class => [
                     'setUrlGenerator' => function () {
                         return $this->urlGenerator;
-                    }
+                    },
                 ],
-                TransformerStub::class => [
+                TransformerStub::class     => [
                     'setDependency' => function () {
                         return $this->dependency;
-                    }
+                    },
                 ],
             ]);
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
@@ -51,6 +51,7 @@ class TransformerFactoryTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 

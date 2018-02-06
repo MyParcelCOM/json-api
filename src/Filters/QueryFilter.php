@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Filters;
+namespace MyParcelCom\JsonApi\Filters;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Expression;
-use MyParcelCom\Common\Contracts\FilterInterface;
+use MyParcelCom\JsonApi\Filters\Interfaces\FilterInterface;
 
 class QueryFilter implements FilterInterface
 {
@@ -168,7 +168,7 @@ class QueryFilter implements FilterInterface
      * @param string $values
      * @return Builder
      */
-    public function filterQuery(array $columns, string $operator, string $values):Builder
+    public function filterQuery(array $columns, string $operator, string $values): Builder
     {
         return $this->query->where(function (Builder $query) use ($columns, $operator, $values) {
             array_walk($columns, function ($columnName) use ($query, $operator, $values) {

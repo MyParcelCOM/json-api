@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Transformers;
+namespace MyParcelCom\JsonApi\Transformers;
 
-use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Paginator;
 
 class TransformerResource
 {
@@ -22,8 +22,8 @@ class TransformerResource
     protected $includes = [];
 
     /** @var array */
-
     protected $meta = [];
+
     /** @var bool */
     protected $multipleResult = false;
 

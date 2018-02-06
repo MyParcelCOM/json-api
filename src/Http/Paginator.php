@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Http;
+namespace MyParcelCom\JsonApi\Http;
 
-use MyParcelCom\Common\Exceptions\PaginatorException;
+use MyParcelCom\JsonApi\Exceptions\PaginatorException;
 
 class Paginator
 {

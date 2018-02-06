@@ -9,8 +9,8 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Mockery;
-use MyParcelCom\JsonApi\Exceptions\AbstractJsonApiException;
 use MyParcelCom\JsonApi\ExceptionHandler;
+use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -63,7 +63,7 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
 
         // Test rendering a JsonApiException
-        $jsonApiException = Mockery::mock(AbstractJsonApiException::class, [
+        $jsonApiException = Mockery::mock(AbstractException::class, [
             'getId'        => 'id',
             'getLinks'     => ['about' => 'some-link'],
             'getStatus'    => 404,

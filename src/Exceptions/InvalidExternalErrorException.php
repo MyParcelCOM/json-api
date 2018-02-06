@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 /**
  * Thrown when a request to an external service returns an improperly formatted error response.
  */
-class InvalidExternalErrorException extends AbstractJsonApiException
+class InvalidExternalErrorException extends AbstractException
 {
     /**
      * @param \Throwable|null $previous
@@ -14,7 +14,7 @@ class InvalidExternalErrorException extends AbstractJsonApiException
     {
         parent::__construct(
             "An error was thrown during the request to the external source. We cannot provide more information since the returned error was improperly formatted.",
-            JsonApiExceptionInterface::INVALID_ERROR_SCHEMA,
+            self::INVALID_ERROR_SCHEMA,
             500,
             $previous
         );

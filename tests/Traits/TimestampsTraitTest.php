@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Traits;
+namespace MyParcelCom\JsonApi\Tests\Traits;
 
 use DateTime;
-use MyParcelCom\Common\Traits\TimestampsTrait;
+use MyParcelCom\JsonApi\Traits\TimestampsTrait;
 use PHPUnit\Framework\TestCase;
 
 class TimestampsTraitTest extends TestCase

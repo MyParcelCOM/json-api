@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Contracts;
+namespace MyParcelCom\JsonApi\Interfaces;
 
 interface MetaInterface
 {
