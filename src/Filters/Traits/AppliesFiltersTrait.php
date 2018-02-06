@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Traits;
+namespace MyParcelCom\JsonApi\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use MyParcelCom\Common\Filters\QueryFilter;
+use MyParcelCom\JsonApi\Filters\QueryFilter;
 
 trait AppliesFiltersTrait
 {

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Traits;
+namespace MyParcelCom\JsonApi\Http\Traits;
 
-use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Paginator;
 
 trait JsonApiRequestTrait
 {

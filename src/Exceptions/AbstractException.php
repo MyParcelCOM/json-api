@@ -1,10 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions;
 
 use Exception;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 
-abstract class AbstractJsonApiException extends Exception implements JsonApiExceptionInterface
+abstract class AbstractJsonApiException extends Exception implements ExceptionInterface
 {
     /** @var string */
     protected $id;

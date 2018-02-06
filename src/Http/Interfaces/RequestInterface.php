@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Contracts;
+namespace MyParcelCom\JsonApi\Http\Interfaces;
 
-use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Paginator;
 
 interface JsonApiRequestInterface
 {

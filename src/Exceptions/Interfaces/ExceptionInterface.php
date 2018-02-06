@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions;
+namespace MyParcelCom\JsonApi\Exceptions\Interfaces;
 
-interface JsonApiExceptionInterface
+interface ExceptionInterface
 {
     // General errors *salute* 10000 - 10999
     const NOT_FOUND = [

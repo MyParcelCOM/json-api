@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Exceptions\Tests;
+namespace MyParcelCom\JsonApi\Exceptions\Tests;
 
 use Exception;
 use Illuminate\Contracts\Container\Container;
@@ -9,15 +9,15 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Mockery;
-use MyParcelCom\Exceptions\AbstractJsonApiException;
-use MyParcelCom\Exceptions\Handler;
+use MyParcelCom\JsonApi\Exceptions\AbstractJsonApiException;
+use MyParcelCom\JsonApi\ExceptionHandler;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-class HandlerTest extends TestCase
+class ExceptionHandlerTest extends TestCase
 {
-    /** @var Handler */
+    /** @var ExceptionHandler */
     protected $handler;
 
     /** @var Request */
@@ -36,7 +36,7 @@ class HandlerTest extends TestCase
         $factory->shouldReceive('json')
             ->andReturnUsing([$this, 'mockResponse']);
 
-        $this->handler = (new Handler(Mockery::mock(Container::class)))
+        $this->handler = (new ExceptionHandler(Mockery::mock(Container::class)))
             ->setResponseFactory($factory)
             ->setAppName($this->appName);
     }
@@ -164,7 +164,7 @@ class HandlerTest extends TestCase
     {
         // Can't mock exceptions, they have final methods.
         $exception = Mockery::mock(MaintenanceModeException::class);
-        $request =  Mockery::mock(Request::class, ['path' => '/']);
+        $request = Mockery::mock(Request::class, ['path' => '/']);
         $response = $this->handler->render($request, $exception);
         $json = $response->getData();
 
@@ -176,7 +176,7 @@ class HandlerTest extends TestCase
         $this->assertEquals(503, $response->getStatus(), 'Maintenance status code was not 503');
 
 
-        $request =  Mockery::mock(Request::class, ['path' => '/some/other/path']);
+        $request = Mockery::mock(Request::class, ['path' => '/some/other/path']);
         $response = $this->handler->render($request, $exception);
         $json = $response->getData();
 

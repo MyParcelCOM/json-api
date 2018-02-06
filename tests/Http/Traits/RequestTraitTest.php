@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Traits;
+namespace MyParcelCom\JsonApi\Tests\Traits;
 
-use MyParcelCom\Common\Contracts\JsonApiRequestInterface;
-use MyParcelCom\Common\Http\Paginator;
-use MyParcelCom\Common\Traits\JsonApiRequestTrait;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
+use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Http\Traits\RequestTrait;
 use PHPUnit\Framework\TestCase;
 
-class JsonApiRequestTraitTest extends TestCase
+class RequestTraitTest extends TestCase
 {
     /** @test */
     public function testGetPaginator()
     {
-        $request = $this->createJsonApiRequestTraitMock();
+        $request = $this->createRequestTraitMock();
 
         $paginator = $request->getPaginator();
         $this->assertInstanceOf(
@@ -36,7 +36,7 @@ class JsonApiRequestTraitTest extends TestCase
     /** @test */
     public function testGetIncludes()
     {
-        $request = $this->createJsonApiRequestTraitMock();
+        $request = $this->createRequestTraitMock();
         $this->assertEquals(
             [
                 'all',
@@ -50,7 +50,7 @@ class JsonApiRequestTraitTest extends TestCase
     /** @test */
     public function testGetSort()
     {
-        $request = $this->createJsonApiRequestTraitMock();
+        $request = $this->createRequestTraitMock();
         $this->assertEquals(
             [
                 'this' => 'DESC',
@@ -63,7 +63,7 @@ class JsonApiRequestTraitTest extends TestCase
     /** @test */
     public function testGetFilter()
     {
-        $request = $this->createJsonApiRequestTraitMock();
+        $request = $this->createRequestTraitMock();
         $this->assertEquals(
             [
                 'foo' => 'bar',
@@ -73,22 +73,22 @@ class JsonApiRequestTraitTest extends TestCase
     }
 
     /**
-     * @return JsonApiRequestInterface
+     * @return RequestInterface
      */
-    private function createJsonApiRequestTraitMock()
+    private function createRequestTraitMock()
     {
-        return new class implements JsonApiRequestInterface
+        return new class implements RequestInterface
         {
-            use JsonApiRequestTrait;
+            use RequestTrait;
 
             private $data = [
                 'include' => 'all,the,things',
-                'page'     => [
+                'page'    => [
                     'number' => 3,
                     'size'   => 5,
                 ],
-                'sort'     => '-this,that',
-                'filter'   => [
+                'sort'    => '-this,that',
+                'filter'  => [
                     'foo' => 'bar',
                 ],
             ];
