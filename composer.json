@@ -1,6 +1,6 @@
 {
-  "name": "myparcelcom/common",
-  "description": "MyParcel.com shared library with common interfaces, traits and utility classes.",
+  "name": "myparcelcom/json-api",
+  "description": "MyParcel.com shared library with JSON API related exceptions, interfaces, traits and utility classes.",
   "homepage": "https://www.myparcel.com",
   "type": "library",
   "require": {
@@ -8,13 +8,13 @@
     "illuminate/database": "~5.0",
     "illuminate/support": "~5.0",
     "intouch/newrelic": "^1.0.3",
+    "justinrainbow/json-schema": "^5.2",
     "laravel/framework": "~5.4",
-    "php": ">=7.1",
-    "justinrainbow/json-schema": "^5.2"
+    "php": ">=7.1"
   },
   "autoload": {
     "psr-4": {
-      "MyParcelCom\\Common\\": "src/Common/"
+      "MyParcelCom\\JsonApi\\": "src/"
     }
   },
   "require-dev": {
@@ -24,7 +24,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "MyParcelCom\\Common\\Tests\\": "tests"
+      "MyParcelCom\\JsonApi\\Tests\\": "tests/"
     }
   },
   "scripts": {

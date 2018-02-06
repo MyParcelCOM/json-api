@@ -1,6 +1,6 @@
-# MyParcel.com Common
-[![GitHub release](https://img.shields.io/github/release/MyParcelCOM/common/all.svg)](https://github.com/MyParcelCOM/common)
-Shared library with common interfaces, traits and utility classes.
+# MyParcel.com JSON API
+[![GitHub release](https://img.shields.io/github/release/MyParcelCOM/json-api/all.svg)](https://github.com/MyParcelCOM/json-api)
+Shared library with JSON API related exceptions, interfaces, traits and utility classes.
 
 ## Content
 - [Installation](#installation)
@@ -13,7 +13,7 @@ The library uses Docker to run php and composer. To install Docker, follow the s
 ### Setup
 To setup the project, run the following command:
 ```bash
-./mp.sh composer install
+./mp.sh setup
 ```
 
 #### Composer key

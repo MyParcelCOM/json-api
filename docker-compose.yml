@@ -6,11 +6,9 @@ services:
       context: ./docker
       dockerfile: Dockerfile
     image: myparcelcom/php:v1-dev
-    working_dir: /opt/common
-    environment:
-      - COMPOSER_AUTH=$COMPOSER_AUTH
+    working_dir: /opt/json-api
     volumes:
-      - .:/opt/common
+      - .:/opt/json-api
       - composercache:/tmp
 
 volumes:
