@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     image: myparcelcom/php:v1-dev
     working_dir: /opt/common
+    environment:
+      - COMPOSER_AUTH=$COMPOSER_AUTH
     volumes:
       - .:/opt/common
       - composercache:/tmp

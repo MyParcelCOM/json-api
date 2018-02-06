@@ -5,7 +5,9 @@ set -eo pipefail
 set -o allexport
 {
   ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-  COMPOSE="docker-compose --project-name myparcelcomcommon"
+  ${ROOT_DIR}/mp/helpers/check-env
+  source ${ROOT_DIR}/.env
+  COMPOSE="docker-compose --project-name ${PROJECT_NAME}"
 }
 set +o allexport
 

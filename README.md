@@ -16,6 +16,16 @@ To setup the project, run the following command:
 ./mp.sh composer install
 ```
 
+#### Composer key
+Composer needs to be able to install private packages. In order to do that it requires an access token
+for GitHub.
+
+- Login to GitHub.
+- Go to `Settings` > `Personal access tokens` > `Generate new token`.
+- Check the box next to `repo` and fill in the `description`.
+- Click `generate`.
+- Copy the generated token and paste it in your `.env` file where it says `<api-token>`.
+
 ### Commands
 The following commands are available:
 - `./mp.sh composer <args>` - Run composer inside the container.
