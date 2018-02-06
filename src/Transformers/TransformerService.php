@@ -3,8 +3,9 @@
 namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Support\Collection;
-use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
+use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class TransformerService
 {
@@ -20,6 +21,10 @@ class TransformerService
     /** @var bool */
     protected $multipleResult;
 
+    /**
+     * @param RequestInterface   $request
+     * @param TransformerFactory $transformerFactory
+     */
     public function __construct(RequestInterface $request, TransformerFactory $transformerFactory)
     {
         $this->transformerFactory = $transformerFactory;
@@ -30,10 +35,10 @@ class TransformerService
     /**
      * Transform a builder to JSON Api output.
      *
-     * @param Resources[] $resources
+     * @param ResourcesInterface[] $resources
      * @return array
      */
-    public function transformResources(...$resources): array
+    public function transformResources(ResourcesInterface ...$resources): array
     {
         $collections = [];
 

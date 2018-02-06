@@ -6,10 +6,13 @@ use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
 
-abstract class AbstractTransformer
+abstract class AbstractTransformer implements TransformerInterface
 {
+    /** @var UrlGeneratorInterface */
     protected $urlGenerator;
+    /** @var TransformerFactory */
     protected $transformerFactory;
+    /** @var string */
     protected $type;
 
     public function __construct(TransformerFactory $transformerFactory)
@@ -49,7 +52,7 @@ abstract class AbstractTransformer
     }
 
     /**
-     * Do a deep filter on an array to remove all null values.
+     * Do a deep filter on an array to remove all null values
      *
      * @param array $array
      * @return array
