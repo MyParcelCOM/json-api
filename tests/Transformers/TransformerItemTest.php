@@ -26,7 +26,7 @@ class TransformerItemTest extends TestCase
     /** @var TransformerItem */
     protected $transformerItem;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -62,9 +62,10 @@ class TransformerItemTest extends TestCase
         $this->transformerItem = new TransformerItem($this->transformerFactory, Mockery::mock(Model::class));
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 

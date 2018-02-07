@@ -26,7 +26,7 @@ class TransformerResourceTest extends TestCase
     /** @var Paginator */
     protected $paginator;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -55,9 +55,10 @@ class TransformerResourceTest extends TestCase
         ]);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 
@@ -111,5 +112,22 @@ class TransformerResourceTest extends TestCase
 
         $this->expectException(TransformerException::class);
         $this->assertEquals($expectedResult, $this->transformerResource->toArrayMultiple());
+    }
+
+    /** @test */
+    public function testAddMeta()
+    {
+        $this->transformerResource->addMeta(['x' => 'y']);
+        $this->assertEquals([
+            'data' => [],
+            'meta' => ['x' => 'y'],
+        ], $this->transformerResource->toArraySingle());
+    }
+
+    /** @test */
+    public function testAddMetaException()
+    {
+        $this->expectException(TransformerException::class);
+        $this->transformerResource->addMeta((object)[]);
     }
 }

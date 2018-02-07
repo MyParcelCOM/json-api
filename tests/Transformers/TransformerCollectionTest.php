@@ -27,7 +27,7 @@ class TransformerCollectionTest extends TestCase
     /** @var TransformerCollection */
     protected $transformerCollection;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -55,9 +55,10 @@ class TransformerCollectionTest extends TestCase
         $this->transformerCollection = new TransformerCollection($this->transformerFactory, $this->getCollectionMock($this->transformerData));
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 

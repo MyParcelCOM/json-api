@@ -26,7 +26,7 @@ class ExceptionHandlerTest extends TestCase
     /** @var string */
     protected $appName = 'Test app';
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -41,18 +41,14 @@ class ExceptionHandlerTest extends TestCase
             ->setAppName($this->appName);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
 
         Mockery::close();
     }
 
-    /**
-     * Test the render method.
-     *
-     * @test
-     */
+    /** @test */
     public function testRender()
     {
         // Test rendering a normal exception

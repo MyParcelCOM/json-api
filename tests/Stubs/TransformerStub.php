@@ -10,6 +10,9 @@ class TransformerStub extends AbstractTransformer
     /** @var mixed */
     protected $dependency;
 
+    /** @var string */
+    protected $type = 'test';
+
     /**
      * @param mixed $model
      * @return string
@@ -51,5 +54,30 @@ class TransformerStub extends AbstractTransformer
     public function getDependency()
     {
         return $this->dependency;
+    }
+
+    public function getIncluded($model): array
+    {
+        return parent::getIncluded($model) + ['more' => 'things'];
+    }
+
+    public function getRelationships($model): array
+    {
+        return parent::getRelationships($model) + ['relation' => 'ship'];
+    }
+
+    public function getLink($model): string
+    {
+        return parent::getLink($model) . '#32';
+    }
+
+    public function getAttributes($model): array
+    {
+        return parent::getAttributes($model) + ['at' => 'tribute'];
+    }
+
+    public function getMeta($model): array
+    {
+        return parent::getMeta($model) + ['da' => 'ta'];
     }
 }

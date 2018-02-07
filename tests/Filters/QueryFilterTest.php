@@ -40,7 +40,7 @@ class QueryFilterTest extends TestCase
     /** @test */
     public function testApplyWhereValueIsNull()
     {
-        $this->queryFilter->apply(['column_a', 'column_b'], '!=', null);
+        $this->queryFilter->apply(['column_a', 'column_b'], '!=', [null]);
         $this->queryFilter->apply('column_c', 'nOt', null); // Also tests capitalized operator.
 
         $this->assertEquals(

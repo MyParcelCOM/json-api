@@ -27,7 +27,7 @@ class TransformerFactoryTest extends TestCase
 
     protected $dependency = 'Some random dependency';
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->urlGenerator = Mockery::mock(UrlGeneratorInterface::class);
@@ -48,7 +48,7 @@ class TransformerFactoryTest extends TestCase
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
 

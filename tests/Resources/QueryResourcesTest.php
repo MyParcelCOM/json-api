@@ -23,7 +23,7 @@ class QueryResourcesTest extends TestCase
     /** @var int */
     private $take = 30;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -60,9 +60,10 @@ class QueryResourcesTest extends TestCase
         $this->resultSet = new QueryResources($builder);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 
@@ -137,5 +138,18 @@ class QueryResourcesTest extends TestCase
             [1, 2, 3],
             $this->resultSet->getIds()
         );
+    }
+
+    /** @test */
+    public function testEach()
+    {
+        $called = false;
+        $this->resultSet->each(function () use (&$called) {
+            $called = true;
+        });
+
+        $this->assertEquals(false, $called);
+        $this->resultSet->get();
+        $this->assertEquals(true, $called);
     }
 }
