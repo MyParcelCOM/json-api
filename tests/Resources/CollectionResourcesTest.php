@@ -2,33 +2,22 @@
 
 namespace MyParcelCom\JsonApi\Tests\Resources;
 
-use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
-use Mockery;
-use MyParcelCom\JsonApi\Resources\PromiseResources;
+use MyParcelCom\JsonApi\Resources\CollectionResources;
 use PHPUnit\Framework\TestCase;
 
-class PromiseResourcesTest extends TestCase
+class CollectionResourcesTest extends TestCase
 {
-    /** @var PromiseResources */
+    /** @var CollectionResources */
     private $resultSet;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->resultSet = new PromiseResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
+        $this->resultSet = new CollectionResources(
+            new Collection(['some', 'random', 'data'])
         );
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

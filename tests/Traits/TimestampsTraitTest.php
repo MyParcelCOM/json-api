@@ -10,13 +10,14 @@ class TimestampsTraitTest extends TestCase
 {
     private $model;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         $this->model = $this->getMockForTrait(TimestampsTrait::class);
     }
 
+    /** @test */
     public function testGetUpdatedAt()
     {
         $this->model->updated_at = new DateTime();
@@ -24,6 +25,7 @@ class TimestampsTraitTest extends TestCase
         $this->assertInstanceOf(DateTime::class, $this->model->getUpdatedAt());
     }
 
+    /** @test */
     public function testGetCreatedAt()
     {
         $this->model->created_at = new DateTime();

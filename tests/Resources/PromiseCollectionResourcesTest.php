@@ -10,126 +10,74 @@ use PHPUnit\Framework\TestCase;
 
 class PromiseCollectionResourcesTest extends TestCase
 {
-    public function tearDown()
+    /** @var PromiseCollectionResources */
+    private $resultSet;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->resultSet = new PromiseCollectionResources(
+            Mockery::mock(PromiseInterface::class, [
+                'wait' => new Collection(['some', 'random', 'data']),
+            ])
+        );
+    }
+
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 
     /** @test */
     public function testGet()
     {
-        $resultSet = new PromiseCollectionResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
-        );
-
-        $this->assertInstanceOf(
-            Collection::class,
-            $resultSet->get()
-        );
-
-        $this->assertEquals(
-            ['some', 'random', 'data'],
-            $resultSet->get()->toArray()
-        );
+        $this->assertInstanceOf(Collection::class, $this->resultSet->get());
+        $this->assertEquals(['some', 'random', 'data'], $this->resultSet->get()->toArray());
     }
 
     /** @test */
     public function testCount()
     {
-        $resultSet = new PromiseCollectionResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
-        );
-
-        $this->assertEquals(
-            3,
-            $resultSet->count()
-        );
+        $this->assertEquals(3, $this->resultSet->count());
     }
 
     /** @test */
     public function testOffset()
     {
-        $resultSet = new PromiseCollectionResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
-        );
+        $this->resultSet->offset(1);
 
-        $resultSet->offset(1);
-        $this->assertEquals(
-            3,
-            $resultSet->count(),
-            'Offset should not influence the count'
-        );
-
-        $this->assertEquals(
-            ['random', 'data'],
-            array_values($resultSet->get()->toArray())
-        );
+        $this->assertEquals(3, $this->resultSet->count(), 'Offset should not influence the count');
+        $this->assertEquals(['random', 'data'], array_values($this->resultSet->get()->toArray()));
     }
 
     /** @test */
     public function testLimit()
     {
-        $resultSet = new PromiseCollectionResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
-        );
+        $this->resultSet->limit(1);
 
-        $resultSet->limit(1);
-        $this->assertEquals(
-            3,
-            $resultSet->count(),
-            'Limit should not influence the count'
-        );
-
-        $this->assertEquals(
-            ['some'],
-            $resultSet->get()->toArray()
-        );
+        $this->assertEquals(3, $this->resultSet->count(), 'Limit should not influence the count');
+        $this->assertEquals(['some'], $this->resultSet->get()->toArray());
     }
 
+    /** @test */
     public function testAddPromise()
     {
-        $resultSet = new PromiseCollectionResources(
-            Mockery::mock(PromiseInterface::class, [
-                'wait' => new Collection(['some', 'random', 'data']),
-            ])
-        );
-
-        $resultSet->addPromise(
+        $this->resultSet->addPromise(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['more', 'crazy', 'things']),
             ])
         );
 
-        $this->assertEquals(
-            6,
-            $resultSet->count(),
-            'Offset should not influence the count'
-        );
+        $this->assertEquals(6, $this->resultSet->count(), 'Offset should not influence the count');
+        $this->assertEquals(['some', 'random', 'data', 'more', 'crazy', 'things'], $this->resultSet->get()->toArray());
 
-        $this->assertEquals(
-            ['some', 'random', 'data', 'more', 'crazy', 'things'],
-            $resultSet->get()->toArray()
-        );
+        $this->resultSet->offset(2);
+        $this->assertEquals(['data', 'more', 'crazy', 'things'], array_values($this->resultSet->get()->toArray()));
 
-        $resultSet->offset(2);
-        $this->assertEquals(
-            ['data', 'more', 'crazy', 'things'],
-            array_values($resultSet->get()->toArray())
-        );
-
-        $resultSet->limit(2);
-        $this->assertEquals(
-            ['data', 'more'],
-            array_values($resultSet->get()->toArray())
-        );
+        $this->resultSet->limit(2);
+        $this->assertEquals(['data', 'more'], array_values($this->resultSet->get()->toArray()));
     }
 }

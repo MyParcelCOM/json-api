@@ -21,7 +21,7 @@ class TransformerServiceTest extends TestCase
     /** @var ResultSetInterface */
     protected $resources;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -31,7 +31,7 @@ class TransformerServiceTest extends TestCase
             'getPerPage' => 1,
             'addTotal'   => 2,
             'getCount'   => 2,
-            'getLinks'   => [],
+            'getLinks'   => ['self' => 'me'],
         ]);
         $request = Mockery::mock(RequestInterface::class, [
             'getPaginator' => $paginator,
@@ -55,9 +55,10 @@ class TransformerServiceTest extends TestCase
         $this->transformerService = new TransformerService($request, $transformerFactory);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
+
         Mockery::close();
     }
 
@@ -65,6 +66,15 @@ class TransformerServiceTest extends TestCase
     public function testTransformResultSets()
     {
         $result = $this->transformerService->transformResources($this->resources);
-        $this->assertInternalType('array', $result);
+        $this->assertEquals([
+            'data'  => [],
+            'meta'  => [
+                'total_pages'   => 2,
+                'total_records' => 3,
+            ],
+            'links' => [
+                'self' => 'me',
+            ],
+        ], $result);
     }
 }

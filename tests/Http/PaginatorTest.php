@@ -26,7 +26,7 @@ class PaginatorTest extends TestCase
     /** @var int */
     protected $end;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
