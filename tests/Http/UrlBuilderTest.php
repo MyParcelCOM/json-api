@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Http;
+namespace MyParcelCom\JsonApi\Tests\Http;
 
-use MyParcelCom\Common\Http\UrlBuilder;
+use MyParcelCom\JsonApi\Http\UrlBuilder;
 use PHPUnit\Framework\TestCase;
 
 class UrlBuilderTest extends TestCase

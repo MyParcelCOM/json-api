@@ -1,6 +1,6 @@
-# MyParcel.com Common
-[![GitHub release](https://img.shields.io/github/release/MyParcelCOM/common/all.svg)](https://github.com/MyParcelCOM/common)
-Shared library with common interfaces, traits and utility classes.
+# MyParcel.com JSON API
+[![GitHub release](https://img.shields.io/github/release/MyParcelCOM/json-api/all.svg)](https://github.com/MyParcelCOM/json-api)
+Shared library with JSON API related exceptions, interfaces, traits and utility classes.
 
 ## Content
 - [Installation](#installation)
@@ -13,8 +13,18 @@ The library uses Docker to run php and composer. To install Docker, follow the s
 ### Setup
 To setup the project, run the following command:
 ```bash
-./mp.sh composer install
+./mp.sh setup
 ```
+
+#### Composer key
+Composer needs to be able to install private packages. In order to do that it requires an access token
+for GitHub.
+
+- Login to GitHub.
+- Go to `Settings` > `Personal access tokens` > `Generate new token`.
+- Check the box next to `repo` and fill in the `description`.
+- Click `generate`.
+- Copy the generated token and paste it in your `.env` file where it says `<api-token>`.
 
 ### Commands
 The following commands are available:

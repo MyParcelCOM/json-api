@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Filters;
+namespace MyParcelCom\JsonApi\Tests\Filters;
 
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Database\Query\Processors\PostgresProcessor;
 use Mockery;
-use MyParcelCom\Common\Filters\QueryFilter;
+use MyParcelCom\JsonApi\Filters\QueryFilter;
 use PHPUnit\Framework\TestCase;
 
 class QueryFilterTest extends TestCase

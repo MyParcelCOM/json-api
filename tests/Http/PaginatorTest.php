@@ -1,23 +1,28 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\Common\Tests\Http;
+namespace MyParcelCom\JsonApi\Tests\Http;
 
-use MyParcelCom\Common\Exceptions\PaginatorException;
-use MyParcelCom\Common\Http\Paginator;
+use MyParcelCom\JsonApi\Exceptions\PaginatorException;
+use MyParcelCom\JsonApi\Http\Paginator;
 use PHPUnit\Framework\TestCase;
 
 class PaginatorTest extends TestCase
 {
     /** @var Paginator */
     protected $paginator;
+
     /** @var int */
     protected $perPage;
+
     /** @var int */
     protected $total;
+
     /** @var int */
     protected $curPage;
+
     /** @var int */
     protected $start;
+
     /** @var int */
     protected $end;
 
