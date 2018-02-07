@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Exceptions\Tests;
+namespace MyParcelCom\JsonApi\Tests;
 
 use Exception;
 use Illuminate\Contracts\Container\Container;

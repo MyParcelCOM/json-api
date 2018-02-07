@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Transformers\Tests;
+namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
