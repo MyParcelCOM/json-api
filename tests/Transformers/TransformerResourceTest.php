@@ -31,7 +31,7 @@ class TransformerResourceTest extends TestCase
         parent::setUp();
 
         $this->included = [
-            'foo' => 'bar',
+            'bar',
         ];
         $this->data = [
             'relationships' => [

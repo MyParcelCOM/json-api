@@ -16,7 +16,7 @@ class TransformerFactory
     /**
      * Local transformer cache.
      *
-     * @var AbstractTransformer[]
+     * @var TransformerInterface[]
      */
     private $transformers = [];
 
@@ -55,10 +55,9 @@ class TransformerFactory
      * Create a new transformer for a model.
      *
      * @param object $model
-     * @return AbstractTransformer
-     * @throws TransformerException
+     * @return TransformerInterface
      */
-    public function createFromModel($model): AbstractTransformer
+    public function createFromModel($model): TransformerInterface
     {
         $modelClass = get_class($model);
 
@@ -76,10 +75,10 @@ class TransformerFactory
     }
 
     /**
-     * @param AbstractTransformer $transformer
-     * @return AbstractTransformer
+     * @param TransformerInterface $transformer
+     * @return TransformerInterface
      */
-    protected function injectDependencies(AbstractTransformer $transformer): AbstractTransformer
+    protected function injectDependencies(TransformerInterface $transformer): TransformerInterface
     {
         array_walk($this->dependencies, function ($dependencies, $class) use ($transformer) {
             if (!$transformer instanceof $class) {

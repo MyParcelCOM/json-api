@@ -42,6 +42,19 @@ class RequestTraitTest extends TestCase
                 'all',
                 'the',
                 'things',
+                'nested' => [
+                    'relationship',
+                    'merge',
+                ],
+                'even'   => [
+                    'deeper'  => [
+                        'relationship',
+                        'merge',
+                    ],
+                    'nastier' => [
+                        'merge',
+                    ],
+                ],
             ],
             $request->getIncludes()
         );
@@ -82,7 +95,7 @@ class RequestTraitTest extends TestCase
             use RequestTrait;
 
             private $data = [
-                'include' => 'all,the,things',
+                'include' => 'all,the,things,nested.relationship,even.deeper.relationship,nested.merge,even.deeper.merge,even.nastier.merge',
                 'page'    => [
                     'number' => 3,
                     'size'   => 5,

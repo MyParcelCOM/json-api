@@ -120,7 +120,7 @@ class TransformerResource
             ] + $this->meta;
 
         if ($this->includes) {
-            $res['included'] = array_unique($this->includes, SORT_REGULAR); // remove duplicates
+            $res['included'] = array_values(array_unique($this->includes, SORT_REGULAR)); // remove duplicates
         }
 
         $links = $this->paginator->getLinks();
@@ -135,7 +135,6 @@ class TransformerResource
      * Transform the data to a json api formatted array.
      *
      * @return array
-     * @throws TransformerException
      */
     public function toArraySingle(): array
     {
@@ -146,7 +145,7 @@ class TransformerResource
         }
 
         if ($this->includes) {
-            $res['included'] = $this->includes;
+            $res['included'] = array_values($this->includes);
         }
 
         return $res;

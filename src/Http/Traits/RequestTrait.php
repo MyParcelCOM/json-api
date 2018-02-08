@@ -37,7 +37,30 @@ trait RequestTrait
      */
     public function getIncludes(): array
     {
-        return explode(',', $this->query('include', ''));
+        $includes = [];
+        foreach (explode(',', $this->query('include', '')) as $include) {
+            $this->addInclude($include, $includes);
+        }
+
+        return $includes;
+    }
+
+    /**
+     * @param string $include
+     * @param array  $includes
+     */
+    private function addInclude(string $include, array &$includes): void
+    {
+        if (strpos($include, '.') === false) {
+            $includes[] = $include;
+            return;
+        }
+
+        $parentInclude = strtok($include, '.');
+        if (!isset($includes[$parentInclude])) {
+            $includes[$parentInclude] = [];
+        }
+        $this->addInclude(strtok(""), $includes[$parentInclude]);
     }
 
     /**

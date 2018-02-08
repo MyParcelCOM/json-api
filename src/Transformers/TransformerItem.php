@@ -8,7 +8,7 @@ class TransformerItem
 {
     protected $resource;
 
-    /** @var AbstractTransformer */
+    /** @var TransformerInterface */
     protected $transformer;
 
     /** @var TransformerFactory */
@@ -59,6 +59,21 @@ class TransformerItem
             $included = array_merge($included, $data);
         }
 
+        foreach ($this->transformer->getIncluded($this->resource) as $relationship => $resourceCallback) {
+            if (!array_key_exists($relationship, $relationships)) {
+                continue;
+            }
+            $resource = $resourceCallback();
+
+            if ($resource instanceof Collection) {
+                $data = $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship], $included);
+            } else {
+                $data = $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship], $included);
+            }
+
+            $included = array_merge($included, $data);
+        }
+
         return $included;
     }
 
@@ -73,7 +88,6 @@ class TransformerItem
     {
         $filtered = [];
         $valueFilter = array_map(function ($e) {
-
             return isset($e['type']) && isset($e['id']) ? $e['type'] . '-' . $e['id'] : '';
         }, $valueFilter);
         $included = $this->transformer->getIncluded($this->resource);
