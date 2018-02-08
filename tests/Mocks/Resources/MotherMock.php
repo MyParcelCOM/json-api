@@ -7,7 +7,7 @@ class MotherMock
     /** @var int */
     private static $idCounter = 0;
 
-    /** @var string */
+    /** @var string|null */
     private $id;
 
     /**

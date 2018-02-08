@@ -25,6 +25,10 @@ class PersonTransformerMock implements TransformerInterface
         return $model->getId();
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function transform($model): array
     {
         return [
@@ -33,6 +37,10 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function transformIdentifier($model): array
     {
         return [
@@ -41,11 +49,18 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return 'person';
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function getIncluded($model): array
     {
         return [
@@ -58,6 +73,10 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function getRelationships($model): array
     {
         return [
@@ -76,6 +95,10 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function getLinks($model): array
     {
         return [
@@ -83,16 +106,28 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @param mixed $model
+     * @return string
+     */
     public function getLink($model): string
     {
         return '/link/to/person';
     }
 
+    /**
+     * @param mixed $model
+     * @return string
+     */
     public function getRelationLink($model): string
     {
         return '/link/to/person/relation';
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function getAttributes($model): array
     {
         return [
@@ -100,11 +135,18 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
+    /**
+     * @param mixed $model
+     * @return array
+     */
     public function getMeta($model): array
     {
         return [];
     }
 
+    /**
+     * @param TransformerFactory $transformerFactory
+     */
     public function __construct(TransformerFactory $transformerFactory)
     {
     }

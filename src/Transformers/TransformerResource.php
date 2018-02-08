@@ -22,8 +22,8 @@ class TransformerResource
     protected $includes = [];
 
     /** @var array */
-
     protected $meta = [];
+
     /** @var bool */
     protected $multipleResult = false;
 
