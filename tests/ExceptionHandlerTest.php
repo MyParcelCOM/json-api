@@ -8,11 +8,14 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Intouch\Newrelic\Newrelic;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
+use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class ExceptionHandlerTest extends TestCase
@@ -151,12 +154,28 @@ class ExceptionHandlerTest extends TestCase
         $this->assertTrue(true);
     }
 
+    /** @test */
+    public function testNewrelic()
+    {
+        $exception = new Exception('moar errors occured');
+
+        $newRelic = Mockery::mock(Newrelic::class);
+        $newRelic->shouldReceive('noticeError')->andReturnUsing(function ($value) use ($exception) {
+            $this->assertEquals($exception->getMessage(), $value);
+        });
+
+        $logger = Mockery::mock(LoggerInterface::class);
+        $logger->shouldReceive('error')->withArgs([$exception->getMessage(), $exception->getTrace()]);
+
+        $this->handler->setNewrelic($newRelic)->setLogger($logger)->report($exception);
+    }
+
     /**
      * Test whether a correct response is generated when a MaintenanceModeException is handled.
      *
      * @test
      */
-    public function testMainenanceModeHandling()
+    public function testMaintenanceModeHandling()
     {
         // Can't mock exceptions, they have final methods.
         $exception = Mockery::mock(MaintenanceModeException::class);
@@ -168,9 +187,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals($this->appName, $json['title'], 'When in maintenance mode response on \'/\' contains an incorrect title');
 
         $this->assertArrayHasKey('status', $json, 'When in maintenance mode response on \'/\' does not contain a status');
-
         $this->assertEquals(503, $response->getStatus(), 'Maintenance status code was not 503');
-
 
         $request = Mockery::mock(Request::class, ['path' => '/some/other/path']);
         $response = $this->handler->render($request, $exception);
@@ -181,6 +198,16 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals('503', reset($json['errors'])['status'], 'Maintenance status code was not 503');
     }
 
+    /** @test */
+    public function testNotFoundException()
+    {
+        $exception = Mockery::mock(NotFoundHttpException::class);
+        $response = $this->handler->setDebug(true)->render($this->request, $exception);
+        $json = $response->getData();
+
+        $this->assertEquals(NotFoundException::class, $json['errors'][0]['meta']['debug']['exception']);
+        $this->assertEquals(404, $response->getStatus());
+    }
 
     /**
      * Check if the json array is a valid jsonapi response.
