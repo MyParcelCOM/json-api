@@ -75,15 +75,19 @@ class TransformerFactoryTest extends TestCase
     /** @test */
     public function testCreateTransformerItem()
     {
-        $this->assertInstanceOf(TransformerItem::class,
-            $this->transformerFactory->createTransformerItem($this->modelMock));
+        $this->assertInstanceOf(
+            TransformerItem::class,
+            $this->transformerFactory->createTransformerItem($this->modelMock)
+        );
     }
 
     /** @test */
     public function testCreateTransformerCollection()
     {
         $collection = Mockery::mock(Collection::class, ['offsetExists' => false, 'offsetGet' => null]);
-        $this->assertInstanceOf(TransformerCollection::class,
-            $this->transformerFactory->createTransformerCollection($collection));
+        $this->assertInstanceOf(
+            TransformerCollection::class,
+            $this->transformerFactory->createTransformerCollection($collection)
+        );
     }
 }
