@@ -2,7 +2,6 @@
 
 namespace MyParcelCom\JsonApi\Tests\Mocks\Transformers;
 
-
 use MyParcelCom\JsonApi\Tests\Mocks\Resources\FatherMock;
 use MyParcelCom\JsonApi\Tests\Mocks\Resources\MotherMock;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
