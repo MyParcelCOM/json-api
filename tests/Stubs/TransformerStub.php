@@ -2,6 +2,8 @@
 
 namespace MyParcelCom\JsonApi\Tests\Stubs;
 
+use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
@@ -12,6 +14,18 @@ class TransformerStub extends AbstractTransformer
 
     /** @var string */
     protected $type = 'test';
+
+    /**
+     * Helper function to reset the type for the abstract exception test.
+     *
+     * @return $this
+     */
+    public function clearType()
+    {
+        $this->type = null;
+
+        return $this;
+    }
 
     /**
      * @param mixed $model
@@ -79,5 +93,35 @@ class TransformerStub extends AbstractTransformer
     public function getMeta($model): array
     {
         return parent::getMeta($model) + ['da' => 'ta'];
+    }
+
+    public function transformRelationship($model, $inDataTag = true): array
+    {
+        return parent::transformRelationship($model, $inDataTag);
+    }
+
+    public function transformCollection(Collection $collection): array
+    {
+        return parent::transformCollection($collection);
+    }
+
+    public function getAttributesFromModel($model): ?array
+    {
+        return parent::getAttributesFromModel($model);
+    }
+
+    public function getTimestamp(?DateTime $dateTime): ?int
+    {
+        return parent::getTimestamp($dateTime);
+    }
+
+    public function transformRelationshipForId(string $id, string $class, $inDataTag = true): array
+    {
+        return parent::transformRelationshipForId($id, $class, $inDataTag);
+    }
+
+    public function transformRelationshipForIds(array $ids, string $class, $relatedLink = null): array
+    {
+        return parent::transformRelationshipForIds($ids, $class, $relatedLink);
     }
 }

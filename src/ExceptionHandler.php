@@ -118,9 +118,7 @@ class ExceptionHandler extends Handler
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            $exception = new NotFoundException(
-                "The endpoint could not be found."
-            );
+            $exception = new NotFoundException('The endpoint could not be found.');
         }
 
         if ($exception instanceof ExceptionInterface) {
@@ -130,20 +128,29 @@ class ExceptionHandler extends Handler
                 $error['meta']['debug'] = $this->getDebugMeta($exception);
             }
 
-            return $this->responseFactory->json([
-                'errors' => [
-                    $error,
+            return $this->responseFactory->json(
+                [
+                    'errors' => [
+                        $error,
+                    ],
                 ],
-            ], $exception->getStatus());
+                $exception->getStatus(),
+                [
+                    'Content-Type' => 'application/vnd.api+json',
+                ]
+            );
         }
 
         return $this->responseFactory->json(
             [
-                "errors" => [
+                'errors' => [
                     $this->getDefaultError($exception),
                 ],
             ],
-            Response::HTTP_INTERNAL_SERVER_ERROR
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            [
+                'Content-Type' => 'application/vnd.api+json',
+            ]
         );
     }
 
