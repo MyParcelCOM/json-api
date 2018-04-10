@@ -121,12 +121,13 @@ class AbstractTransformerTest extends TestCase
     /** @test */
     public function testGetAttributesFromCollection()
     {
-        $this->assertNull($this->transformer->getAttributesFromCollection(null));
         $this->assertEquals(
             [
-                'at' => 'tribute',
+                [
+                    'at' => 'tribute',
+                ],
             ],
-            $this->transformer->getAttributesFromModel(new Collection([$this->model]))
+            $this->transformer->getAttributesFromCollection(new Collection([$this->model]))
         );
     }
 
@@ -173,7 +174,7 @@ class AbstractTransformerTest extends TestCase
     {
         $this->assertEquals(
             [
-                'data' => [
+                'data'  => [
                     [
                         'id'   => 'mockId',
                         'type' => 'test',

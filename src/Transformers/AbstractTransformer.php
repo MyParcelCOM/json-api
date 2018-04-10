@@ -115,11 +115,11 @@ abstract class AbstractTransformer implements TransformerInterface
      * @param Collection $collection
      * @return array
      */
-    protected function getAttributesFromCollection(Collection $collection): ?array
+    protected function getAttributesFromCollection(Collection $collection): array
     {
         $result = [];
         foreach ($collection as $model) {
-            $result[] = $this->transformerFactory->createFromModel($model)->getAttributes($model);
+            $result[] = $this->getAttributesFromModel($model);
         }
 
         return $result;
