@@ -119,6 +119,18 @@ class AbstractTransformerTest extends TestCase
     }
 
     /** @test */
+    public function testGetAttributesFromCollection()
+    {
+        $this->assertNull($this->transformer->getAttributesFromCollection(null));
+        $this->assertEquals(
+            [
+                'at' => 'tribute',
+            ],
+            $this->transformer->getAttributesFromModel(new Collection([$this->model]))
+        );
+    }
+
+    /** @test */
     public function testGetAttributesFromModel()
     {
         $this->assertNull($this->transformer->getAttributesFromModel(null));
