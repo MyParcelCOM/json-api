@@ -105,6 +105,11 @@ class TransformerStub extends AbstractTransformer
         return parent::transformCollection($collection);
     }
 
+    public function getAttributesFromCollection(Collection $collection): array
+    {
+        return parent::getAttributesFromCollection($collection);
+    }
+
     public function getAttributesFromModel($model): ?array
     {
         return parent::getAttributesFromModel($model);
