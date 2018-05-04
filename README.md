@@ -5,7 +5,7 @@
 Shared library with JSON API related exceptions, interfaces, traits and utility classes.
 
 ## Installation
-The library uses Docker to run php and composer. To install Docker, follow the steps in the [documentation](https://docs.myparcel.com/github/#docker).
+The library uses Docker to run php and composer. To install Docker, follow the steps in the [documentation](https://docs.myparcel.com/development/#docker).
 
 ### Setup
 To setup the project, run:
@@ -28,5 +28,5 @@ A few composer scripts have been defined, you can call these using the following
 
 `./mp.sh composer fix-style` - Automatically fix non-PSR-2 code (not all errors can be automatically fixed).
 
-## Licence
-All software by MyParcel.com is licenced under the [MyParcel.com general terms and conditions](https://www.myparcel.com/terms). 
+## License
+All software by MyParcel.com is licensed under the [MyParcel.com general terms and conditions](https://www.myparcel.com/terms). 
