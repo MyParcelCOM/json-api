@@ -143,7 +143,7 @@ class ExceptionHandlerTest extends TestCase
         }
 
         $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs([$message, $trace]);
+        $logger->shouldReceive('error')->withArgs([$message, ['trace' => $trace]]);
 
         try {
             $this->handler->setLogger($logger);
@@ -167,7 +167,7 @@ class ExceptionHandlerTest extends TestCase
         });
 
         $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs([$exception->getMessage(), $exception->getTrace()]);
+        $logger->shouldReceive('error')->withArgs([$exception->getMessage(), ['trace' => $exception->getTrace()]]);
 
         $this->handler->setNewrelic($newRelic)->setLogger($logger)->report($exception);
     }
