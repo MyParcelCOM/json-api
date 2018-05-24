@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Traits;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use JsonSchema\Validator;
 
 /**
@@ -20,50 +21,81 @@ trait AssertionsTrait
      * @param array  $body
      * @param string $method
      * @param int    $status
+     * @return TestResponse
      */
-    public function assertJsonSchema(string $schemaPath, string $url, array $headers = [], array $body = [], string $method = 'get', int $status = 200)
+    public function assertJsonSchema(string $schemaPath, string $url, array $headers = [], array $body = [], string $method = 'get', int $status = 200): TestResponse
     {
+        /** @var TestResponse $response */
         $response = $this->json($method, $url, $body, $headers);
+
+        // Response should have correct header and status.
         $response->assertStatus($status);
+        $response->assertHeader('Content-Type', 'application/vnd.api+json');
+
+        $accept = $headers['Accept'] ?? 'application/vnd.api+json';
 
         // Content should adhere to the schema.
         $content = json_decode($response->getContent());
+        $schema = $this->getSchema($schemaPath, $method, $status, $accept);
 
-        $schema = $this->getSchema($schemaPath, $method, $status);
+        $this->assertValidJsonSchema($content, $schema);
 
+        return $response;
+    }
+
+    /**
+     * @param $content
+     * @param $schema
+     */
+    private function assertValidJsonSchema($content, $schema): void
+    {
         /** @var Validator $validator */
-        $validator = $this->app->make(Validator::class);
+        $validator = $this->getValidator();
         $validator->validate($content, $schema);
 
-        $this->assertTrue($validator->isValid(), print_r($validator->getErrors(), true));
+        $this->assertTrue($validator->isValid(), print_r([
+            'errors' => $validator->getErrors(),
+            'data'   => $content,
+        ], true));
     }
 
     /**
      * @param int    $count
      * @param string $url
      * @param array  $headers
-     * @param int    $status
-     * @internal param null|string $accessToken
+     * @return TestResponse
      */
-    public function assertJsonDataCount(int $count, string $url, array $headers = [], int $status = 200): void
+    public function assertJsonDataCount(int $count, string $url, array $headers = []): TestResponse
     {
         $response = $this->json('GET', $url, [], $headers);
-        $response->assertStatus($status);
-
         $content = json_decode($response->getContent());
 
         $this->assertTrue(property_exists($content, 'data'), 'content has no property "data" for url:' . $url);
-        $this->assertCount($count, $content->data, 'data amount is ' . count($content->data) . ' expecting ' . $count . ' for url:' . $url);
+        if (is_array($content->data)) {
+            $this->assertEquals($count, count($content->data), 'data amount is ' . count($content->data) . ' expecting ' . $count . ' for url:' . $url);
+        } elseif (is_object($content->data)) {
+            // It is a single object, so count is one.
+            $this->assertEquals($count, 1);
+        } elseif (is_null($content->data)) {
+            $this->assertEquals($count, 0);
+        } else {
+            $this->fail("The content of the data attribute is of type: %s. It should be an array, object or null.", gettype($content->data));
+        }
+
+        return $response;
     }
 
     /**
      * @param string $schemaPath
      * @param string $method
      * @param int    $status
-     * @return \stdClass
+     * @param string $accept
+     * @return stdClass
      */
-    public function getSchema(string $schemaPath, string $method = 'get', int $status = 200): \stdClass
-    {
-        return $this->app->make('schema')->paths->{$schemaPath}->{strtolower($method)}->responses->{$status}->schema;
-    }
+    protected abstract function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass;
+
+    /**
+     * @return Validator
+     */
+    protected abstract function getValidator(): Validator;
 }
