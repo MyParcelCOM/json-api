@@ -218,7 +218,7 @@ class ExceptionHandler extends Handler
             return;
         }
 
-        $this->logger->error($e->getMessage(), ['trace' => $e->getTrace()]);
+        $this->logger->error($e->getMessage(), ['trace' => array_slice($e->getTrace(), 0, 5)]);
     }
 
     /**
