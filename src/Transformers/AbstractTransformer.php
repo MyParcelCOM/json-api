@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Transformers;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 
 abstract class AbstractTransformer implements TransformerInterface
 {
@@ -100,34 +100,6 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param Collection $collection
-     * @return array
-     */
-    protected function transformCollection(Collection $collection): array
-    {
-        $result = [];
-        foreach ($collection as $model) {
-            $result[] = $this->transformerFactory->createFromModel($model)->transform($model);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param Collection $collection
-     * @return array
-     */
-    protected function getAttributesFromCollection(Collection $collection): array
-    {
-        $result = [];
-        foreach ($collection as $model) {
-            $result[] = $this->getAttributesFromModel($model);
-        }
-
-        return $result;
-    }
-
-    /**
      * @param $model
      * @return array|null
      */
@@ -158,6 +130,7 @@ abstract class AbstractTransformer implements TransformerInterface
      * @param string $class
      * @param string $relatedLink
      * @return array
+     * @deprecated Use `transformRelationshipForIdentifiers()` instead
      */
     protected function transformRelationshipForIds(array $ids, string $class, $relatedLink = null): array
     {
@@ -181,10 +154,57 @@ abstract class AbstractTransformer implements TransformerInterface
      * @param string $class
      * @param bool   $inDataTag
      * @return array
+     * @deprecated Use `transformRelationshipForIdentifier()` instead
      */
     protected function transformRelationshipForId(string $id, string $class, $inDataTag = true): array
     {
+        /**
+         * @note This method is deprecated because too many assumptions are made
+         *       regarding $class.
+         *        - It is assumed that it is always safe to create a new
+         *          instance of $class.
+         *        - It is assumed that the constructor can take an array of
+         *          properties to be set on the object.
+         *        - It is assumed that $class has the property 'id'.
+         */
         return $this->transformRelationship(new $class(['id' => $id]), $inDataTag);
+    }
+
+    /**
+     * @param string $id
+     * @param string $type
+     * @param string $class
+     * @return array
+     */
+    protected function transformRelationshipForIdentifier(string $id, string $type, string $class): array
+    {
+        $resource = new ResourceIdentifier($id, $type);
+        $transformer = $this->transformerFactory->createFromModel($class);
+        $relationship = ['data' => $resource->jsonSerialize()];
+
+        if (($link = $transformer->getLink($resource))) {
+            $relationship['links'] = [
+                'related' => $link,
+            ];
+        }
+
+        return $relationship;
+    }
+
+    /**
+     * @param string[]   $ids
+     * @param string     $type
+     * @param array|null $links
+     * @return array
+     */
+    protected function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
+    {
+        return [
+            'data'  => array_map(function ($id) use ($type) {
+                return (new ResourceIdentifier($id, $type))->jsonSerialize();
+            }, $ids),
+            'links' => $links,
+        ];
     }
 
     /**

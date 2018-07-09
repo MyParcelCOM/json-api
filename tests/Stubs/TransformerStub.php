@@ -102,16 +102,6 @@ class TransformerStub extends AbstractTransformer
         return parent::transformRelationship($model, $inDataTag);
     }
 
-    public function transformCollection(Collection $collection): array
-    {
-        return parent::transformCollection($collection);
-    }
-
-    public function getAttributesFromCollection(Collection $collection): array
-    {
-        return parent::getAttributesFromCollection($collection);
-    }
-
     public function getAttributesFromModel($model): ?array
     {
         return parent::getAttributesFromModel($model);
@@ -120,6 +110,16 @@ class TransformerStub extends AbstractTransformer
     public function getTimestamp(?DateTime $dateTime): ?int
     {
         return parent::getTimestamp($dateTime);
+    }
+
+    public function transformRelationshipForIdentifier(string $id, string $type, string $class): array
+    {
+        return parent::transformRelationshipForIdentifier($id, $type, $class);
+    }
+
+    public function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
+    {
+        return parent::transformRelationshipForIdentifiers($ids, $type, $links);
     }
 
     public function transformRelationshipForId(string $id, string $class, $inDataTag = true): array

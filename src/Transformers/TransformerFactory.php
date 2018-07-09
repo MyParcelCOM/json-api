@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Transformers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class TransformerFactory
@@ -56,19 +55,19 @@ class TransformerFactory
     /**
      * Create a new transformer for a model.
      *
-     * @param object $model
+     * @param object|string $model
      * @return TransformerInterface
      */
     public function createFromModel($model): TransformerInterface
     {
-        $modelClass = get_class($model);
+        $modelClass = is_string($model) ? $model : get_class($model);
 
         if (isset($this->transformers[$modelClass])) {
             return $this->transformers[$modelClass];
         }
 
         foreach ($this->transformerMap as $class => $transformer) {
-            if ($model instanceof $class) {
+            if (is_a($modelClass, $class, true)) {
                 return $this->transformers[$modelClass] = $this->injectDependencies(new $transformer($this));
             }
         }
@@ -98,7 +97,7 @@ class TransformerFactory
     /**
      * Create a new transformer item for a model.
      *
-     * @param Model $model
+     * @param object $model
      * @return TransformerItem
      */
     public function createTransformerItem($model): TransformerItem
