@@ -12,8 +12,10 @@ abstract class AbstractTransformer implements TransformerInterface
 {
     /** @var UrlGeneratorInterface */
     protected $urlGenerator;
+
     /** @var TransformerFactory */
     protected $transformerFactory;
+
     /** @var string */
     protected $type;
 
@@ -41,8 +43,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function transform($model): array
     {
-        $this->validateModel($model);
-
         return $this->arrayDeepFilter([
             'id'            => $this->getId($model),
             'type'          => $this->getType(),
@@ -90,7 +90,7 @@ abstract class AbstractTransformer implements TransformerInterface
         $link = $transformer->getLink($model);
         $transformed = $inDataTag ? ['data' => $relationship] : $relationship;
 
-        if ($inDataTag && $link && $link !== '') {
+        if ($inDataTag && $link) {
             $transformed['links'] = [
                 'related' => $link,
             ];
@@ -195,8 +195,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function transformIdentifier($model): array
     {
-        $this->validateModel($model);
-
         return [
             'id'   => $this->getId($model),
             'type' => $this->getType(),
@@ -222,8 +220,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getIncluded($model): array
     {
-        $this->validateModel($model);
-
         return [];
     }
 
@@ -233,8 +229,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getRelationships($model): array
     {
-        $this->validateModel($model);
-
         return [];
     }
 
@@ -244,8 +238,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getLinks($model): array
     {
-        $this->validateModel($model);
-
         return array_filter([
             'self' => $this->getLink($model),
         ]);
@@ -259,8 +251,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getLink($model): string
     {
-        $this->validateModel($model);
-
         return '';
     }
 
@@ -272,8 +262,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getRelationLink($model): string
     {
-        $this->validateModel($model);
-
         return '';
     }
 
@@ -283,8 +271,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getAttributes($model): array
     {
-        $this->validateModel($model);
-
         return [];
     }
 
@@ -294,8 +280,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getMeta($model): array
     {
-        $this->validateModel($model);
-
         return [];
     }
 
@@ -304,10 +288,4 @@ abstract class AbstractTransformer implements TransformerInterface
      * @return string
      */
     abstract public function getId($model): string;
-
-    /**
-     * @param mixed $model
-     * @throws TransformerException
-     */
-    abstract protected function validateModel($model): void;
 }
