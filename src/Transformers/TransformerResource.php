@@ -8,7 +8,7 @@ use MyParcelCom\JsonApi\Http\Paginator;
 
 class TransformerResource
 {
-    /** @var array */
+    /** @var TransformerItem[] */
     protected $resources = [];
 
     /** @var Paginator */
@@ -30,9 +30,9 @@ class TransformerResource
     protected $multipleResult = false;
 
     /**
-     * @param array $resources
+     * @param TransformerItem[] $resources
      */
-    public function __construct($resources)
+    public function __construct(array $resources)
     {
         $this->resources = $resources;
     }

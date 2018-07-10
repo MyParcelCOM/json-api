@@ -46,82 +46,48 @@ class TransformerItem
      */
     public function getIncluded(array $relationships = [], array $alreadyIncluded = []): array
     {
+        /**
+         * @note This method used to be more complex. It was checking if the
+         *       resources that were to be included were already included.
+         *       However the implementation was incomplete and instead of
+         *       reducing the number of queries it was increasing them.
+         */
+
         $included = [];
-        $filtered = $this->getFilteredIncludes($relationships, $alreadyIncluded);
 
-        foreach ($filtered as $relationship => $resourceCallback) {
-            $resource = $resourceCallback();
+        $includedCallbacks = $this->transformer->getIncluded($this->resource);
+        foreach ($includedCallbacks as $relationship => $callback) {
+            if (in_array($relationship, $relationships)) {
+                $resource = $callback();
 
-            if ($resource instanceof Collection) {
-                $data = $this->transformerFactory->createTransformerCollection($resource)->getData();
-            } else {
-                $data = [$this->transformerFactory->createTransformerItem($resource)->getData()];
+                if ($resource instanceof Collection) {
+                    $data = $this->transformerFactory->createTransformerCollection($resource)->getData();
+                } else {
+                    $data = [$this->transformerFactory->createTransformerItem($resource)->getData()];
+                }
+
+                $included = array_merge($included, $data);
             }
 
-            $included = array_merge($included, $data);
-        }
+            if (array_key_exists($relationship, $relationships)) {
+                if (!isset($resource)) {
+                    $resource = $callback();
+                }
 
-        foreach ($this->transformer->getIncluded($this->resource) as $relationship => $resourceCallback) {
-            if (!array_key_exists($relationship, $relationships)) {
-                continue;
+                if ($resource instanceof Collection) {
+                    $data = $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship]);
+                } else {
+                    $data = $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship]);
+                }
+
+                $included = array_merge($included, $data);
             }
-            $resource = $resourceCallback();
 
-            if ($resource instanceof Collection) {
-                $data = $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship], $included);
-            } else {
-                $data = $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship], $included);
-            }
-
-            $included = array_merge($included, $data);
+            // Unset the resource so the isset check works correctly on the next
+            // iteration #phpvariablescoping
+            unset($resource);
         }
 
         return $included;
-    }
-
-    /**
-     * Filter which includes are still required to include.
-     *
-     * @param array $keyFilter   keys we need to include
-     * @param array $valueFilter values already included
-     * @return array
-     */
-    protected function getFilteredIncludes(array $keyFilter = [], array $valueFilter = []): array
-    {
-        $filtered = [];
-        $valueFilter = array_map(function ($e) {
-            return isset($e['type']) && isset($e['id']) ? $e['type'] . '-' . $e['id'] : '';
-        }, $valueFilter);
-        $included = $this->transformer->getIncluded($this->resource);
-
-        foreach ($included as $key => $includes) {
-            if (!in_array($key, $keyFilter)) {
-                continue;
-            }
-
-            /**
-             * Get the relationship data with key from the transformer
-             */
-            $relationships = $this->transformer->getRelationships($this->resource)[$key]['data'];
-
-            /**
-             * If $relationships is a single item instead of an array of items, we put it in an array.
-             */
-            if (isset($relationships['type'])) {
-                $relationships = [$relationships];
-            }
-
-            /**
-             * We check for all the items if they are already included if not we add them to the list
-             */
-            foreach ($relationships as $relation) {
-                if (!in_array($relation['type'] . '-' . $relation['id'], $valueFilter)) {
-                    $filtered[$key] = $includes;
-                    break;
-                }
-            }
-        }
-
-        return $filtered;
     }
 }
