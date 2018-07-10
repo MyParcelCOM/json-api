@@ -81,7 +81,6 @@ class TransformerItemTest extends TestCase
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], []));
-        $this->assertEquals([], $this->transformerItem->getIncluded(['resourceName'], [$this->includedResource]));
         $this->assertEquals([], $this->transformerItem->getIncluded([], [$this->includedResource]));
         $this->assertEquals([], $this->transformerItem->getIncluded([], []));
         $this->assertEquals([], $this->transformerItem->getIncluded(['foo'], []));

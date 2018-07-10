@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Exceptions\Tests;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class AbstractTransformerTest extends TestCase
 {
@@ -95,45 +95,6 @@ class AbstractTransformerTest extends TestCase
     }
 
     /** @test */
-    public function testTransformCollection()
-    {
-        $this->assertEquals(
-            [
-                [
-                    'id'            => 'mockId',
-                    'type'          => 'test',
-                    'attributes'    => [
-                        'at' => 'tribute',
-                    ],
-                    'meta'          => [
-                        'da' => 'ta',
-                    ],
-                    'links'         => [
-                        'self' => '#32',
-                    ],
-                    'relationships' => [
-                        'relation' => 'ship',
-                    ],
-                ],
-            ],
-            $this->transformer->transformCollection(new Collection([$this->model]))
-        );
-    }
-
-    /** @test */
-    public function testGetAttributesFromCollection()
-    {
-        $this->assertEquals(
-            [
-                [
-                    'at' => 'tribute',
-                ],
-            ],
-            $this->transformer->getAttributesFromCollection(new Collection([$this->model]))
-        );
-    }
-
-    /** @test */
     public function testGetAttributesFromModel()
     {
         $this->assertNull($this->transformer->getAttributesFromModel(null));
@@ -155,6 +116,63 @@ class AbstractTransformerTest extends TestCase
     }
 
     /** @test */
+    public function testTransformRelationshipForIdentifier()
+    {
+        $this->assertEquals(
+            [
+                'data'  => [
+                    'id'   => 'joe',
+                    'type' => 'person',
+                ],
+                'links' => [
+                    'related' => '#32',
+                ],
+            ],
+            $this->transformer->transformRelationshipForIdentifier('joe', 'person', stdClass::class)
+        );
+    }
+
+    /** @test */
+    public function testTransformRelationshipForIdentifiers()
+    {
+        $this->assertEquals(
+            [
+                'data'  => [
+                    [
+                        'id'   => 'joe',
+                        'type' => 'person',
+                    ],
+                    [
+                        'id'   => 'jane',
+                        'type' => 'person',
+                    ],
+                    [
+                        'id'   => 'pete',
+                        'type' => 'person',
+                    ],
+                    [
+                        'id'   => 'anna',
+                        'type' => 'person',
+                    ],
+                ],
+                'links' => [
+                    'related' => 'i-link/to.everyone',
+                ],
+            ],
+            $this->transformer->transformRelationshipForIdentifiers(
+                [
+                    'joe',
+                    'jane',
+                    'pete',
+                    'anna',
+                ],
+                'person',
+                ['related' => 'i-link/to.everyone']
+            )
+        );
+    }
+
+    /** @test */
     public function testTransformRelationshipForId()
     {
         $this->assertEquals(
@@ -167,7 +185,7 @@ class AbstractTransformerTest extends TestCase
                     'related' => '#32',
                 ],
             ],
-            $this->transformer->transformRelationshipForId('1', 'stdClass')
+            $this->transformer->transformRelationshipForId('1', stdClass::class)
         );
     }
 
@@ -190,7 +208,7 @@ class AbstractTransformerTest extends TestCase
                     'related' => 'ploink',
                 ],
             ],
-            $this->transformer->transformRelationshipForIds(['1', '2'], 'stdClass', 'ploink')
+            $this->transformer->transformRelationshipForIds(['1', '2'], stdClass::class, 'ploink')
         );
     }
 }
