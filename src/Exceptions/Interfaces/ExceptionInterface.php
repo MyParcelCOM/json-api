@@ -52,6 +52,12 @@ interface ExceptionInterface
         'title' => 'Unprocessable entity',
     ];
 
+    // Billing/payment related errors 11000 - 11999
+    const PAYMENT_REQUIRED = [
+        'code'  => '11000',
+        'title' => 'Payment Required',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
