@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 class MissingBillingInformationException extends AbstractException
 {
     /**
-     * @param string          $detail
+     * @param array           $missingBillingInformation
      * @param \Throwable|null $previous
      */
-    public function __construct(string $detail, \Throwable $previous = null)
+    public function __construct(array $missingBillingInformation, \Throwable $previous = null)
     {
+        $detail = 'Billing information is incomplete. The following data is missing: ' . implode(', ', $missingBillingInformation);
+
         parent::__construct(
             $detail,
             self::MISSING_BILLING_INFORMATION,
