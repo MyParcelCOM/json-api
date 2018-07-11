@@ -105,6 +105,7 @@ class RequestTraitTest extends TestCase
                 'sort'    => '-this,that',
                 'filter'  => [
                     'foo' => 'bar',
+                    'baz' => '',
                 ],
             ];
 

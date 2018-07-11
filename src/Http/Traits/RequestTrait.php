@@ -87,6 +87,6 @@ trait RequestTrait
      */
     public function getFilter(): array
     {
-        return $this->query('filter', []);
+        return array_filter($this->query('filter', []));
     }
 }
