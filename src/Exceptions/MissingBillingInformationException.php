@@ -6,7 +6,7 @@ namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class PaymentRequiredException extends AbstractException
+class MissingBillingInformationException extends AbstractException
 {
     /**
      * @param string          $detail
@@ -16,7 +16,7 @@ class PaymentRequiredException extends AbstractException
     {
         parent::__construct(
             $detail,
-            self::PAYMENT_REQUIRED,
+            self::MISSING_BILLING_INFORMATION,
             Response::HTTP_PAYMENT_REQUIRED,
             $previous
         );

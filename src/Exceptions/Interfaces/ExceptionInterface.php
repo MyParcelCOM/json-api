@@ -53,9 +53,9 @@ interface ExceptionInterface
     ];
 
     // Billing/payment related errors 11000 - 11999
-    const PAYMENT_REQUIRED = [
+    const MISSING_BILLING_INFORMATION = [
         'code'  => '11000',
-        'title' => 'Payment Required',
+        'title' => 'Missing Billing Information',
     ];
 
     // External API related errors 13000 - 13999
