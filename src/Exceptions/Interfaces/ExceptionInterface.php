@@ -52,6 +52,12 @@ interface ExceptionInterface
         'title' => 'Unprocessable entity',
     ];
 
+    // Billing/payment related errors 11000 - 11999
+    const MISSING_BILLING_INFORMATION = [
+        'code'  => '11000',
+        'title' => 'Missing Billing Information',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
