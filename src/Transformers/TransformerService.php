@@ -35,6 +35,17 @@ class TransformerService
     }
 
     /**
+     * @param int $maxPageSize
+     * @return $this
+     */
+    public function setMaxPageSize(int $maxPageSize): self
+    {
+        $this->paginator->setMaxPerSize($maxPageSize);
+
+        return $this;
+    }
+
+    /**
      * Transform a builder to JSON Api output.
      *
      * @param ResourcesInterface[] $resources

@@ -107,6 +107,13 @@ class PaginatorTest extends TestCase
         $this->assertEquals($this->end, $this->paginator->getLastPage());
     }
 
+         /** @test */
+    public function testMaxPerSize()
+    {
+        $this->paginator->setMaxPerSize(444);
+        $this->assertEquals(444, $this->paginator->getMaxPerSize());
+    }
+
     /** @test */
     public function testGetCount()
     {
