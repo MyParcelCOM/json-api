@@ -40,7 +40,7 @@ class TransformerService
      */
     public function setMaxPageSize(int $maxPageSize): self
     {
-        $this->paginator->setMaxPerSize($maxPageSize);
+        $this->paginator->setMaxPageSize($maxPageSize);
 
         return $this;
     }

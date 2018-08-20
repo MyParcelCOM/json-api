@@ -12,17 +12,17 @@ class Paginator
 
     /** @var int $total */
     protected $total;
-    /** @var string $baseUrl */
+    /** @var string */
     protected $baseUrl;
-    /** @var int $perPage */
+    /** @var int */
     protected $perPage;
-    /** @var int $currentPage */
+    /** @var int */
     protected $currentPage;
-    /** @var int $urlGenerator */
+    /** @var int */
     protected $urlGenerator;
-    /** @var string $pageName */
+    /** @var string */
     protected $pageName = "page[number]";
-    /** @var int $maxPageSize */
+    /** @var int */
     protected $maxPageSize = self::DEFAULT_PAGE_SIZE;
 
     public function __construct(string $url = '', int $perPage = self::DEFAULT_PAGE_SIZE, int $currentPage = 1, int $total = 0)
@@ -91,7 +91,7 @@ class Paginator
     /**
      * @return int
      */
-    public function getMaxPerSize(): int
+    public function getMaxPageSize(): int
     {
         return (int)$this->maxPageSize;
     }
@@ -100,7 +100,7 @@ class Paginator
      * @param int $maxPageSize
      * @return Paginator
      */
-    public function setMaxPerSize(int $maxPageSize): self
+    public function setMaxPageSize(int $maxPageSize): self
     {
         $this->maxPageSize = $maxPageSize;
 
@@ -131,7 +131,7 @@ class Paginator
      */
     public function getPerPage(): int
     {
-        return (int)min($this->getMaxPerSize(), $this->perPage);
+        return (int)min($this->getMaxPageSize(), $this->perPage);
     }
 
     /**
