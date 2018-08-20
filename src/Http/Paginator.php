@@ -8,22 +8,29 @@ use MyParcelCom\JsonApi\Exceptions\PaginatorException;
 
 class Paginator
 {
-    protected $total;
-    protected $baseUrl;
-    protected $perPage;
-    protected $currentPage;
-    protected $urlGenerator;
-    protected $pageName = "page[number]";
-
     const DEFAULT_PAGE_SIZE = 30;
-    const MAX_PAGE_SIZE = 30;
+
+    /** @var int $total */
+    protected $total;
+    /** @var string */
+    protected $baseUrl;
+    /** @var int */
+    protected $perPage;
+    /** @var int */
+    protected $currentPage;
+    /** @var int */
+    protected $urlGenerator;
+    /** @var string */
+    protected $pageName = "page[number]";
+    /** @var int */
+    protected $maxPageSize = self::DEFAULT_PAGE_SIZE;
 
     public function __construct(string $url = '', int $perPage = self::DEFAULT_PAGE_SIZE, int $currentPage = 1, int $total = 0)
     {
-        $this->baseUrl = $url;
-        $this->perPage = $perPage;
-        $this->currentPage = $currentPage;
-        $this->total = $total;
+        $this->setBaseUrl($url);
+        $this->setPerPage($perPage);
+        $this->setCurrentPage($currentPage);
+        $this->setTotal($total);
     }
 
     /**
@@ -76,9 +83,28 @@ class Paginator
      *
      * @return int
      */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
-        return $this->currentPage;
+        return (int)$this->currentPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPageSize(): int
+    {
+        return (int)$this->maxPageSize;
+    }
+
+    /**
+     * @param int $maxPageSize
+     * @return Paginator
+     */
+    public function setMaxPageSize(int $maxPageSize): self
+    {
+        $this->maxPageSize = $maxPageSize;
+
+        return $this;
     }
 
     /**
@@ -103,9 +129,9 @@ class Paginator
      *
      * @return int
      */
-    public function getPerPage()
+    public function getPerPage(): int
     {
-        return $this->perPage;
+        return (int)min($this->getMaxPageSize(), $this->perPage);
     }
 
     /**
@@ -115,7 +141,7 @@ class Paginator
      * @return $this
      * @throws PaginatorException
      */
-    public function setTotal(int $total)
+    public function setTotal(int $total): self
     {
         if ($total < 0) {
             throw new PaginatorException('total needs to be 0 or higher');
@@ -131,7 +157,7 @@ class Paginator
      * @param int $total
      * @return $this
      */
-    public function addTotal(int $total)
+    public function addTotal(int $total): self
     {
         $this->total += $total;
 
@@ -143,9 +169,9 @@ class Paginator
      *
      * @return int
      */
-    public function getTotal()
+    public function getTotal(): int
     {
-        return $this->total;
+        return (int)$this->total;
     }
 
     /**
@@ -153,9 +179,9 @@ class Paginator
      *
      * @return int
      */
-    public function getLastPage()
+    public function getLastPage(): int
     {
-        return ceil($this->total / $this->perPage);
+        return (int)ceil($this->getTotal() / $this->getPerPage());
     }
 
     /**
@@ -163,9 +189,9 @@ class Paginator
      *
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
-        return ceil($this->total / $this->perPage);
+        return (int)ceil($this->getTotal() / $this->getPerPage());
     }
 
     /**
@@ -175,7 +201,7 @@ class Paginator
      */
     public function getStart(): int
     {
-        return (int)(($this->currentPage - 1) * $this->perPage);
+        return (int)(($this->getCurrentPage() - 1) * $this->getPerPage());
     }
 
     /**
@@ -185,7 +211,7 @@ class Paginator
      */
     public function getEnd(): int
     {
-        return $this->getStart() + $this->perPage;
+        return $this->getStart() + $this->getPerPage();
     }
 
     /**
@@ -207,10 +233,10 @@ class Paginator
      * @param int $page
      * @return string
      */
-    protected function getUrl(int $page)
+    protected function getUrl(int $page): string
     {
         $urlBuilder = new UrlBuilder($this->baseUrl);
-        $urlBuilder->addQuery(['page' => ['size' => $this->perPage, 'number' => $page]]);
+        $urlBuilder->addQuery(['page' => ['size' => $this->getPerPage(), 'number' => $page]]);
 
         return $urlBuilder->getUrl();
     }

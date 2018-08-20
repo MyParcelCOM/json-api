@@ -35,10 +35,10 @@ class TransformerServiceTest extends TestCase
             'getTotal'   => 3,
             'getStart'   => 0,
             'getPerPage' => 1,
-            'addTotal'   => 2,
             'getCount'   => 2,
             'getLinks'   => ['self' => 'me'],
         ]);
+        $paginator->shouldReceive('addTotal')->andReturnSelf();
         $request = Mockery::mock(RequestInterface::class, [
             'getPaginator' => $paginator,
             'getIncludes'  => [
