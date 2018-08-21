@@ -125,11 +125,11 @@ class Paginator
      */
     public function getPerPage(): int
     {
-        if($this->perPage < 1 || $this->perPage > $this->getMaxPageSize()){
+        if ($this->perPage < 1 || $this->perPage > $this->getMaxPageSize()) {
             return self::DEFAULT_PAGE_SIZE;
         }
 
-        return (int)$this->perPage;
+        return $this->perPage;
     }
 
     /**
