@@ -74,8 +74,11 @@ class PaginatorTest extends TestCase
         $this->paginator->setCurrentPage(4);
         $this->assertEquals(4, $this->paginator->getCurrentPage());
 
-        $this->expectException(PaginatorException::class);
         $this->paginator->setCurrentPage(0);
+        $this->assertEquals(1, $this->paginator->getCurrentPage());
+
+        $this->paginator->setCurrentPage(-3);
+        $this->assertEquals(1, $this->paginator->getCurrentPage());
     }
 
     /** @test */
@@ -85,8 +88,8 @@ class PaginatorTest extends TestCase
         $this->paginator->setPerPage(4);
         $this->assertEquals(4, $this->paginator->getPerPage());
 
-        $this->expectException(PaginatorException::class);
         $this->paginator->setPerPage(-9001);
+        $this->assertEquals(30, $this->paginator->getPerPage());
     }
 
     /** @test */
