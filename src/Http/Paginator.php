@@ -70,10 +70,7 @@ class Paginator
      */
     public function setCurrentPage(int $currentPage): self
     {
-        if ($currentPage < 1) {
-            throw new PaginatorException('current page needs to be 1 or higher');
-        }
-        $this->currentPage = $currentPage;
+        $this->currentPage = max(1, $currentPage);
 
         return $this;
     }
@@ -116,9 +113,6 @@ class Paginator
      */
     public function setPerPage(int $perPage): self
     {
-        if ($perPage < 1) {
-            throw new PaginatorException('per page needs to be 1 or higher');
-        }
         $this->perPage = $perPage;
 
         return $this;
@@ -131,7 +125,11 @@ class Paginator
      */
     public function getPerPage(): int
     {
-        return (int)min($this->getMaxPageSize(), $this->perPage);
+        if($this->perPage < 1 || $this->perPage > $this->getMaxPageSize()){
+            return self::DEFAULT_PAGE_SIZE;
+        }
+
+        return (int)$this->perPage;
     }
 
     /**
