@@ -43,7 +43,10 @@ class ExceptionsTest extends TestCase
         $exception = new CarrierApiException(418, ['teapot'], new Exception('HTCPCP'));
 
         $this->assertEquals(418, $exception->getStatus());
-        $this->assertEquals(['carrier_response' => ['teapot']], $exception->getMeta());
+        $this->assertEquals([
+            'carrier_response' => ['teapot'],
+            'carrier_status'   => 418,
+        ], $exception->getMeta());
         $this->assertEquals('HTCPCP', $exception->getPrevious()->getMessage());
     }
 

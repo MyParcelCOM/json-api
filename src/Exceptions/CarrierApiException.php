@@ -24,5 +24,6 @@ class CarrierApiException extends AbstractException
         );
 
         $this->addMeta('carrier_response', $carrierApiResponse);
+        $this->addMeta('carrier_status', $status);
     }
 }
