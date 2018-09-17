@@ -21,6 +21,11 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     protected $meta;
 
     /**
+     * @var string
+     */
+    protected $status;
+
+    /**
      * @return JsonSchemaErrorInterface[]
      */
     public function getErrors(): array
@@ -54,6 +59,29 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     public function setMeta(array $meta): MultiErrorInterface
     {
         $this->meta = $meta;
+
+        return $this;
+    }
+
+    /**
+     * Return the http status for the request.
+     *
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the http status code for the request.
+     *
+     * @param string $status
+     * @return $this
+     */
+    public function setStatus(string $status): MultiErrorInterface
+    {
+        $this->status = $status;
 
         return $this;
     }

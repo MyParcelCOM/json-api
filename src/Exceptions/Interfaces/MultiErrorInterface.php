@@ -35,4 +35,19 @@ interface MultiErrorInterface
      * @return self
      */
     public function setMeta(array $meta): MultiErrorInterface;
+
+    /**
+     * Return the http status for the request.
+     *
+     * @return string
+     */
+    public function getStatus(): ?string;
+
+    /**
+     * Set the http status code for the request.
+     *
+     * @param  string $status
+     * @return $this
+     */
+    public function setStatus(string $status): self;
 }
