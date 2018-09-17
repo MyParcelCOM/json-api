@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Intouch\Newrelic\Newrelic;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
@@ -121,6 +122,25 @@ class ExceptionHandler extends Handler
 
         if ($exception instanceof NotFoundHttpException) {
             $exception = new NotFoundException('The endpoint could not be found.');
+        }
+
+        if ($exception instanceof MultiErrorInterface) {
+            $errors = [];
+
+            foreach ($exception->getErrors() as $error) {
+                $errors[] = (new ErrorTransformer())->transform($error);
+            }
+
+            return $this->responseFactory->json(
+                [
+                    'errors' => $errors,
+                    'meta'   => $exception->getMeta(),
+                ],
+                $exception->getStatus(),
+                [
+                    'Content-Type' => 'application/vnd.api+json',
+                ]
+            );
         }
 
         if ($exception instanceof ExceptionInterface) {
