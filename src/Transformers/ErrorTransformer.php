@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Transformers;
 
-use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 
 class ErrorTransformer
 {
     /**
      * Transform given Exception into a valid JSON API response.
      *
-     * @param  ExceptionInterface $exception
+     * @param  JsonSchemaErrorInterface $exception
      * @return array
      */
-    public function transform(ExceptionInterface $exception): array
+    public function transform(JsonSchemaErrorInterface $exception): array
     {
         return array_filter(
             [
