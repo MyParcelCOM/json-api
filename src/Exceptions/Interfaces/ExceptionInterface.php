@@ -52,6 +52,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Unprocessable entity',
     ];
 
+    const METHOD_NOT_ALLOWED = [
+        'code'  => '10009',
+        'title' => 'Method not allowed',
+    ];
+
     // Billing/payment related errors 11000 - 11999
     const MISSING_BILLING_INFORMATION = [
         'code'  => '11000',

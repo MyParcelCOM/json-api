@@ -18,6 +18,8 @@ use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 
 class ExceptionHandler extends Handler
 {
@@ -122,6 +124,10 @@ class ExceptionHandler extends Handler
 
         if ($exception instanceof NotFoundHttpException) {
             $exception = new NotFoundException('The endpoint could not be found.');
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            $exception = new MethodNotAllowedException($request->getMethod());
         }
 
         if ($exception instanceof MultiErrorInterface) {

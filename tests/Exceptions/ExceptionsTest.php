@@ -15,6 +15,7 @@ use MyParcelCom\JsonApi\Exceptions\InvalidHeaderException;
 use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
+use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\ModelTypeException;
@@ -191,5 +192,16 @@ class ExceptionsTest extends TestCase
 
         $this->assertEquals('G-Star', $exception->getPrevious()->getMessage());
         $this->assertEquals('RAW', $exception->getMessage());
+    }
+
+    /** @test */
+    public function testMethodNotAllowedException()
+    {
+        $exception = new MethodNotAllowedException('Put', new Exception('Previous exception'));
+
+        $this->assertEquals(405, $exception->getStatus());
+        $this->assertEquals(10009, $exception->getCode());
+        $this->assertEquals('The \'PUT\' method is not allowed on this endpoint.', $exception->getMessage());
+        $this->assertEquals('Previous exception', $exception->getPrevious()->getMessage());
     }
 }

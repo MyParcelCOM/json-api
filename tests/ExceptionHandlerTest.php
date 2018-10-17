@@ -14,9 +14,11 @@ use Intouch\Newrelic\Newrelic;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
+use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -35,7 +37,9 @@ class ExceptionHandlerTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = Mockery::mock(Request::class);
+        $this->request = Mockery::mock(Request::class, [
+            'getMethod' => 'GET'
+        ]);
 
         $factory = Mockery::mock(ResponseFactory::class);
         $factory->shouldReceive('json')
@@ -212,6 +216,22 @@ class ExceptionHandlerTest extends TestCase
 
         $this->assertEquals(NotFoundException::class, $json['errors'][0]['meta']['debug']['exception']);
         $this->assertEquals(404, $response->getStatus());
+    }
+
+    /** @test */
+    public function testItMapsAMethodNotAllowedHttpExceptionToAMethodNotAllowedException()
+    {
+        $exception = Mockery::mock(MethodNotAllowedHttpException::class);
+        $response = $this->handler->setDebug(true)->render($this->request, $exception);
+        $responseData = $response->getData();
+
+        $this->assertNotEmpty($responseData['errors']);
+        $this->assertEquals(MethodNotAllowedException::class, $responseData['errors'][0]['meta']['debug']['exception']);
+        $this->assertEquals(405, $response->getStatus());
+        $this->assertEquals(405, $responseData['errors'][0]['status']);
+        $this->assertEquals(10009, $responseData['errors'][0]['code']);
+        $this->assertEquals('Method not allowed', $responseData['errors'][0]['title']);
+        $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
     }
 
     /**
