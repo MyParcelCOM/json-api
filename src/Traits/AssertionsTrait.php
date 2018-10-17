@@ -95,7 +95,7 @@ trait AssertionsTrait
         $response = $this->json('GET', $url, [], $headers);
         $content = json_decode($response->getContent());
 
-        $this->assertTrue(property_exists($content, 'data'), print_r($content, true));
+        $this->assertObjectHasAttribute('data', $content, print_r($content, true));
         $data = is_array($content->data) ? $content->data : [$content->data];
         $this->assertCount(count($ids), $data, 'Number of expected id\'s did not match number of resources in the response');
 
