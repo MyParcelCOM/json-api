@@ -86,6 +86,26 @@ trait AssertionsTrait
     }
 
     /**
+     * @param string $url
+     * @param array  $headers
+     * @param array  $ids
+     */
+    private function assertJsonDataContainsIds(string $url, array $ids = [], array $headers = [])
+    {
+        $response = $this->json('GET', $url, [], $headers);
+        $content = json_decode($response->getContent());
+
+        $this->assertObjectHasAttribute('data', $content, print_r($content, true));
+        $data = is_array($content->data) ? $content->data : [$content->data];
+        $this->assertCount(count($ids), $data, 'Number of expected id\'s did not match number of resources in the response');
+
+        $expectedIds = array_map(function ($item) {
+            return $item->id;
+        }, $content->data);
+        $this->assertEquals($ids, $expectedIds, 'Missing expected ids', 0.0, 10, true);
+    }
+
+    /**
      * @param string $schemaPath
      * @param string $method
      * @param int    $status
