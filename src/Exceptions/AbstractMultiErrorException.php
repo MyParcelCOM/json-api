@@ -59,9 +59,9 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getMeta(): array
+    public function getMeta(): ?array
     {
         return $this->meta;
     }
