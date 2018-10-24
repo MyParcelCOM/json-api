@@ -8,10 +8,14 @@ use Exception;
 use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
 use MyParcelCom\JsonApi\Exceptions\ExternalRequestException;
+use MyParcelCom\JsonApi\Exceptions\GenericCarrierException;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
 use MyParcelCom\JsonApi\Exceptions\InvalidClientException;
+use MyParcelCom\JsonApi\Exceptions\InvalidCredentialsException;
 use MyParcelCom\JsonApi\Exceptions\InvalidExternalErrorException;
 use MyParcelCom\JsonApi\Exceptions\InvalidHeaderException;
+use MyParcelCom\JsonApi\Exceptions\InvalidInputException;
 use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
@@ -203,5 +207,65 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(10009, $exception->getCode());
         $this->assertEquals('The \'PUT\' method is not allowed on this endpoint.', $exception->getMessage());
         $this->assertEquals('Previous exception', $exception->getPrevious()->getMessage());
+    }
+
+    /** @test */
+    public function testGenericCarrierErrorException()
+    {
+        $errors = [
+            \Mockery::mock(JsonSchemaErrorInterface::class),
+        ];
+        $exception = new GenericCarrierException($errors);
+        $this->assertEquals($errors, $exception->getErrors());
+        $this->assertEquals(500, $exception->getStatus());
+
+        $exception->setStatus(300);
+        $this->assertEquals(300, $exception->getStatus());
+
+        $this->assertEquals([
+            'foo' => 'bar',
+        ], $exception->setMeta([
+            'foo' => 'bar',
+        ])->getMeta());
+    }
+
+    /** @test */
+    public function testInvalidInputException()
+    {
+        $errors = [
+            \Mockery::mock(JsonSchemaErrorInterface::class),
+        ];
+        $exception = new InvalidInputException($errors);
+        $this->assertEquals($errors, $exception->getErrors());
+        $this->assertEquals(422, $exception->getStatus());
+
+        $exception->setStatus(300);
+        $this->assertEquals(300, $exception->getStatus());
+
+        $this->assertEquals([
+            'foo' => 'bar',
+        ], $exception->setMeta([
+            'foo' => 'bar',
+        ])->getMeta());
+    }
+
+    /** @test */
+    public function testInvalidCredentialsException()
+    {
+        $errors = [
+            \Mockery::mock(JsonSchemaErrorInterface::class),
+        ];
+        $exception = new InvalidCredentialsException($errors);
+        $this->assertEquals($errors, $exception->getErrors());
+        $this->assertEquals(403, $exception->getStatus());
+
+        $exception->setStatus(300);
+        $this->assertEquals(300, $exception->getStatus());
+
+        $this->assertEquals([
+            'foo' => 'bar',
+        ], $exception->setMeta([
+            'foo' => 'bar',
+        ])->getMeta());
     }
 }
