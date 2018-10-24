@@ -16,7 +16,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     /** @var array */
     protected $links;
 
-    /** @var string */
+    /** @var int */
     protected $status;
 
     /** @var string */
@@ -45,7 +45,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
         $this->setDetail($detail);
         $this->setErrorCode($errorType['code']);
         $this->setTitle($errorType['title']);
-        $this->setStatus((string)$status);
+        $this->setStatus($status);
 
         parent::__construct($detail, (int)$this->getErrorCode(), $previous);
     }
@@ -113,9 +113,9 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     /**
      * Return the http status for the request.
      *
-     * @return string
+     * @return int
      */
-    public function getStatus(): ?string
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -123,10 +123,10 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     /**
      * Set the http status code for the request.
      *
-     * @param string $status
+     * @param int $status
      * @return $this
      */
-    public function setStatus(string $status): JsonSchemaErrorInterface
+    public function setStatus(int $status): JsonSchemaErrorInterface
     {
         $this->status = $status;
 
