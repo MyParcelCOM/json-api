@@ -19,6 +19,6 @@ class GenericCarrierException extends AbstractMultiErrorException
      */
     public function __construct(array $errors, int $status = 500, ?Throwable $previous = null)
     {
-        parent::__construct($status, $errors, $previous);
+        parent::__construct($errors, $status, $previous);
     }
 }

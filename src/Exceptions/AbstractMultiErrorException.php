@@ -27,11 +27,11 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     protected $status;
 
     /**
-     * @param int                        $status
      * @param JsonSchemaErrorInterface[] $errors
+     * @param int                        $status
      * @param Throwable|null             $previous
      */
-    public function __construct(int $status, array $errors, \Throwable $previous = null)
+    public function __construct(array $errors, int $status, \Throwable $previous = null)
     {
         $this->setStatus((string)$status);
         $this->setErrors($errors);
