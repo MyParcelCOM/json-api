@@ -36,7 +36,7 @@ class AbstractExceptionTest extends TestCase
     /** @test */
     public function testStatus()
     {
-        $this->assertEquals('single', $this->exception->setStatus('single')->getStatus());
+        $this->assertEquals(123, $this->exception->setStatus(123)->getStatus());
     }
 
     /** @test */

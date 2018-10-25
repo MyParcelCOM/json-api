@@ -37,17 +37,17 @@ interface JsonSchemaErrorInterface
     /**
      * Return the http status for the request.
      *
-     * @return string
+     * @return int
      */
-    public function getStatus(): ?string;
+    public function getStatus(): ?int;
 
     /**
      * Set the http status code for the request.
      *
-     * @param  string $status
+     * @param  int $status
      * @return $this
      */
-    public function setStatus(string $status): self;
+    public function setStatus(int $status): self;
 
     /**
      * Get the application specific error code.

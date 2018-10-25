@@ -22,18 +22,18 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     protected $meta;
 
     /**
-     * @var string
+     * @var int
      */
     protected $status;
 
     /**
-     * @param int                        $status
      * @param JsonSchemaErrorInterface[] $errors
+     * @param int                        $status
      * @param Throwable|null             $previous
      */
-    public function __construct(int $status, array $errors, \Throwable $previous = null)
+    public function __construct(array $errors, int $status, \Throwable $previous = null)
     {
-        $this->setStatus((string)$status);
+        $this->setStatus($status);
         $this->setErrors($errors);
 
         parent::__construct('Response contains multiple errors.', $status, $previous);
@@ -80,9 +80,9 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     /**
      * Return the http status for the request.
      *
-     * @return string
+     * @return int
      */
-    public function getStatus(): ?string
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -90,10 +90,10 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     /**
      * Set the http status code for the request.
      *
-     * @param string $status
+     * @param int $status
      * @return $this
      */
-    public function setStatus(string $status): MultiErrorInterface
+    public function setStatus(int $status): MultiErrorInterface
     {
         $this->status = $status;
 
