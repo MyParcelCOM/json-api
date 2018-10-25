@@ -257,7 +257,7 @@ class ExceptionsTest extends TestCase
         ];
         $exception = new InvalidCredentialsException($errors);
         $this->assertEquals($errors, $exception->getErrors());
-        $this->assertEquals(403, $exception->getStatus());
+        $this->assertEquals(401, $exception->getStatus());
 
         $exception->setStatus(300);
         $this->assertEquals(300, $exception->getStatus());

@@ -17,7 +17,7 @@ class InvalidCredentialsException extends AbstractMultiErrorException
      * @param int            $status
      * @param Throwable|null $previous
      */
-    public function __construct(array $errors, int $status = 403, ?Throwable $previous = null)
+    public function __construct(array $errors, int $status = 401, ?Throwable $previous = null)
     {
         parent::__construct($errors, $status, $previous);
     }
