@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Tests\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Collection;
 use Mockery;
 use MyParcelCom\JsonApi\Resources\QueryResources;
@@ -140,6 +141,15 @@ class QueryResourcesTest extends TestCase
             [1, 2, 3],
             $this->resultSet->getIds()
         );
+    }
+
+    /** @test */
+    public function testGetQuery()
+    {
+        $builder = new Builder(Mockery::mock(QueryBuilder::class, ['id' => '123']));
+
+        $this->resultSet = new QueryResources($builder);
+        $this->assertEquals($builder, $this->resultSet->getQuery());
     }
 
     /** @test */

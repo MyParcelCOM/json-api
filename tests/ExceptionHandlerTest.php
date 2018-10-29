@@ -14,6 +14,7 @@ use Intouch\Newrelic\Newrelic;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
+use MyParcelCom\JsonApi\Exceptions\AbstractMultiErrorException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +39,7 @@ class ExceptionHandlerTest extends TestCase
         parent::setUp();
 
         $this->request = Mockery::mock(Request::class, [
-            'getMethod' => 'GET'
+            'getMethod' => 'GET',
         ]);
 
         $factory = Mockery::mock(ResponseFactory::class);
@@ -58,16 +59,18 @@ class ExceptionHandlerTest extends TestCase
     }
 
     /** @test */
-    public function testRender()
+    public function testRenderNormalException()
     {
-        // Test rendering a normal exception
         $exception = Mockery::mock(Exception::class);
         $response = $this->handler->render($this->request, $exception);
 
         $this->assertEquals(500, $response->getStatus(), 'Normal exceptions should produce a 500 http status code');
         $this->checkJson($response->getData());
+    }
 
-        // Test rendering a JsonApiException
+    /** @test */
+    public function testRenderJsonApiException()
+    {
         $jsonApiException = Mockery::mock(AbstractException::class, [
             'getId'        => 'id',
             'getLinks'     => ['about' => 'some-link'],
@@ -75,14 +78,47 @@ class ExceptionHandlerTest extends TestCase
             'getErrorCode' => 8008,
             'getTitle'     => 'You went somewhere that doesn\'t exist',
             'getDetail'    => 'Don\'t pretend like you didn\'t know what you were doing!',
-            'getSource'    => ['pointer' => '/data/attributes/some-attribute', 'parameter' => 'some-query-param'],
+            'getSource'    => [
+                'pointer'   => '/data/attributes/some-attribute',
+                'parameter' => 'some-query-param',
+            ],
             'getMeta'      => [
                 'non-standard' => 'something non standard can be in here',
             ],
         ]);
         $response = $this->handler->render($this->request, $jsonApiException);
 
-        $this->assertEquals(404, $response->getStatus(), 'Normal exceptions should produce a 500 http status code');
+        $this->assertEquals(404, $response->getStatus());
+        $this->checkJson($response->getData());
+    }
+
+    /** @test */
+    public function testRenderMultiErrorException()
+    {
+        $exception = Mockery::mock(AbstractMultiErrorException::class, [
+            'getErrors' => [
+                Mockery::mock(AbstractException::class, [
+                    'getId'        => 'id',
+                    'getLinks'     => ['about' => 'some-link'],
+                    'getStatus'    => 404,
+                    'getErrorCode' => 8008,
+                    'getTitle'     => 'You went somewhere that doesn\'t exist',
+                    'getDetail'    => 'Don\'t pretend like you didn\'t know what you were doing!',
+                    'getSource'    => [
+                        'pointer'   => '/data/attributes/some-attribute',
+                        'parameter' => 'some-query-param',
+                    ],
+                    'getMeta'      => [
+                        'non-standard' => 'something non standard can be in here',
+                    ],
+                ]),
+            ],
+            'getMeta'   => ['teapot'],
+            'getStatus' => 418,
+        ]);
+        $response = $this->handler->render($this->request, $exception);
+
+        $this->assertEquals(418, $response->getStatus());
         $this->checkJson($response->getData());
     }
 

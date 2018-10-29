@@ -51,6 +51,7 @@ trait RequestTrait
     {
         if (strpos($include, '.') === false) {
             $includes[] = $include;
+
             return;
         }
 

@@ -90,7 +90,7 @@ trait AssertionsTrait
      * @param array  $headers
      * @param array  $ids
      */
-    private function assertJsonDataContainsIds(string $url, array $ids = [], array $headers = [])
+    public function assertJsonDataContainsIds(string $url, array $ids = [], array $headers = [])
     {
         $response = $this->json('GET', $url, [], $headers);
         $content = json_decode($response->getContent());

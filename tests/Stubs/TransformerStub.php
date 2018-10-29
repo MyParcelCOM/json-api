@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Tests\Stubs;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Collection;
 use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 

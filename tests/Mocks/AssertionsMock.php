@@ -38,7 +38,7 @@ class AssertionsMock
      */
     protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass
     {
-        return json_decode('{"paths":{"swag":{"get":{"responses":{"101":{"schema":{"data":[404]}}}}}}}');
+        return json_decode('{"paths":{"swag":{"get":{"responses":{"101":{"schema":{"data":[{"id":0},{"id":1}]}}}}}}}');
     }
 
     /**
@@ -65,7 +65,7 @@ class AssertionsMock
                 throw new Exception('unexpected json() parameters');
             }
 
-            return '{"data":[404]}';
+            return '{"data":[{"id":0},{"id":1}]}';
         });
 
         return $responseMock;
@@ -79,5 +79,15 @@ class AssertionsMock
     private function assertEquals($expected, $actual)
     {
         $this->testCase->assertEquals($expected, $actual);
+    }
+
+    private function assertObjectHasAttribute($attributeName, $object, $message = '')
+    {
+        $this->testCase->assertObjectHasAttribute($attributeName, $object, $message);
+    }
+
+    private function assertCount($expectedCount, $haystack, $message = '')
+    {
+        $this->testCase->assertCount($expectedCount, $haystack, $message);
     }
 }

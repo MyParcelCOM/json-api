@@ -24,9 +24,6 @@ class TransformerServiceTest extends TestCase
     /** @var TransformerService */
     protected $transformerService;
 
-    /** @var ResourcesInterface */
-    protected $resources;
-
     protected function setUp()
     {
         parent::setUp();
@@ -52,16 +49,6 @@ class TransformerServiceTest extends TestCase
             ],
         ]);
 
-        $this->resources = Mockery::mock(ResourcesInterface::class, [
-            'count' => 2,
-            'get'   => new Collection([
-                new PersonMock('1'),
-                new PersonMock('3'),
-            ]),
-        ]);
-        $this->resources->shouldReceive('limit')->andReturnSelf();
-        $this->resources->shouldReceive('offset')->andReturnSelf();
-
         $transformerFactory = (new TransformerFactory())
             ->setMapping([
                 PersonMock::class => PersonTransformerMock::class,
@@ -80,9 +67,94 @@ class TransformerServiceTest extends TestCase
     }
 
     /** @test */
-    public function testTransformResultSets()
+    public function testSetMaxPageSize()
     {
-        $result = $this->transformerService->transformResources($this->resources);
+        $paginator = Mockery::mock(Paginator::class);
+        $paginator->shouldReceive('setMaxPageSize')->andReturnUsing(function ($maxPageSsize) use ($paginator) {
+            $this->assertEquals(3, $maxPageSsize);
+
+            return $paginator;
+        });
+        $request = Mockery::mock(RequestInterface::class, [
+            'getPaginator' => $paginator,
+            'getIncludes'  => [],
+        ]);
+
+        $transformerService = new TransformerService($request, new TransformerFactory());
+        $transformerService->setMaxPageSize(3);
+    }
+
+    /** @test */
+    public function testTransformEmptyResources()
+    {
+        $resources = Mockery::mock(ResourcesInterface::class, [
+            'count' => 0,
+            'get'   => new Collection([]),
+        ]);
+        $resources->shouldReceive('limit')->andReturnSelf();
+        $resources->shouldReceive('offset')->andReturnSelf();
+
+        $this->assertEquals(
+            [
+                'data'  => [],
+                'meta'  => [
+                    'total_pages'   => 2,
+                    'total_records' => 3,
+                ],
+                'links' => [
+                    'self' => 'me',
+                ],
+            ],
+            $this->transformerService->transformResources($resources)
+        );
+    }
+
+    /** @test */
+    public function testTransformResource()
+    {
+        $resource = new PersonMock('1');
+
+        $this->assertEquals(
+            [
+                'data'     => [
+                    'id'   => '1',
+                    'type' => 'person',
+                ],
+                'included' => [
+                    [
+                        // The first person has an id of 1 and the mock has related models with ids that are 1 higher
+                        'id'   => '2',
+                        'type' => 'mother',
+                    ],
+                    [
+                        // Same as above
+                        'id'   => '2',
+                        'type' => 'father',
+                    ],
+                    [
+                        // father.father.father relationship, has id increased by 1 for each deeper relationship
+                        'id'   => '4',
+                        'type' => 'father',
+                    ],
+                ],
+            ],
+            $this->transformerService->transformResource($resource)
+        );
+    }
+
+    /** @test */
+    public function testTransformResources()
+    {
+        $resources = Mockery::mock(ResourcesInterface::class, [
+            'count' => 2,
+            'get'   => new Collection([
+                new PersonMock('1'),
+                new PersonMock('3'),
+            ]),
+        ]);
+        $resources->shouldReceive('limit')->andReturnSelf();
+        $resources->shouldReceive('offset')->andReturnSelf();
+
         $this->assertEquals(
             [
                 'data'     => [
@@ -130,7 +202,7 @@ class TransformerServiceTest extends TestCase
                     'self' => 'me',
                 ],
             ],
-            $result
+            $this->transformerService->transformResources($resources)
         );
     }
 }

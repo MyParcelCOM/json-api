@@ -44,9 +44,10 @@ class QueryFilterTest extends TestCase
     {
         $this->queryFilter->apply(['column_a', 'column_b'], '!=', [null]);
         $this->queryFilter->apply('column_c', 'nOt', null); // Also tests capitalized operator.
+        $this->queryFilter->apply('column_d', '=', null);
 
         $this->assertEquals(
-            'select * where ("column_a" is not null or "column_b" is not null) and ("column_c" is not null)',
+            'select * where ("column_a" is not null or "column_b" is not null) and ("column_c" is not null) and ("column_d" is null)',
             $this->query->toSql()
         );
     }
