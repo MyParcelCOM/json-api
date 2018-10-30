@@ -14,12 +14,12 @@ use Illuminate\Http\Response;
 use Intouch\Newrelic\Newrelic;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
+use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExceptionHandler extends Handler
 {

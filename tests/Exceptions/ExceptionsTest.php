@@ -7,6 +7,7 @@ namespace MyParcelCom\JsonApi\Exceptions\Tests;
 use Exception;
 use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
+use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\ExternalRequestException;
 use MyParcelCom\JsonApi\Exceptions\GenericCarrierException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
@@ -20,6 +21,7 @@ use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
+use MyParcelCom\JsonApi\Exceptions\MissingBillingInformationException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\ModelTypeException;
@@ -53,6 +55,16 @@ class ExceptionsTest extends TestCase
             'carrier_status'   => 418,
         ], $exception->getMeta());
         $this->assertEquals('HTCPCP', $exception->getPrevious()->getMessage());
+    }
+
+    /** @test */
+    public function testCarrierDataNotFoundException()
+    {
+        $exception = new CarrierDataNotFoundException(['data'], 404, new Exception('carrier'));
+
+        $this->assertEquals(404, $exception->getStatus());
+        $this->assertEquals(['data'], $exception->getErrors());
+        $this->assertEquals('carrier', $exception->getPrevious()->getMessage());
     }
 
     /** @test */
@@ -124,6 +136,15 @@ class ExceptionsTest extends TestCase
         $exception = new InvalidSecretException(new Exception('welcome'));
 
         $this->assertEquals('welcome', $exception->getPrevious()->getMessage());
+    }
+
+    /** @test */
+    public function testMissingBillingInformationException()
+    {
+        $exception = new MissingBillingInformationException(['bil', 'ling'], new Exception('info'));
+
+        $this->assertContains('bil, ling', $exception->getMessage());
+        $this->assertEquals('info', $exception->getPrevious()->getMessage());
     }
 
     /** @test */
