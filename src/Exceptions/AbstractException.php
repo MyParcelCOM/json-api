@@ -182,7 +182,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Get the detailed message for the error.
+     * Get the detailed message for the exception.
      *
      * @return string
      */
@@ -192,7 +192,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Set the detailed message for the server.
+     * Set the detailed message for the exception.
      *
      * @param string $detail
      * @return $this
@@ -205,7 +205,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Get an array containing references to the source of the error.
+     * Get an array containing references to the source of the exception.
      *
      * @return array
      */
@@ -215,7 +215,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Set an array containing references to the source of the error.
+     * Set an array containing references to the source of the exception.
      *
      * @param array $source
      * @return $this
@@ -228,7 +228,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Get meta object containing non-standard meta-information about the error.
+     * Get meta object containing non-standard meta-information about the exception.
      *
      * @return array
      */
@@ -238,7 +238,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     }
 
     /**
-     * Set meta object containing non-standard meta-information about the error.
+     * Set meta object containing non-standard meta-information about the exception.
      *
      * @param array $meta
      * @return $this
