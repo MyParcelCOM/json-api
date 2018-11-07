@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyParcelCom\JsonApi\Exceptions\Tests;
+namespace MyParcelCom\JsonApi\Tests\Exceptions;
 
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use PHPUnit\Framework\TestCase;
