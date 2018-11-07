@@ -137,11 +137,17 @@ class ExceptionHandler extends Handler
                 $errors[] = (new ErrorTransformer())->transform($error);
             }
 
+            $errorResponse = [
+                'errors' => $errors,
+                'meta'   => $exception->getMeta(),
+            ];
+
+            if ($this->debug === true) {
+                $errorResponse['meta']['debug'] = $this->getDebugMeta($exception);
+            }
+
             return $this->responseFactory->json(
-                [
-                    'errors' => $errors,
-                    'meta'   => $exception->getMeta(),
-                ],
+                $errorResponse,
                 $exception->getStatus(),
                 [
                     'Content-Type' => 'application/vnd.api+json',

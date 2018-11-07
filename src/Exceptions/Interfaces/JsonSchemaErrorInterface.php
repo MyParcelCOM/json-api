@@ -52,7 +52,7 @@ interface JsonSchemaErrorInterface
     /**
      * Get the application specific error code.
      *
-     * @return string
+     * @return string|null
      */
     public function getErrorCode(): ?string;
 
