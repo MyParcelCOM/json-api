@@ -32,10 +32,12 @@ trait AppliesFiltersTrait
                 return;
             }
 
+            $values = array_filter(explode(',', $value));
+
             $filter->apply(
                 $this->filters[$name]['column'] ?? $name,
                 $this->filters[$name]['operator'] ?? '=',
-                explode(',', $value)
+                $values
             );
         });
 
