@@ -19,6 +19,7 @@ use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -268,6 +269,22 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(10009, $responseData['errors'][0]['code']);
         $this->assertEquals('Method not allowed', $responseData['errors'][0]['title']);
         $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
+    }
+
+    /** @test */
+    public function testItSetsTraceToNoTraceIsAvailableWhenTraceIsInvalidForJsonEncode()
+    {
+        json_encode(file_get_contents('Stubs/random-pictures.pdf'));
+        try {
+            throw new \InvalidArgumentException(json_last_error_msg());
+        } catch (\InvalidArgumentException $e) {
+            var_dump($e->getTrace()[0]['args']);die;
+        }
+        $exception = new Exception('Poepie');
+        $response = $this->handler->setDebug(true)->render($this->request, $exception);
+        $responseData = $response->getData();
+
+//        $this->assertEquals('Trace is not available.', $responseData['errors'][0]['meta']['debug']['trace']);
     }
 
     /**
