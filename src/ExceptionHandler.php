@@ -274,10 +274,16 @@ class ExceptionHandler extends Handler
      */
     private function getDebugMeta(Exception $exception)
     {
+        $trace = $exception->getTrace();
+
+        if (json_encode($trace) === false) {
+            $trace = 'Trace is not available.';
+        }
+
         return [
             'exception' => get_class($exception),
             'message'   => $exception->getMessage(),
-            'trace'     => $exception->getTrace(),
+            'trace'     => $trace,
         ];
     }
 }

@@ -270,6 +270,34 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
     }
 
+    /** @test */
+    public function testItSetsTraceToNoTraceIsAvailableWhenTraceIsInvalidForJsonEncode()
+    {
+        // The error we encountered was caused when binary data was passed to a method that tried to json_encode the
+        // binary data and failed. It would then throw an exception. The exception would have a stack trace and part of
+        // the stack trace are the arguments of all the calling methods, which would hold the binary data. Which in turn
+        // gets json encoded by the renderer and causes it to fail.
+        // To simulate this behaviour, we create a method that throws an exception and pass binary data to it, so the
+        // data shows up in the trace array.
+        $badMethod = function ($string) {
+            json_encode($string);
+
+            throw new \InvalidArgumentException(json_last_error_msg());
+        };
+
+        try {
+            $badMethod(file_get_contents(__DIR__ . '/Stubs/random-pictures.pdf'));
+        } catch (\InvalidArgumentException $e) {
+            $response = $this->handler->setDebug(true)->render($this->request, $e);
+            $responseData = $response->getData();
+            $this->assertEquals(
+                'Trace is not available.',
+                $responseData['errors'][0]['meta']['debug']['trace'],
+                'Binary data cannot be json encoded and should therefore cause the trace to not be rendered'
+            );
+        }
+    }
+
     /**
      * Check if the json array is a valid jsonapi response.
      *
