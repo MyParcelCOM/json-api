@@ -20,6 +20,7 @@ use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class ExceptionHandler extends Handler
 {
@@ -276,7 +277,11 @@ class ExceptionHandler extends Handler
     {
         $trace = $exception->getTrace();
 
-        if (json_encode($trace) === false) {
+        try {
+            if (json_encode($trace) === false) {
+                $trace = 'Trace is not available.';
+            }
+        } catch (Throwable $e) {
             $trace = 'Trace is not available.';
         }
 
