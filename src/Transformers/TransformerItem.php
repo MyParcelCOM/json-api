@@ -60,6 +60,10 @@ class TransformerItem
             if (in_array($relationship, $relationships)) {
                 $resource = $callback();
 
+                if ($resource === null) {
+                    continue;
+                }
+
                 if ($resource instanceof Collection) {
                     $data = $this->transformerFactory->createTransformerCollection($resource)->getData();
                 } else {
