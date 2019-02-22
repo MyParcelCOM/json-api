@@ -60,7 +60,7 @@ class QueryFilterTest extends TestCase
         $this->queryFilter->apply(['column_d', 'column_e'], 'LIKE', ['value_c', 'value_d']);
 
         $this->assertEquals(
-            'select * where (lower(column_a) like ? or lower(column_b) like ?) and (lower(column_c) like ? or lower(column_c) like ?) and (lower(column_d) like ? or lower(column_e) like ? or lower(column_d) like ? or lower(column_e) like ?)',
+            'select * where (lower(column_a)::text like ? or lower(column_b)::text like ?) and (lower(column_c)::text like ? or lower(column_c)::text like ?) and (lower(column_d)::text like ? or lower(column_e)::text like ? or lower(column_d)::text like ? or lower(column_e)::text like ?)',
             $this->query->toSql()
         );
 
