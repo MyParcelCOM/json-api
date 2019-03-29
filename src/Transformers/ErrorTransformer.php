@@ -11,7 +11,7 @@ class ErrorTransformer
     /**
      * Transform given Exception into a valid JSON API response.
      *
-     * @param  JsonSchemaErrorInterface $exception
+     * @param JsonSchemaErrorInterface $exception
      * @return array
      */
     public function transform(JsonSchemaErrorInterface $exception): array

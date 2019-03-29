@@ -171,44 +171,4 @@ class AbstractTransformerTest extends TestCase
             )
         );
     }
-
-    /** @test */
-    public function testTransformRelationshipForId()
-    {
-        $this->assertEquals(
-            [
-                'data'  => [
-                    'id'   => 'mockId',
-                    'type' => 'test',
-                ],
-                'links' => [
-                    'related' => '#32',
-                ],
-            ],
-            $this->transformer->transformRelationshipForId('1', stdClass::class)
-        );
-    }
-
-    /** @test */
-    public function testTransformRelationshipForIds()
-    {
-        $this->assertEquals(
-            [
-                'data'  => [
-                    [
-                        'id'   => 'mockId',
-                        'type' => 'test',
-                    ],
-                    [
-                        'id'   => 'mockId',
-                        'type' => 'test',
-                    ],
-                ],
-                'links' => [
-                    'related' => 'ploink',
-                ],
-            ],
-            $this->transformer->transformRelationshipForIds(['1', '2'], stdClass::class, 'ploink')
-        );
-    }
 }

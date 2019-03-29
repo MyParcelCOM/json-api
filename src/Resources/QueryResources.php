@@ -31,7 +31,7 @@ class QueryResources implements ResourcesInterface
     /**
      * Skip n amount of records.
      *
-     * @param  int $offset
+     * @param int $offset
      * @return ResourcesInterface
      */
     public function offset(int $offset): ResourcesInterface
@@ -44,7 +44,7 @@ class QueryResources implements ResourcesInterface
     /**
      * Take n amount of records.
      *
-     * @param  int $limit
+     * @param int $limit
      * @return ResourcesInterface
      */
     public function limit(int $limit): ResourcesInterface

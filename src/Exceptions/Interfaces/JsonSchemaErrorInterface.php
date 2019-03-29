@@ -14,7 +14,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set the id for this occurrence of the exception.
      *
-     * @param  string $id
+     * @param string $id
      * @return $this
      */
     public function setId(string $id): self;
@@ -29,7 +29,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set the links related to the exception.
      *
-     * @param  array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
+     * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
      * @return $this
      */
     public function setLinks(array $links): self;
@@ -44,7 +44,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set the http status code for the request.
      *
-     * @param  int $status
+     * @param int $status
      * @return $this
      */
     public function setStatus(int $status): self;
@@ -60,7 +60,7 @@ interface JsonSchemaErrorInterface
      * Set the application specific error code.
      * This should be retrieved from one of the defined constants.
      *
-     * @param  string $errorCode
+     * @param string $errorCode
      * @return $this
      */
     public function setErrorCode(string $errorCode): self;
@@ -76,7 +76,7 @@ interface JsonSchemaErrorInterface
      * Set the description linked to the code.
      * This should be retrieved from one of the defined constants.
      *
-     * @param  string $title
+     * @param string $title
      * @return $this
      */
     public function setTitle(string $title): self;
@@ -91,7 +91,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set the detailed message for the server.
      *
-     * @param  string $detail
+     * @param string $detail
      * @return $this
      */
     public function setDetail(string $detail): self;
@@ -106,7 +106,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set an array containing references to the source of the error.
      *
-     * @param  array $source
+     * @param array $source
      * @return $this
      */
     public function setSource(array $source): self;
@@ -121,7 +121,7 @@ interface JsonSchemaErrorInterface
     /**
      * Set meta object containing non-standard meta-information about the error.
      *
-     * @param  array $meta
+     * @param array $meta
      * @return $this
      */
     public function setMeta(array $meta): self;

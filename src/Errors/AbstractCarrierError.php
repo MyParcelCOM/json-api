@@ -283,14 +283,14 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     {
         if ($this->getSource() === null) {
             $this->setSource([
-                'pointer' => $pointer
+                'pointer' => $pointer,
             ]);
 
             return $this;
         }
 
         $this->setSource(array_merge($this->getSource(), [
-            'pointer' => $pointer
+            'pointer' => $pointer,
         ]));
 
         return $this;

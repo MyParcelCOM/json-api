@@ -45,7 +45,7 @@ class ExceptionHandler extends Handler
     /**
      * Set the Response Factory.
      *
-     * @param  ResponseFactory $factory
+     * @param ResponseFactory $factory
      * @return $this
      */
     public function setResponseFactory(ResponseFactory $factory): self
@@ -58,7 +58,7 @@ class ExceptionHandler extends Handler
     /**
      * Set the debug value.
      *
-     * @param  bool $debug
+     * @param bool $debug
      * @return $this
      */
     public function setDebug(bool $debug): self
@@ -71,7 +71,7 @@ class ExceptionHandler extends Handler
     /**
      * Set the contact link.
      *
-     * @param  string $link
+     * @param string $link
      * @return $this
      */
     public function setContactLink(string $link): self
@@ -84,7 +84,7 @@ class ExceptionHandler extends Handler
     /**
      * Set the logger for error reporting.
      *
-     * @param  LoggerInterface $logger
+     * @param LoggerInterface $logger
      * @return $this
      */
     public function setLogger(LoggerInterface $logger): self
@@ -110,8 +110,8 @@ class ExceptionHandler extends Handler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request   $request
-     * @param  Exception $exception
+     * @param Request   $request
+     * @param Exception $exception
      * @return JsonResponse
      */
     public function render($request, Exception $exception)
@@ -212,7 +212,7 @@ class ExceptionHandler extends Handler
     /**
      * Return the default error array/object.
      *
-     * @param  Exception $exception
+     * @param Exception $exception
      * @return array
      */
     private function getDefaultError(Exception $exception): array
@@ -238,7 +238,7 @@ class ExceptionHandler extends Handler
     /**
      * Report or log an exception.
      *
-     * @param  Exception $e
+     * @param Exception $e
      * @return void
      */
     public function report(Exception $e): void
