@@ -126,51 +126,6 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param array  $ids
-     * @param string $class
-     * @param string $relatedLink
-     * @return array
-     * @deprecated Use `transformRelationshipForIdentifiers()` instead
-     */
-    protected function transformRelationshipForIds(array $ids, string $class, $relatedLink = null): array
-    {
-        $relation = [
-            'data' => array_map(
-                function ($id) use ($class) {
-                    return $this->transformRelationshipForId($id, $class, false);
-                },
-                $ids
-            ),
-        ];
-        if ($relatedLink) {
-            $relation['links'] = ['related' => $relatedLink];
-        }
-
-        return $relation;
-    }
-
-    /**
-     * @param string $id
-     * @param string $class
-     * @param bool   $inDataTag
-     * @return array
-     * @deprecated Use `transformRelationshipForIdentifier()` instead
-     */
-    protected function transformRelationshipForId(string $id, string $class, $inDataTag = true): array
-    {
-        /**
-         * @note This method is deprecated because too many assumptions are made
-         *       regarding $class.
-         *        - It is assumed that it is always safe to create a new
-         *          instance of $class.
-         *        - It is assumed that the constructor can take an array of
-         *          properties to be set on the object.
-         *        - It is assumed that $class has the property 'id'.
-         */
-        return $this->transformRelationship(new $class(['id' => $id]), $inDataTag);
-    }
-
-    /**
      * @param string $id
      * @param string $type
      * @param string $class
@@ -199,12 +154,12 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     protected function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
     {
-        return [
+        return array_filter([
             'data'  => array_map(function ($id) use ($type) {
                 return (new ResourceIdentifier($id, $type))->jsonSerialize();
             }, $ids),
             'links' => $links,
-        ];
+        ]);
     }
 
     /**

@@ -120,14 +120,4 @@ class TransformerStub extends AbstractTransformer
     {
         return parent::transformRelationshipForIdentifiers($ids, $type, $links);
     }
-
-    public function transformRelationshipForId(string $id, string $class, $inDataTag = true): array
-    {
-        return parent::transformRelationshipForId($id, $class, $inDataTag);
-    }
-
-    public function transformRelationshipForIds(array $ids, string $class, $relatedLink = null): array
-    {
-        return parent::transformRelationshipForIds($ids, $class, $relatedLink);
-    }
 }
