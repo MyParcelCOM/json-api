@@ -84,7 +84,7 @@ class TransformerCollectionTest extends TestCase
     /**
      * get an iterable Collection mock
      *
-     * @param  array $items iterator items
+     * @param array $items iterator items
      * @return Collection
      */
     protected function getCollectionMock(array $items)
@@ -99,7 +99,7 @@ class TransformerCollectionTest extends TestCase
     /**
      * get an iterator
      *
-     * @param  array $items iterator items
+     * @param array $items iterator items
      * @return \Iterator
      */
     public function getIteratorMock(array $items)
@@ -120,9 +120,9 @@ class TransformerCollectionTest extends TestCase
     /**
      * add items to the iterator
      *
-     * @param  \Iterator $iterator
-     * @param  array     $items iterator items
-     * @param  boolean   $includeCallsToKey
+     * @param \Iterator $iterator
+     * @param array     $items iterator items
+     * @param boolean   $includeCallsToKey
      */
     public function mockIteratorItems(\Iterator $iterator, array $items, $includeCallsToKey = false)
     {

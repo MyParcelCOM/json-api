@@ -31,7 +31,7 @@ interface MultiErrorInterface
     /**
      * Set meta object containing non-standard meta-information about the error.
      *
-     * @param  array $meta
+     * @param array $meta
      * @return self
      */
     public function setMeta(array $meta): MultiErrorInterface;
@@ -46,7 +46,7 @@ interface MultiErrorInterface
     /**
      * Set the http status code for the request.
      *
-     * @param  int $status
+     * @param int $status
      * @return $this
      */
     public function setStatus(int $status): self;

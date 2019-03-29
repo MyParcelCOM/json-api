@@ -39,8 +39,8 @@ interface RequestInterface
     /**
      * Retrieve a query string item from the request.
      *
-     * @param  string            $key
-     * @param  string|array|null $default
+     * @param string            $key
+     * @param string|array|null $default
      * @return string|array
      */
     public function query($key = null, $default = null);
