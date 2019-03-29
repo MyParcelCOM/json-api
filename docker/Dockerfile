@@ -1,4 +1,4 @@
-FROM composer:1.6
+FROM composer:1.8
 
 RUN apk add --no-cache --update --virtual alpine-sdk \
     && apk add --no-cache --update --virtual autoconf \
