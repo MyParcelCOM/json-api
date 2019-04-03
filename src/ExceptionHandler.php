@@ -138,10 +138,10 @@ class ExceptionHandler extends Handler
                 $errors[] = (new ErrorTransformer())->transform($error);
             }
 
-            $errorResponse = [
+            $errorResponse = array_filter([
                 'errors' => $errors,
                 'meta'   => $exception->getMeta(),
-            ];
+            ]);
 
             if ($this->debug === true) {
                 $errorResponse['meta']['debug'] = $this->getDebugMeta($exception);
