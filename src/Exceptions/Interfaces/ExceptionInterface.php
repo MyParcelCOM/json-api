@@ -32,6 +32,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Invalid Request Header',
     ];
 
+    const MISSING_REQUEST_HEADER = [
+        'code'  => '10010',
+        'title' => 'Missing Request Header',
+    ];
+
     const RESOURCE_CANNOT_BE_MODIFIED = [
         'code'  => '10005',
         'title' => 'Resource Cannot Be Modified',
