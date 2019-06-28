@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: myparcelcom/php:7.2-cli
         auth:
