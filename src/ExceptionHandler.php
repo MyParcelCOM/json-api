@@ -244,6 +244,7 @@ class ExceptionHandler extends Handler
     public function report(Exception $e): void
     {
         if (isset($this->newrelic)) {
+            newrelic_add_custom_parameter('request.post', json_encode(request()->post()));
             $this->newrelic->noticeError($e->getMessage(), $e);
         }
 
