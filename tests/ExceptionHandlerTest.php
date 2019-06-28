@@ -40,13 +40,16 @@ class ExceptionHandlerTest extends TestCase
 
         $this->request = Mockery::mock(Request::class, [
             'getMethod' => 'GET',
+            'post'      => [],
         ]);
 
         $factory = Mockery::mock(ResponseFactory::class);
         $factory->shouldReceive('json')
             ->andReturnUsing([$this, 'mockResponse']);
 
-        $this->handler = (new ExceptionHandler(Mockery::mock(Container::class)))
+        $this->handler = (new ExceptionHandler(Mockery::mock(Container::class, [
+                'get' => $this->request
+            ])))
             ->setResponseFactory($factory)
             ->setAppName($this->appName);
     }
@@ -202,6 +205,10 @@ class ExceptionHandlerTest extends TestCase
         $exception = new Exception('moar errors occured');
 
         $newRelic = Mockery::mock(Newrelic::class);
+        $newRelic->shouldReceive('addCustomParameter')->withArgs([
+            'request.post',
+            '[]'
+        ]);
         $newRelic->shouldReceive('noticeError')->andReturnUsing(function ($value) use ($exception) {
             $this->assertEquals($exception->getMessage(), $value);
         });
