@@ -14,7 +14,12 @@ use Illuminate\Http\Response;
 use Intouch\Newrelic\Newrelic;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
+use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
+use MyParcelCom\JsonApi\Exceptions\InvalidInputException;
+use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
+use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
+use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
@@ -41,6 +46,16 @@ class ExceptionHandler extends Handler
 
     /** @var Newrelic */
     protected $newrelic;
+
+    protected $dontReport = [
+        MissingTokenException::class,
+        MissingScopeException::class,
+        NotFoundException::class,
+        InvalidAccessTokenException::class,
+        InvalidInputException::class,
+        InvalidSecretException::class,
+        MethodNotAllowedException::class,
+    ];
 
     /**
      * Set the Response Factory.
@@ -243,6 +258,10 @@ class ExceptionHandler extends Handler
      */
     public function report(Exception $e): void
     {
+        if ($this->shouldntReport($e)) {
+            return;
+        }
+
         if (isset($this->newrelic)) {
             $this->newrelic->addCustomParameter('request.post', json_encode($this->container->get('request')->post()));
             $this->newrelic->noticeError($e->getMessage(), $e);
