@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Intouch\Newrelic\Newrelic;
@@ -15,8 +16,10 @@ use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use MyParcelCom\JsonApi\Exceptions\AbstractMultiErrorException;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
+use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -275,6 +278,18 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(10009, $responseData['errors'][0]['code']);
         $this->assertEquals('Method not allowed', $responseData['errors'][0]['title']);
         $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
+    }
+
+    /** @test */
+    public function testItMapsThrottleExceptionsToTooManyRequestsException()
+    {
+        $exception = Mockery::mock(ThrottleRequestsException::class);
+        $response = $this->handler->setDebug(true)->render($this->request, $exception);
+        $json = $response->getData();
+
+        $this->assertEquals(TooManyRequestsException::class, $json['errors'][0]['meta']['debug']['exception']);
+        $this->assertEquals(429, $response->getStatus());
+        $this->assertEquals(ExceptionInterface::TOO_MANY_REQUESTS['title'], $json['errors'][0]['title']);
     }
 
     /** @test */

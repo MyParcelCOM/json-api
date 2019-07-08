@@ -29,6 +29,7 @@ use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceConflictException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
+use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
 use PHPUnit\Framework\TestCase;
 
@@ -181,6 +182,15 @@ class ExceptionsTest extends TestCase
 
         $this->assertEquals('pants', $exception->getPrevious()->getMessage());
         $this->assertEquals('not found', $exception->getMessage());
+    }
+
+    /** @test */
+    public function testTooManyRequestsException()
+    {
+        $exception = new TooManyRequestsException('Too many requests.', new Exception('Go stand in the time-out corner!'));
+
+        $this->assertEquals('Go stand in the time-out corner!', $exception->getPrevious()->getMessage());
+        $this->assertEquals('Too many requests.', $exception->getMessage());
     }
 
     /** @test */
