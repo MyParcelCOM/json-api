@@ -62,6 +62,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Method not allowed',
     ];
 
+    const TOO_MANY_REQUESTS = [
+        'code'  => '10010',
+        'title' => 'Too many requests.',
+    ];
+
     // Billing/payment related errors 11000 - 11999
     const MISSING_BILLING_INFORMATION = [
         'code'  => '11000',

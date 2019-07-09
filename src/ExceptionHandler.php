@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,6 +22,7 @@ use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
+use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -140,6 +142,10 @@ class ExceptionHandler extends Handler
 
         if ($exception instanceof NotFoundHttpException) {
             $exception = new NotFoundException('The endpoint could not be found.');
+        }
+
+        if ($exception instanceof ThrottleRequestsException) {
+            $exception = new TooManyRequestsException('Too many requests were made to this endpoint. Please wait before making any more requests.');
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
