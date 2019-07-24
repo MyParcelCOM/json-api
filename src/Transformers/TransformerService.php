@@ -30,8 +30,30 @@ class TransformerService
     public function __construct(RequestInterface $request, TransformerFactory $transformerFactory)
     {
         $this->transformerFactory = $transformerFactory;
-        $this->paginator = $request->getPaginator();
-        $this->includes = $request->getIncludes();
+        $this->setPaginator($request->getPaginator());
+        $this->setIncludes($request->getIncludes());
+    }
+
+    /**
+     * @param Paginator $paginator
+     * @return $this
+     */
+    public function setPaginator(Paginator $paginator): self
+    {
+        $this->paginator = $paginator;
+
+        return $this;
+    }
+
+    /**
+     * @param array $includes
+     * @return $this
+     */
+    public function setIncludes(array $includes): self
+    {
+        $this->includes = $includes;
+
+        return $this;
     }
 
     /**

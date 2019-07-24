@@ -28,5 +28,5 @@ interface TransformerInterface
 
     public function getMeta($model): array;
 
-    public function getId($model): string;
+    public function getId($model);
 }
