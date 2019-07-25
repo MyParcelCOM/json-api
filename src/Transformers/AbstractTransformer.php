@@ -260,7 +260,7 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param mixed $model
-     * @return string
+     * @return mixed
      */
-    abstract public function getId($model): string;
+    abstract public function getId($model);
 }
