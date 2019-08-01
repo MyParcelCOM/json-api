@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Transformers;
 
 use Illuminate\Support\Collection;
-use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
@@ -18,20 +17,18 @@ class TransformerService
     protected $paginator;
 
     /** @var array */
-    protected $includes;
+    protected $includes = [];
 
     /** @var bool */
     protected $multipleResult;
 
     /**
-     * @param RequestInterface   $request
      * @param TransformerFactory $transformerFactory
      */
-    public function __construct(RequestInterface $request, TransformerFactory $transformerFactory)
+    public function __construct(TransformerFactory $transformerFactory)
     {
         $this->transformerFactory = $transformerFactory;
-        $this->setPaginator($request->getPaginator());
-        $this->setIncludes($request->getIncludes());
+        $this->setPaginator(new Paginator());
     }
 
     /**

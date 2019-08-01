@@ -36,18 +36,6 @@ class TransformerServiceTest extends TestCase
             'getLinks'   => ['self' => 'me'],
         ]);
         $paginator->shouldReceive('addTotal')->andReturnSelf();
-        $request = Mockery::mock(RequestInterface::class, [
-            'getPaginator' => $paginator,
-            'getIncludes'  => [
-                'mother',
-                'father',
-                'father' => [
-                    'father' => [
-                        'father',
-                    ],
-                ],
-            ],
-        ]);
 
         $transformerFactory = (new TransformerFactory())
             ->setMapping([
@@ -56,7 +44,17 @@ class TransformerServiceTest extends TestCase
                 FatherMock::class => FatherTransformerMock::class,
             ]);
 
-        $this->transformerService = new TransformerService($request, $transformerFactory);
+        $this->transformerService = new TransformerService($transformerFactory);
+        $this->transformerService->setPaginator($paginator);
+        $this->transformerService->setIncludes([
+            'mother',
+            'father',
+            'father' => [
+                'father' => [
+                    'father',
+                ],
+            ],
+        ]);
     }
 
     protected function tearDown()
@@ -75,12 +73,9 @@ class TransformerServiceTest extends TestCase
 
             return $paginator;
         });
-        $request = Mockery::mock(RequestInterface::class, [
-            'getPaginator' => $paginator,
-            'getIncludes'  => [],
-        ]);
 
-        $transformerService = new TransformerService($request, new TransformerFactory());
+        $transformerService = new TransformerService(new TransformerFactory());
+        $transformerService->setPaginator($paginator);
         $transformerService->setMaxPageSize(3);
     }
 
