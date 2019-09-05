@@ -32,11 +32,6 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Invalid Request Header',
     ];
 
-    const MISSING_REQUEST_HEADER = [
-        'code'  => '10010',
-        'title' => 'Missing Request Header',
-    ];
-
     const RESOURCE_CANNOT_BE_MODIFIED = [
         'code'  => '10005',
         'title' => 'Resource Cannot Be Modified',
@@ -62,9 +57,19 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Method not allowed',
     ];
 
-    const TOO_MANY_REQUESTS = [
+    const MISSING_REQUEST_HEADER = [
         'code'  => '10010',
+        'title' => 'Missing Request Header',
+    ];
+
+    const TOO_MANY_REQUESTS = [
+        'code'  => '10011',
         'title' => 'Too many requests.',
+    ];
+
+    const RELATIONSHIP_CANNOT_BE_MODIFIED = [
+        'code'  => '10012',
+        'title' => 'Relationship cannot be modified.',
     ];
 
     // Billing/payment related errors 11000 - 11999
