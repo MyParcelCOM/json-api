@@ -26,6 +26,7 @@ use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\ModelTypeException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
+use MyParcelCom\JsonApi\Exceptions\RelationshipCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceConflictException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
@@ -278,6 +279,22 @@ class ExceptionsTest extends TestCase
         ], $exception->setMeta([
             'foo' => 'bar',
         ])->getMeta());
+    }
+
+    /** @test */
+    public function testRelationshipCannotBeModifiedException()
+    {
+        $relationshipType = 'shipments';
+
+        $exception = new RelationshipCannotBeModifiedException($relationshipType, new Exception('Previous error.'));
+
+        $this->assertEquals(403, $exception->getStatus());
+        $this->assertEquals('10012', $exception->getCode());
+        $this->assertEquals('Relationship cannot be modified.', $exception->getTitle());
+        $this->assertEquals(
+            "The relationship of type '{$relationshipType}' cannot be modified on this resource.",
+            $exception->getMessage()
+        );
     }
 
     /** @test */
