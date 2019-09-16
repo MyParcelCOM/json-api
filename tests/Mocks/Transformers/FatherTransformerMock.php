@@ -32,15 +32,24 @@ class FatherTransformerMock implements TransformerInterface
     }
 
     /**
+     * Transform a relationship identifier.
+     *
      * @param mixed $model
+     * @param bool  $includeMeta
      * @return array
      */
-    public function transformIdentifier($model): array
+    public function transformIdentifier($model, bool $includeMeta = false): array
     {
-        return [
+        $identifier = [
             'id'   => $this->getId($model),
             'type' => $this->getType(),
         ];
+
+        if ($includeMeta) {
+            $identifier['meta'] = $this->getMeta($model);
+        }
+
+        return $identifier;
     }
 
     /**
