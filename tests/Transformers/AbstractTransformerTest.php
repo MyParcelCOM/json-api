@@ -171,4 +171,16 @@ class AbstractTransformerTest extends TestCase
             )
         );
     }
+
+    /** @test */
+    public function testItAlsoPopulatesMetaInTransformingIdentifiers()
+    {
+        $this->assertEquals([
+            'id'   => 'mockId',
+            'type' => 'test',
+            'meta' => [
+                'da' => 'ta',
+            ],
+        ], $this->transformer->transformIdentifier($this->model, true));
+    }
 }

@@ -10,7 +10,7 @@ interface TransformerInterface
 
     public function transform($model): array;
 
-    public function transformIdentifier($model): array;
+    public function transformIdentifier($model, bool $includeMeta = false): array;
 
     public function getType(): string;
 
