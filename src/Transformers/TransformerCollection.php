@@ -8,8 +8,13 @@ use Illuminate\Support\Collection;
 
 class TransformerCollection
 {
+    /** @var Collection */
     protected $collection;
+
+    /** @var TransformerFactory */
     protected $transformerFactory;
+
+    /** @var Collection */
     private $transformerItems;
 
     /**
@@ -43,14 +48,15 @@ class TransformerCollection
      *
      * @param array $relationships   the relationships that we want to include
      * @param array $alreadyIncluded the already included items
+     * @param array $resourceData    resource data containing relationships (to comply with TransformerItem getIncluded)
      * @return array
      */
-    public function getIncluded(array $relationships = [], array $alreadyIncluded = []): array
+    public function getIncluded(array $relationships = [], array $alreadyIncluded = [], array $resourceData = []): array
     {
         $included = [];
 
         foreach ($this->getTransformerItems() as $item) {
-            $included = array_merge($included, $item->getIncluded($relationships, $alreadyIncluded));
+            $included = array_merge($included, $item->getIncluded($relationships, array_merge($included, $alreadyIncluded), $item->getData()));
         }
 
         return $included;
