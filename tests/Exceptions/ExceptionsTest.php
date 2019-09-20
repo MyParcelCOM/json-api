@@ -22,6 +22,7 @@ use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\MissingBillingInformationException;
+use MyParcelCom\JsonApi\Exceptions\MissingHeaderException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\ModelTypeException;
@@ -147,6 +148,15 @@ class ExceptionsTest extends TestCase
 
         $this->assertContains('bil, ling', $exception->getMessage());
         $this->assertEquals('info', $exception->getPrevious()->getMessage());
+    }
+
+    /** @test */
+    public function testMissingHeaderException()
+    {
+        $exception = new MissingHeaderException(['head', 'durr'], new Exception('hat'));
+
+        $this->assertContains('head, durr', $exception->getMessage());
+        $this->assertEquals('hat', $exception->getPrevious()->getMessage());
     }
 
     /** @test */

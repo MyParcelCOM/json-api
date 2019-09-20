@@ -14,6 +14,7 @@ use MyParcelCom\JsonApi\Tests\Mocks\Resources\PersonMock;
 use MyParcelCom\JsonApi\Tests\Mocks\Transformers\FatherTransformerMock;
 use MyParcelCom\JsonApi\Tests\Mocks\Transformers\MotherTransformerMock;
 use MyParcelCom\JsonApi\Tests\Mocks\Transformers\PersonTransformerMock;
+use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use MyParcelCom\JsonApi\Transformers\TransformerService;
 use PHPUnit\Framework\TestCase;
@@ -134,6 +135,13 @@ class TransformerServiceTest extends TestCase
             ],
             $this->transformerService->transformResource($resource)
         );
+    }
+
+    /** @test */
+    public function testTransformResourceException()
+    {
+        $this->expectException(TransformerException::class);
+        $this->transformerService->transformResource(null);
     }
 
     /** @test */

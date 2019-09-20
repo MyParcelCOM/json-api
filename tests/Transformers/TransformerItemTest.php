@@ -22,6 +22,9 @@ class TransformerItemTest extends TestCase
     /** @var array */
     protected $includedData;
 
+    /** @var AbstractTransformer */
+    protected $transformer;
+
     /** @var TransformerFactory */
     protected $transformerFactory;
 
@@ -81,6 +84,7 @@ class TransformerItemTest extends TestCase
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], []));
+        $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], [], ['relationships' => $this->transformerData]));
         $this->assertEquals([], $this->transformerItem->getIncluded([], [$this->includedResource]));
         $this->assertEquals([], $this->transformerItem->getIncluded([], []));
         $this->assertEquals([], $this->transformerItem->getIncluded(['foo'], []));

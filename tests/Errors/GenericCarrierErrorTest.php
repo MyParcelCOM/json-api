@@ -34,6 +34,12 @@ class GenericCarrierErrorTest extends TestCase
     }
 
     /** @test */
+    public function testItSetsId()
+    {
+        $this->assertEquals('idea', $this->error->setId('idea')->getId());
+    }
+
+    /** @test */
     public function testItSetsErrorCode()
     {
         $this->assertEquals('98765', $this->error->setErrorCode('98765')->getErrorCode());
