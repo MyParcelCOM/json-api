@@ -6,7 +6,6 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 use MyParcelCom\JsonApi\Tests\Mocks\Resources\FatherMock;
@@ -47,8 +46,8 @@ class TransformerServiceTest extends TestCase
         $this->transformerService = new TransformerService($transformerFactory);
         $this->transformerService->setPaginator($paginator);
         $this->transformerService->setIncludes([
-            'mother',
-            'father',
+            0        => 'mother',
+            1        => 'father',
             'father' => [
                 'father' => [
                     'father',

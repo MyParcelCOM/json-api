@@ -14,14 +14,19 @@ class ResourceIdentifier implements JsonSerializable
     /** @var string */
     private $type;
 
+    /** @var string */
+    private $parentId;
+
     /**
-     * @param string $id
-     * @param string $type
+     * @param string      $id
+     * @param string      $type
+     * @param string|null $parentId
      */
-    public function __construct(string $id, string $type)
+    public function __construct(string $id, string $type, string $parentId = null)
     {
         $this->id = $id;
         $this->type = $type;
+        $this->parentId = $parentId;
     }
 
     /**
@@ -38,6 +43,14 @@ class ResourceIdentifier implements JsonSerializable
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getParentId(): ?string
+    {
+        return $this->parentId;
     }
 
     /**

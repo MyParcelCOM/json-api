@@ -96,11 +96,10 @@ class TransformerResource
     public function getData(): array
     {
         $this->prepareData();
-        if ($this->multipleResult) {
-            return $this->toArrayMultiple();
-        } else {
-            return $this->toArraySingle();
-        }
+
+        return ($this->multipleResult)
+            ? $this->toArrayMultiple()
+            : $this->toArraySingle();
     }
 
     /**
@@ -153,14 +152,12 @@ class TransformerResource
         return $res;
     }
 
-    /**
-     * @return void
-     */
     public function prepareData(): void
     {
         foreach ($this->resources as $resource) {
-            $this->data = array_merge($this->data, $resource->getData());
-            $this->includes = array_merge($this->includes, $resource->getIncluded($this->requestedIncludes, $this->includes));
+            $resourceData = $resource->getData();
+            $this->data = array_merge($this->data, $resourceData);
+            $this->includes = array_merge($this->includes, $resource->getIncluded($this->requestedIncludes, $this->includes, $resourceData));
         }
 
         $this->includes = array_unique($this->includes, SORT_REGULAR); // remove duplicates

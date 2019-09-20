@@ -126,14 +126,15 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param string $id
-     * @param string $type
-     * @param string $class
+     * @param string      $id
+     * @param string      $type
+     * @param string      $class
+     * @param string|null $parentId
      * @return array
      */
-    protected function transformRelationshipForIdentifier(string $id, string $type, string $class): array
+    protected function transformRelationshipForIdentifier(string $id, string $type, string $class, string $parentId = null): array
     {
-        $resource = new ResourceIdentifier($id, $type);
+        $resource = new ResourceIdentifier($id, $type, $parentId);
         $transformer = $this->transformerFactory->createFromModel($class);
         $relationship = ['data' => $resource->jsonSerialize()];
 
