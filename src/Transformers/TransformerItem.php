@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Transformers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class TransformerItem
@@ -111,18 +112,19 @@ class TransformerItem
                 continue;
             }
 
-            // Get the relationship data with key from the transformer
+            // Get the relationship data with key from the transformer.
             $relationships = array_key_exists('relationships', $resourceData)
-                ? $resourceData['relationships'][$key]['data']
-                : $this->transformer->getRelationships($this->resource)[$key]['data'];
+                ? $resourceData['relationships']
+                : $this->transformer->getRelationships($this->resource);
+            $relationshipData = Arr::get($relationships, $key . '.data', []);
 
-            // If $relationships is a single item instead of an array of items, we put it in an array.
-            if (isset($relationships['type'])) {
-                $relationships = [$relationships];
+            // If relationship data is a single item instead of an array of items, we put it in an array.
+            if (isset($relationshipData['type'])) {
+                $relationshipData = [$relationshipData];
             }
 
             // We check for all the items if they are already included if not we add them to the list.
-            foreach ($relationships as $relation) {
+            foreach ($relationshipData as $relation) {
                 if (!in_array($relation['type'] . '-' . $relation['id'], $valueFilter)) {
                     $filtered[$key] = $includes;
                     break;
