@@ -7,6 +7,7 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
+use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
@@ -170,6 +171,13 @@ class AbstractTransformerTest extends TestCase
                 ['related' => 'i-link/to.everyone']
             )
         );
+    }
+
+    public function testTransformLinkWithParentIdentifier()
+    {
+        $identifier = new ResourceIdentifier('borderlands', 'fps', 'gearbox');
+
+        $this->assertEquals('gearbox/borderlands', $this->transformer->getLinkWithParentId($identifier));
     }
 
     /** @test */

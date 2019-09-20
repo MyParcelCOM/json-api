@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Tests\Stubs;
 
 use DateTime;
 use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
 class TransformerStub extends AbstractTransformer
@@ -84,6 +85,11 @@ class TransformerStub extends AbstractTransformer
     public function getLink($model): string
     {
         return parent::getLink($model) . '#32';
+    }
+
+    public function getLinkWithParentId(ResourceIdentifier $model): string
+    {
+        return $model->getParentId() . '/' . $model->getId();
     }
 
     public function getAttributes($model): array
