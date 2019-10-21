@@ -52,7 +52,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Get the id for this occurrence of the exception.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId(): ?string
     {
@@ -75,7 +75,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Get the links related to the exception.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getLinks(): ?array
     {
@@ -112,7 +112,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Return the http status for the request.
      *
-     * @return null|int
+     * @return int|null
      */
     public function getStatus(): ?int
     {
@@ -206,7 +206,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Get an array containing references to the source of the error.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getSource(): ?array
     {
@@ -229,7 +229,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Get meta object containing non-standard meta-information about the error.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getMeta(): ?array
     {
@@ -264,7 +264,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPointer(): ?string
     {

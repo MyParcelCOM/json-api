@@ -68,7 +68,7 @@ class FatherTransformerMock implements TransformerInterface
     {
         return [
             'father' => function () use ($model) {
-                return new FatherMock((string)($this->getId($model) + 1));
+                return new FatherMock((string) ($this->getId($model) + 1));
             },
         ];
     }

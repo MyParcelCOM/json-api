@@ -12,16 +12,16 @@ class Paginator
 
     /** @var int $total */
     protected $total;
+
     /** @var string */
     protected $baseUrl;
+
     /** @var int */
     protected $perPage;
+
     /** @var int */
     protected $currentPage;
-    /** @var int */
-    protected $urlGenerator;
-    /** @var string */
-    protected $pageName = "page[number]";
+
     /** @var int */
     protected $maxPageSize = self::DEFAULT_PAGE_SIZE;
 
@@ -40,8 +40,8 @@ class Paginator
      */
     public function getLinks(): array
     {
-        $currentPage = (int)$this->getCurrentPage();
-        $lastPage = (int)$this->getLastPage();
+        $currentPage = (int) $this->getCurrentPage();
+        $lastPage = (int) $this->getLastPage();
 
         $pagination = [];
 
@@ -82,7 +82,7 @@ class Paginator
      */
     public function getCurrentPage(): int
     {
-        return (int)$this->currentPage;
+        return (int) $this->currentPage;
     }
 
     /**
@@ -90,7 +90,7 @@ class Paginator
      */
     public function getMaxPageSize(): int
     {
-        return (int)$this->maxPageSize;
+        return (int) $this->maxPageSize;
     }
 
     /**
@@ -169,7 +169,7 @@ class Paginator
      */
     public function getTotal(): int
     {
-        return (int)$this->total;
+        return (int) $this->total;
     }
 
     /**
@@ -179,7 +179,7 @@ class Paginator
      */
     public function getLastPage(): int
     {
-        return (int)ceil($this->getTotal() / $this->getPerPage());
+        return (int) ceil($this->getTotal() / $this->getPerPage());
     }
 
     /**
@@ -189,7 +189,7 @@ class Paginator
      */
     public function getCount(): int
     {
-        return (int)ceil($this->getTotal() / $this->getPerPage());
+        return (int) ceil($this->getTotal() / $this->getPerPage());
     }
 
     /**
@@ -199,7 +199,7 @@ class Paginator
      */
     public function getStart(): int
     {
-        return (int)(($this->getCurrentPage() - 1) * $this->getPerPage());
+        return (int) (($this->getCurrentPage() - 1) * $this->getPerPage());
     }
 
     /**

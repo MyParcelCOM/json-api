@@ -130,6 +130,6 @@ class TransformerResourceTest extends TestCase
     public function testAddMetaException()
     {
         $this->expectException(TransformerException::class);
-        $this->transformerResource->addMeta((object)[]);
+        $this->transformerResource->addMeta((object) []);
     }
 }
