@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Tests\Stubs;
 
 use DateTime;
-use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
@@ -46,9 +46,9 @@ class TransformerStub extends AbstractTransformer
     }
 
     /**
-     * @return UrlGeneratorInterface
+     * @return UrlGenerator
      */
-    public function getUrlGenerator(): UrlGeneratorInterface
+    public function getUrlGenerator(): UrlGenerator
     {
         return $this->urlGenerator;
     }

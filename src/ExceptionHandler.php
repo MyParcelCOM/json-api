@@ -225,7 +225,7 @@ class ExceptionHandler extends Handler
         }
 
         $error = $this->getDefaultError($exception);
-        $error['status'] = (string)Response::HTTP_SERVICE_UNAVAILABLE;
+        $error['status'] = (string) Response::HTTP_SERVICE_UNAVAILABLE;
 
         return ['errors' => [$error]];
     }
@@ -239,7 +239,7 @@ class ExceptionHandler extends Handler
     private function getDefaultError(Exception $exception): array
     {
         $error = [
-            'status' => (string)Response::HTTP_INTERNAL_SERVER_ERROR,
+            'status' => (string) Response::HTTP_INTERNAL_SERVER_ERROR,
             'code'   => ExceptionInterface::INTERNAL_SERVER_ERROR['code'],
             'title'  => ExceptionInterface::INTERNAL_SERVER_ERROR['title'],
             'detail' => 'Something went wrong. Please try again. If the problem persists, contact support.',

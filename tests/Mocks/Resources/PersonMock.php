@@ -26,7 +26,7 @@ class PersonMock
     public function getId(): string
     {
         if (!isset($this->id)) {
-            $this->id = (string)self::$idCounter++;
+            $this->id = (string) self::$idCounter++;
         }
 
         return $this->id;

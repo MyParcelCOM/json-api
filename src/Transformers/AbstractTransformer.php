@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Transformers;
 
 use DateTime;
-use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 
 abstract class AbstractTransformer implements TransformerInterface
 {
-    /** @var UrlGeneratorInterface */
+    /** @var UrlGenerator */
     protected $urlGenerator;
 
     /** @var TransformerFactory */
@@ -25,10 +25,10 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param UrlGeneratorInterface $urlGenerator
+     * @param UrlGenerator $urlGenerator
      * @return $this
      */
-    public function setUrlGenerator(UrlGeneratorInterface $urlGenerator): self
+    public function setUrlGenerator(UrlGenerator $urlGenerator): self
     {
         $this->urlGenerator = $urlGenerator;
 

@@ -18,12 +18,12 @@ class ErrorTransformer
     {
         return array_filter(
             [
-                'id'     => (string)$exception->getId(),
+                'id'     => (string) $exception->getId(),
                 'links'  => $exception->getLinks(),
-                'status' => (string)$exception->getStatus(),
-                'code'   => (string)$exception->getErrorCode(),
-                'title'  => (string)$exception->getTitle(),
-                'detail' => (string)$exception->getDetail(),
+                'status' => (string) $exception->getStatus(),
+                'code'   => (string) $exception->getErrorCode(),
+                'title'  => (string) $exception->getTitle(),
+                'detail' => (string) $exception->getDetail(),
                 'source' => $exception->getSource(),
                 'meta'   => $exception->getMeta(),
             ]

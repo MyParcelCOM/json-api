@@ -75,10 +75,10 @@ class PersonTransformerMock implements TransformerInterface
     {
         return [
             'mother' => function () use ($model) {
-                return new MotherMock((string)($this->getId($model) + 1));
+                return new MotherMock((string) ($this->getId($model) + 1));
             },
             'father' => function () use ($model) {
-                return new FatherMock((string)($this->getId($model) + 1));
+                return new FatherMock((string) ($this->getId($model) + 1));
             },
         ];
     }

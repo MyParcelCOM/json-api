@@ -19,10 +19,10 @@ trait RequestTrait
         $paginator = new Paginator($this->fullUrl());
 
         if (isset($page['size'])) {
-            $paginator->setPerPage((int)$page['size']);
+            $paginator->setPerPage((int) $page['size']);
         }
         if (isset($page['number'])) {
-            $paginator->setCurrentPage((int)$page['number']);
+            $paginator->setCurrentPage((int) $page['number']);
         }
 
         return $paginator;

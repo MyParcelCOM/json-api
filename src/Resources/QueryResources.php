@@ -98,7 +98,7 @@ class QueryResources implements ResourcesInterface
     public function count(): int
     {
         if (!isset($this->count)) {
-            $this->count = (int)$this->builder->toBase()->getCountForPagination();
+            $this->count = (int) $this->builder->toBase()->getCountForPagination();
         }
 
         return $this->count;

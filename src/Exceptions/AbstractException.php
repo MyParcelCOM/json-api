@@ -47,7 +47,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
         $this->setTitle($errorType['title']);
         $this->setStatus($status);
 
-        parent::__construct($detail, (int)$this->getErrorCode(), $previous);
+        parent::__construct($detail, (int) $this->getErrorCode(), $previous);
     }
 
     /**

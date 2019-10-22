@@ -59,7 +59,7 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function getMeta(): ?array
     {

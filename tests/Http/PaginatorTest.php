@@ -37,7 +37,7 @@ class PaginatorTest extends TestCase
         $this->perPage = 5;
         $this->total = 15;
         $this->end = ceil($this->total / $this->perPage);
-        $this->start = (int)(($this->curPage - 1) * $this->perPage);
+        $this->start = (int) (($this->curPage - 1) * $this->perPage);
 
         $this->paginator = new Paginator('http://link', $this->perPage, $this->curPage, $this->total);
     }

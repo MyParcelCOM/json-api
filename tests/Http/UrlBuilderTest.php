@@ -16,7 +16,7 @@ class UrlBuilderTest extends TestCase
 
         $urlBuilder->setUrl('http://username:password@hostname:9090/path?arg=value#anchor');
         $this->assertEquals('http://username:password@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
-        $this->assertEquals('http://username:password@hostname:9090/path?arg=value#anchor', (string)$urlBuilder);
+        $this->assertEquals('http://username:password@hostname:9090/path?arg=value#anchor', (string) $urlBuilder);
 
         $urlBuilder->setUrl('https://username@hostname:9090/path?arg=value#anchor');
         $this->assertEquals('https://username@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
@@ -95,7 +95,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setScheme('https');
         $this->assertEquals(
             'https://url?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set scheme was not set in build url'
         );
         $this->assertEquals(
@@ -123,7 +123,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setHost('some.random-url.com');
         $this->assertEquals(
             'http://some.random-url.com?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set host was not set in build url'
         );
         $this->assertEquals(
@@ -149,7 +149,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setPort(1337);
         $this->assertEquals(
             'http://url:1337?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set port was not set in build url'
         );
         $this->assertEquals(
@@ -177,7 +177,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setUser('patrick');
         $this->assertEquals(
             'http://patrick@url?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set user was not set in build url'
         );
         $this->assertEquals(
@@ -205,7 +205,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setPassword('welkom123');
         $this->assertEquals(
             'http://fidel:welkom123@url?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set password was not set in build url'
         );
         $this->assertEquals(
@@ -233,7 +233,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setPath('/to/somwhere/else');
         $this->assertEquals(
             'http://fidel:secret@url/to/somwhere/else?foo=bar',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set password was not set in build url'
         );
         $this->assertEquals(
@@ -261,7 +261,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->setFragment('mom');
         $this->assertEquals(
             'http://url?foo=bar#mom',
-            (string)$urlBuilder,
+            (string) $urlBuilder,
             'Set fragment was not set in build url'
         );
         $this->assertEquals(

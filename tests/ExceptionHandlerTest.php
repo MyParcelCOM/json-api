@@ -50,9 +50,7 @@ class ExceptionHandlerTest extends TestCase
         $factory->shouldReceive('json')
             ->andReturnUsing([$this, 'mockResponse']);
 
-        $this->handler = (new ExceptionHandler(Mockery::mock(Container::class, [
-                'get' => $this->request
-            ])))
+        $this->handler = (new ExceptionHandler(Mockery::mock(Container::class, ['get' => $this->request])))
             ->setResponseFactory($factory)
             ->setAppName($this->appName);
     }
@@ -210,7 +208,7 @@ class ExceptionHandlerTest extends TestCase
         $newRelic = Mockery::mock(Newrelic::class);
         $newRelic->shouldReceive('addCustomParameter')->withArgs([
             'request.post',
-            '[]'
+            '[]',
         ]);
         $newRelic->shouldReceive('noticeError')->andReturnUsing(function ($value) use ($exception) {
             $this->assertEquals($exception->getMessage(), $value);

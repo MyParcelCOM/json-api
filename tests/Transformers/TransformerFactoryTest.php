@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Transformers;
 
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
-use MyParcelCom\JsonApi\Interfaces\UrlGeneratorInterface;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
@@ -24,7 +24,7 @@ class TransformerFactoryTest extends TestCase
     /** @var Model */
     protected $modelMock;
 
-    /** @var UrlGeneratorInterface */
+    /** @var UrlGenerator */
     protected $urlGenerator;
 
     protected $dependency = 'Some random dependency';
@@ -32,7 +32,7 @@ class TransformerFactoryTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->urlGenerator = Mockery::mock(UrlGeneratorInterface::class);
+        $this->urlGenerator = Mockery::mock(UrlGenerator::class);
         $this->modelMock = Mockery::mock(Model::class);
         $this->transformerFactory = (new TransformerFactory())
             ->setDependencies([
