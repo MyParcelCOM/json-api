@@ -33,14 +33,14 @@ class TransformerFactory
     }
 
     /**
-     * @example
-     *  [
-     *      AbstractTransformer::class => [
-     *          'setUrlGenerator' => function () {
-     *              return new UrlGenerator();
-     *          },
-     *      ],
-     *  ]
+     * An example of the dependencies array:
+     * [
+     *     AbstractTransformer::class => [
+     *         'setUrlGenerator' => function () {
+     *             return new UrlGenerator();
+     *         },
+     *     ],
+     * ]
      *
      * @param array $dependencies
      * @return $this
