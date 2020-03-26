@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Intouch\Newrelic\Newrelic;
+use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
@@ -50,6 +51,7 @@ class ExceptionHandler extends Handler
     protected $newrelic;
 
     protected $dontReport = [
+        CarrierDataNotFoundException::class,
         MissingTokenException::class,
         MissingScopeException::class,
         NotFoundException::class,
