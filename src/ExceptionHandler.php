@@ -18,12 +18,16 @@ use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
 use MyParcelCom\JsonApi\Exceptions\InvalidInputException;
+use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
+use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
+use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
+use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -52,13 +56,17 @@ class ExceptionHandler extends Handler
 
     protected $dontReport = [
         CarrierDataNotFoundException::class,
-        MissingTokenException::class,
-        MissingScopeException::class,
-        NotFoundException::class,
         InvalidAccessTokenException::class,
         InvalidInputException::class,
+        InvalidJsonSchemaException::class,
         InvalidSecretException::class,
         MethodNotAllowedException::class,
+        MissingScopeException::class,
+        MissingTokenException::class,
+        NotFoundException::class,
+        ResourceCannotBeModifiedException::class,
+        ResourceNotFoundException::class,
+        UnprocessableEntityException::class,
     ];
 
     /**
