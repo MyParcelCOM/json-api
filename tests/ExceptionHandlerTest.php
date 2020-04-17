@@ -11,7 +11,6 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Intouch\Newrelic\Newrelic;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
@@ -200,29 +199,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
-    public function testNewrelic()
-    {
-        $exception = new Exception('moar errors occured');
-
-        $newRelic = Mockery::mock(Newrelic::class);
-        $newRelic->shouldReceive('addCustomParameter')->withArgs([
-            'request.post',
-            '[]',
-        ]);
-        $newRelic->shouldReceive('noticeError')->andReturnUsing(function ($value) use ($exception) {
-            $this->assertEquals($exception->getMessage(), $value);
-        });
-
-        $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs([
-            $exception->getMessage(),
-            ['trace' => array_slice($exception->getTrace(), 0, 5)],
-        ]);
-
-        $this->handler->setNewrelic($newRelic)->setLogger($logger)->report($exception);
-    }
-
     /**
      * Test whether a correct response is generated when a MaintenanceModeException is handled.
      *
@@ -355,8 +331,7 @@ class ExceptionHandlerTest extends TestCase
      */
     public function mockResponse(array $data, int $code)
     {
-        return new class($data, $code) extends JsonResponse
-        {
+        return new class($data, $code) extends JsonResponse {
             protected $data;
             protected $status;
             public $headers;

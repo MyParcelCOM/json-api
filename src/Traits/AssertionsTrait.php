@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Traits;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use JsonSchema\Validator;
+use stdClass;
 
 /**
  * This trait can be used to extend the Phpunit assertions inside a Laravel project.
@@ -49,7 +50,6 @@ trait AssertionsTrait
      */
     private function assertValidJsonSchema($content, $schema): void
     {
-        /** @var Validator $validator */
         $validator = $this->getValidator();
         $validator->validate($content, $schema);
 

@@ -16,7 +16,8 @@ class AbstractExceptionTest extends TestCase
     {
         parent::setUp();
 
-        $this->exception = new class('1', ['code' => '2', 'title' => '3'], 4) extends AbstractException {};
+        $this->exception = new class('1', ['code' => '2', 'title' => '3'], 4) extends AbstractException {
+        };
     }
 
     /** @test */

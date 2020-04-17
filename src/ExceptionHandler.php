@@ -12,13 +12,15 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Intouch\Newrelic\Newrelic;
+use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
+use MyParcelCom\JsonApi\Exceptions\InvalidClientException;
 use MyParcelCom\JsonApi\Exceptions\InvalidInputException;
 use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
+use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
@@ -51,14 +53,14 @@ class ExceptionHandler extends Handler
     /** @var string */
     protected $appName;
 
-    /** @var Newrelic */
-    protected $newrelic;
-
     protected $dontReport = [
+        AuthException::class,
         CarrierDataNotFoundException::class,
         InvalidAccessTokenException::class,
+        InvalidClientException::class,
         InvalidInputException::class,
         InvalidJsonSchemaException::class,
+        InvalidScopeException::class,
         InvalidSecretException::class,
         MethodNotAllowedException::class,
         MissingScopeException::class,
@@ -277,29 +279,11 @@ class ExceptionHandler extends Handler
             return;
         }
 
-        if (isset($this->newrelic)) {
-            $this->newrelic->addCustomParameter('request.post', json_encode($this->container->get('request')->post()));
-            $this->newrelic->noticeError($e->getMessage(), $e);
-        }
-
         if (!isset($this->logger)) {
             return;
         }
 
         $this->logger->error($e->getMessage(), ['trace' => array_slice($e->getTrace(), 0, 5)]);
-    }
-
-    /**
-     * Set Newrelic
-     *
-     * @param Newrelic $newrelic
-     * @return $this
-     */
-    public function setNewrelic(Newrelic $newrelic)
-    {
-        $this->newrelic = $newrelic;
-
-        return $this;
     }
 
     /**
