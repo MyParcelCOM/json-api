@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05478cfce6daa901a9f41b8605eb233e",
+    "content-hash": "e85aeb4ad5a9a46996eb642d82050920",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -345,47 +345,6 @@
             "time": "2016-12-20T10:07:11+00:00"
         },
         {
-            "name": "intouch/newrelic",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/In-Touch/newrelic.git",
-                "reference": "20db6cb25a9eb88e504e16829077c56828c176cc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/In-Touch/newrelic/zipball/20db6cb25a9eb88e504e16829077c56828c176cc",
-                "reference": "20db6cb25a9eb88e504e16829077c56828c176cc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Intouch\\Newrelic": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache 2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Leckey",
-                    "email": "pleckey@intouchinsight.com"
-                }
-            ],
-            "description": "Namespaced Wrapper for NewRelic PHP Agent",
-            "homepage": "http://github.com/In-Touch/newrelic/",
-            "keywords": [
-                "new relic",
-                "newrelic"
-            ],
-            "time": "2014-08-18T12:08:45+00:00"
-        },
-        {
             "name": "justinrainbow/json-schema",
             "version": "5.2.9",
             "source": {
@@ -453,16 +412,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.37",
+            "version": "v5.8.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ce08aaee3a0b8bb58b459b2decf7f25ba7b10fa4"
+                "reference": "78eb4dabcc03e189620c16f436358d41d31ae11f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ce08aaee3a0b8bb58b459b2decf7f25ba7b10fa4",
-                "reference": "ce08aaee3a0b8bb58b459b2decf7f25ba7b10fa4",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/78eb4dabcc03e189620c16f436358d41d31ae11f",
+                "reference": "78eb4dabcc03e189620c16f436358d41d31ae11f",
                 "shasum": ""
             },
             "require": {
@@ -597,20 +556,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-02-14T14:29:11+00:00"
+            "time": "2020-04-14T14:14:36+00:00"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.66",
+            "version": "1.0.67",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21"
+                "reference": "5b1f36c75c4bdde981294c2a0ebdb437ee6f275e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/021569195e15f8209b1c4bebb78bd66aa4f08c21",
-                "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5b1f36c75c4bdde981294c2a0ebdb437ee6f275e",
+                "reference": "5b1f36c75c4bdde981294c2a0ebdb437ee6f275e",
                 "shasum": ""
             },
             "require": {
@@ -681,7 +640,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-03-17T18:58:12+00:00"
+            "time": "2020-04-16T13:21:26+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -763,16 +722,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.32.1",
+            "version": "2.32.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c"
+                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c",
-                "reference": "ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
+                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +789,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-03-26T13:04:10+00:00"
+            "time": "2020-03-31T13:43:19+00:00"
         },
         {
             "name": "opis/closure",
@@ -2705,16 +2664,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v3.6.2",
+            "version": "v3.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "786a947e57086cf236cefdee80784634224b99fa"
+                "reference": "1b3103013797f04521c6cae5560f604649484066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/786a947e57086cf236cefdee80784634224b99fa",
-                "reference": "786a947e57086cf236cefdee80784634224b99fa",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1b3103013797f04521c6cae5560f604649484066",
+                "reference": "1b3103013797f04521c6cae5560f604649484066",
                 "shasum": ""
             },
             "require": {
@@ -2764,7 +2723,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-03-27T23:36:02+00:00"
+            "time": "2020-04-12T15:18:03+00:00"
         }
     ],
     "packages-dev": [
@@ -4205,16 +4164,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.4",
+            "version": "3.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "dceec07328401de6211037abbb18bda423677e26"
+                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dceec07328401de6211037abbb18bda423677e26",
-                "reference": "dceec07328401de6211037abbb18bda423677e26",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
+                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
                 "shasum": ""
             },
             "require": {
@@ -4252,7 +4211,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2020-01-30T22:20:29+00:00"
+            "time": "2020-04-17T01:09:41+00:00"
         },
         {
             "name": "theseer/tokenizer",

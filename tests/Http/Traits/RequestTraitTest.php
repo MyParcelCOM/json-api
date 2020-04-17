@@ -92,8 +92,7 @@ class RequestTraitTest extends TestCase
      */
     private function createRequestTraitMock()
     {
-        return new class implements RequestInterface
-        {
+        return new class implements RequestInterface {
             use RequestTrait;
 
             private $data = [

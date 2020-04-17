@@ -24,7 +24,7 @@ class PromiseCollectionResources implements ResourcesInterface
     protected $offset;
 
     /**
-     * @param PromiseInterface[] ...$promises
+     * @param PromiseInterface[] $promises
      */
     public function __construct(PromiseInterface ...$promises)
     {

@@ -116,7 +116,6 @@ class TransformerCollectionTest extends TestCase
         return $iteratorMock;
     }
 
-
     /**
      * add items to the iterator
      *
