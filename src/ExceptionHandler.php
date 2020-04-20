@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
+use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
 use MyParcelCom\JsonApi\Exceptions\InvalidClientException;
@@ -283,7 +284,20 @@ class ExceptionHandler extends Handler
             return;
         }
 
-        $this->logger->error($e->getMessage(), ['trace' => array_slice($e->getTrace(), 0, 5)]);
+        $context = ['trace' => array_slice($e->getTrace(), 0, 5)];
+
+        if ($e instanceof MultiErrorInterface) {
+            $context['multi_error_errors'] = array_map(function (JsonSchemaErrorInterface $error) {
+                return [
+                    'code'   => $error->getErrorCode(),
+                    'title'  => $error->getTitle(),
+                    'detail' => $error->getDetail(),
+                    'source' => $error->getSource(),
+                ];
+            }, $e->getErrors());
+        }
+
+        $this->logger->error($e->getMessage(), $context);
     }
 
     /**
