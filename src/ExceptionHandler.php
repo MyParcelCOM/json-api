@@ -33,6 +33,7 @@ use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -297,7 +298,18 @@ class ExceptionHandler extends Handler
             }, $e->getErrors());
         }
 
-        $this->logger->error($e->getMessage(), $context);
+        $this->isWarning($e)
+            ? $this->logger->warning($e->getMessage(), $context)
+            : $this->logger->error($e->getMessage(), $context);
+    }
+
+    private function isWarning(Exception $exception): bool
+    {
+        // Not all exceptions have the getStatus method.
+        // We define it in the JsonSchemaErrorInterface, which all the exceptions that we throw implement.
+        return $exception instanceof JsonSchemaErrorInterface
+            && $exception->getStatus() !== null
+            && $exception->getStatus() < 500;
     }
 
     /**
