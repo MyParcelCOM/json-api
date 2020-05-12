@@ -15,6 +15,7 @@ use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use MyParcelCom\JsonApi\Exceptions\AbstractMultiErrorException;
+use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
@@ -196,6 +197,34 @@ class ExceptionHandlerTest extends TestCase
         }
 
         // Mockery didn't throw any errors, so the test succeeded.
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function testReportShouldLogWarningsForStatusCodeBelow500()
+    {
+        $exception = new CarrierApiException(422, ['nono' => 'not good']);
+        $trace = array_slice($exception->getTrace(), 0, 5);
+
+        try {
+            $this->handler->report($exception);
+        } catch (Throwable $e) {
+            $this->fail('An exception was thrown when report was called without a logger');
+        }
+
+        $logger = Mockery::mock(LoggerInterface::class);
+        $logger->shouldReceive('warning')->withArgs([
+            'There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.',
+            ['trace' => $trace],
+        ]);
+
+        try {
+            $this->handler->setLogger($logger);
+            $this->handler->report($exception);
+        } catch (Throwable $e) {
+            $this->fail('An exception was thrown when report was called with a logger');
+        }
+
         $this->assertTrue(true);
     }
 
