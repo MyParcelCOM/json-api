@@ -297,7 +297,9 @@ class ExceptionHandler extends Handler
             }, $e->getErrors());
         }
 
-        $this->logger->error($e->getMessage(), $context);
+        $e->getStatus() >= 500
+            ? $this->logger->error($e->getMessage(), $context)
+            : $this->logger->warning($e->getMessage(), $context);
     }
 
     /**
