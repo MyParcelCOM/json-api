@@ -87,8 +87,8 @@ trait AssertionsTrait
 
     /**
      * @param string $url
-     * @param array  $headers
      * @param array  $ids
+     * @param array  $headers
      */
     public function assertJsonDataContainsIds(string $url, array $ids = [], array $headers = [])
     {
