@@ -89,10 +89,10 @@ class PaginatorTest extends TestCase
         $this->assertEquals(4, $this->paginator->getPerPage());
 
         $this->paginator->setPerPage(-9001);
-        $this->assertEquals(30, $this->paginator->getPerPage());
+        $this->assertEquals(Paginator::DEFAULT_PAGE_SIZE, $this->paginator->getPerPage());
 
-        $this->paginator->setMaxPageSize(70);
-        $this->assertEquals(70, $this->paginator->getPerPage());
+        $this->paginator->setMaxPageSize(137);
+        $this->assertEquals(137, $this->paginator->getPerPage());
     }
 
     /** @test */

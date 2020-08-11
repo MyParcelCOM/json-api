@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Resources;
 
 use Illuminate\Support\Collection;
+use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class CollectionResources implements ResourcesInterface
@@ -13,7 +14,7 @@ class CollectionResources implements ResourcesInterface
     protected $collection;
 
     /** @var int */
-    protected $limit = 30;
+    protected $limit = Paginator::DEFAULT_PAGE_SIZE;
 
     /** @var int */
     protected $offset = 0;

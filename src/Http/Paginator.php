@@ -8,7 +8,7 @@ use MyParcelCom\JsonApi\Exceptions\PaginatorException;
 
 class Paginator
 {
-    const DEFAULT_PAGE_SIZE = 30;
+    const DEFAULT_PAGE_SIZE = 100;
 
     /** @var int $total */
     protected $total;
