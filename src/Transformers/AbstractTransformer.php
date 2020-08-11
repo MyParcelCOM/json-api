@@ -181,7 +181,7 @@ abstract class AbstractTransformer implements TransformerInterface
             $identifier['meta'] = $this->getMeta($model);
         }
 
-        return $identifier;
+        return $this->arrayDeepFilter($identifier);
     }
 
     /**
