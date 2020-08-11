@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
+use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class PromiseResources implements ResourcesInterface
@@ -20,7 +21,7 @@ class PromiseResources implements ResourcesInterface
     protected $offset = 0;
 
     /** @var int */
-    protected $limit = 30;
+    protected $limit = Paginator::DEFAULT_PAGE_SIZE;
 
     public function __construct(PromiseInterface $promise)
     {
