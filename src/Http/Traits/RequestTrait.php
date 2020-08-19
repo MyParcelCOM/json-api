@@ -84,6 +84,21 @@ trait RequestTrait
      */
     public function getFilter(): array
     {
-        return array_filter($this->query('filter', []));
+        return $this->arrayDeepFilter($this->query('filter', []));
+    }
+
+    /**
+     * @param array $array
+     * @return array
+     */
+    private function arrayDeepFilter(array $array): array
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array[$key] = $this->arrayDeepFilter($value);
+            }
+        }
+
+        return array_filter($array);
     }
 }

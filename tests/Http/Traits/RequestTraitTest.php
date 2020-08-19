@@ -82,6 +82,9 @@ class RequestTraitTest extends TestCase
         $this->assertEquals(
             [
                 'foo' => 'bar',
+                'yes' => [
+                    'some' => 'thing',
+                ],
             ],
             $request->getFilter()
         );
@@ -105,6 +108,12 @@ class RequestTraitTest extends TestCase
                 'filter'  => [
                     'foo' => 'bar',
                     'baz' => '',
+                    'yes' => [
+                        'some' => 'thing',
+                    ],
+                    'no'  => [
+                        'thing' => '',
+                    ],
                 ],
             ];
 
