@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * This exception is thrown when the server understands the content type and
@@ -14,9 +15,9 @@ class UnprocessableEntityException extends AbstractException
 {
     /**
      * @param string          $detail
-     * @param \Throwable|null $previous
+     * @param Throwable|null $previous
      */
-    public function __construct(string $detail, \Throwable $previous = null)
+    public function __construct(string $detail, Throwable $previous = null)
     {
         parent::__construct(
             $detail,

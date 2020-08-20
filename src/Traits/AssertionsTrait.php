@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Traits;
 
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use JsonSchema\Validator;
 use stdClass;
 
@@ -102,7 +102,7 @@ trait AssertionsTrait
         $expectedIds = array_map(function ($item) {
             return $item->id;
         }, $content->data);
-        $this->assertEquals($ids, $expectedIds, 'Missing expected ids', 0.0, 10, true);
+        $this->assertEqualsCanonicalizing($ids, $expectedIds, 'Missing expected ids');
     }
 
     /**
@@ -112,10 +112,10 @@ trait AssertionsTrait
      * @param string $accept
      * @return stdClass
      */
-    protected abstract function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass;
+    abstract protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass;
 
     /**
      * @return Validator
      */
-    protected abstract function getValidator(): Validator;
+    abstract protected function getValidator(): Validator;
 }

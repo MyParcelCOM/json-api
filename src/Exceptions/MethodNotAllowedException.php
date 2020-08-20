@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Throwable;
+
 /**
  * This exception is thrown when an endpoint
  * does not support the http method used to
@@ -15,7 +17,7 @@ namespace MyParcelCom\JsonApi\Exceptions;
  */
 class MethodNotAllowedException extends AbstractException
 {
-    public function __construct(string $httpMethod, \Throwable $previous = null)
+    public function __construct(string $httpMethod, Throwable $previous = null)
     {
         $httpMethod = strtoupper($httpMethod);
         parent::__construct(

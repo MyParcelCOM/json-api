@@ -125,5 +125,4 @@ interface JsonSchemaErrorInterface
      * @return $this
      */
     public function setMeta(array $meta): self;
-
 }
