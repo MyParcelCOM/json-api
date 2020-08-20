@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Tests\Exceptions;
 
 use Exception;
+use Mockery;
 use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
 use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
@@ -129,7 +130,7 @@ class ExceptionsTest extends TestCase
     {
         $exception = new InvalidScopeException(['slug', 'slag'], new Exception('Eridium'));
 
-        $this->assertContains('slug, slag', $exception->getMessage());
+        $this->assertStringContainsString('slug, slag', $exception->getMessage());
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
@@ -146,7 +147,7 @@ class ExceptionsTest extends TestCase
     {
         $exception = new MissingBillingInformationException(['bil', 'ling'], new Exception('info'));
 
-        $this->assertContains('bil, ling', $exception->getMessage());
+        $this->assertStringContainsString('bil, ling', $exception->getMessage());
         $this->assertEquals('info', $exception->getPrevious()->getMessage());
     }
 
@@ -155,7 +156,7 @@ class ExceptionsTest extends TestCase
     {
         $exception = new MissingHeaderException(['head', 'durr'], new Exception('hat'));
 
-        $this->assertContains('head, durr', $exception->getMessage());
+        $this->assertStringContainsString('head, durr', $exception->getMessage());
         $this->assertEquals('hat', $exception->getPrevious()->getMessage());
     }
 
@@ -164,7 +165,7 @@ class ExceptionsTest extends TestCase
     {
         $exception = new MissingScopeException(['slug', 'slag'], new Exception('Eridium'));
 
-        $this->assertContains('slug, slag', $exception->getMessage());
+        $this->assertStringContainsString('slug, slag', $exception->getMessage());
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
@@ -255,7 +256,7 @@ class ExceptionsTest extends TestCase
     public function testGenericCarrierErrorException()
     {
         $errors = [
-            \Mockery::mock(JsonSchemaErrorInterface::class),
+            Mockery::mock(JsonSchemaErrorInterface::class),
         ];
         $exception = new GenericCarrierException($errors);
         $this->assertEquals($errors, $exception->getErrors());
@@ -275,7 +276,7 @@ class ExceptionsTest extends TestCase
     public function testInvalidInputException()
     {
         $errors = [
-            \Mockery::mock(JsonSchemaErrorInterface::class),
+            Mockery::mock(JsonSchemaErrorInterface::class),
         ];
         $exception = new InvalidInputException($errors);
         $this->assertEquals($errors, $exception->getErrors());
@@ -311,7 +312,7 @@ class ExceptionsTest extends TestCase
     public function testInvalidCredentialsException()
     {
         $errors = [
-            \Mockery::mock(JsonSchemaErrorInterface::class),
+            Mockery::mock(JsonSchemaErrorInterface::class),
         ];
         $exception = new InvalidCredentialsException($errors);
         $this->assertEquals($errors, $exception->getErrors());

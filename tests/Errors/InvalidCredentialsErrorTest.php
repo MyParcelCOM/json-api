@@ -9,12 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class InvalidCredentialsErrorTest extends TestCase
 {
-    /**
-     * @var InvalidCredentialsError()
-     */
+    /** @var InvalidCredentialsError() */
     protected $error;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

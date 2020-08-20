@@ -9,12 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class MissingInputErrorTest extends TestCase
 {
-    /**
-     * @var MissingInputError()
-     */
+    /** @var MissingInputError() */
     protected $error;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -9,12 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class GenericCarrierErrorTest extends TestCase
 {
-    /**
-     * @var GenericCarrierError
-     */
+    /** @var GenericCarrierError */
     protected $error;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

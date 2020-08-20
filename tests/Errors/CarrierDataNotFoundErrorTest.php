@@ -9,12 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class CarrierDataNotFoundErrorTest extends TestCase
 {
-    /**
-     * @var CarrierDataNotFoundError
-     */
+    /** @var CarrierDataNotFoundError */
     protected $error;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

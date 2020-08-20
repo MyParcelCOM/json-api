@@ -22,7 +22,7 @@ class AbstractTransformerTest extends TestCase
     /** @var TransformerStub */
     private $transformer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +34,7 @@ class AbstractTransformerTest extends TestCase
         $this->transformer = new TransformerStub($transformerFactory);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

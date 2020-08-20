@@ -12,7 +12,7 @@ class AbstractExceptionTest extends TestCase
     /** @var AbstractException */
     private $exception;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -13,7 +13,7 @@ class CollectionResourcesTest extends TestCase
     /** @var CollectionResources */
     private $resultSet;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

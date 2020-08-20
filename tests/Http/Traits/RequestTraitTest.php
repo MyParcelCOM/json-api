@@ -27,10 +27,10 @@ class RequestTraitTest extends TestCase
             $paginator->getLinks(),
             [
                 'self'  => 'https://some.url.com/resource?page[size]=5&page[number]=3&include=all,the,things',
-                'next'  => 'https://some.url.com/resource?page[size]=5&page[number]=4&include=all,the,things',
-                'prev'  => 'https://some.url.com/resource?page[size]=5&page[number]=2&include=all,the,things',
-                'last'  => 'https://some.url.com/resource?page[size]=5&page[number]=5&include=all,the,things',
                 'first' => 'https://some.url.com/resource?page[size]=5&page[number]=1&include=all,the,things',
+                'prev'  => 'https://some.url.com/resource?page[size]=5&page[number]=2&include=all,the,things',
+                'next'  => 'https://some.url.com/resource?page[size]=5&page[number]=4&include=all,the,things',
+                'last'  => 'https://some.url.com/resource?page[size]=5&page[number]=5&include=all,the,things',
             ]
         );
     }

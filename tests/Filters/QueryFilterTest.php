@@ -20,7 +20,7 @@ class QueryFilterTest extends TestCase
     /** @var Builder */
     private $query;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +32,7 @@ class QueryFilterTest extends TestCase
         $this->queryFilter = new QueryFilter($this->query);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

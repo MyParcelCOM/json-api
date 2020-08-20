@@ -2,6 +2,7 @@
 
 namespace MyParcelCom\JsonApi\Tests\Transformers;
 
+use Mockery;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,7 @@ class ErrorTransformerTest extends TestCase
     /** @test */
     public function testTransform()
     {
-        $exception = \Mockery::mock(JsonSchemaErrorInterface::class, [
+        $exception = Mockery::mock(JsonSchemaErrorInterface::class, [
             'getId'        => '123',
             'getLinks'     => [
                 'api_specification' => 'The combined address fields exceed the limit of 35 characters.',

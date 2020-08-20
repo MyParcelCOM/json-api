@@ -13,14 +13,14 @@ class AssertionsTraitTest extends TestCase
     /** @var AssertionsMock */
     private $testClass;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->testClass = new AssertionsMock($this);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -36,12 +36,12 @@ class AssertionsTraitTest extends TestCase
     /** @test */
     public function testAssertJsonDataCount()
     {
-        $this->testClass->assertJsonDataCount(2, 'human', ['head'], 101);
+        $this->testClass->assertJsonDataCount(2, 'human', ['head']);
     }
 
     /** @test */
     public function testAssertJsonDataContainsIds()
     {
-        $this->testClass->assertJsonDataContainsIds('human', ['0', '1'], ['head'], 101);
+        $this->testClass->assertJsonDataContainsIds('human', ['0', '1'], ['head']);
     }
 }

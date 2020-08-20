@@ -26,7 +26,7 @@ class QueryResourcesTest extends TestCase
     /** @var int */
     private $take = 30;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -63,7 +63,7 @@ class QueryResourcesTest extends TestCase
         $this->resultSet = new QueryResources($builder);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

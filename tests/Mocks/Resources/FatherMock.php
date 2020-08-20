@@ -13,7 +13,7 @@ class FatherMock
     private $id;
 
     /**
-     * @param string $id
+     * @param string|null $id
      */
     public function __construct(string $id = null)
     {
