@@ -17,7 +17,7 @@ class InvalidClientException extends AbstractException
     public function __construct()
     {
         parent::__construct(
-            "The supplied client credentials are invalid or the client does not have access to this grant type.",
+            'The supplied client credentials are invalid or the client does not have access to this grant type.',
             self::AUTH_INVALID_CLIENT,
             Response::HTTP_FORBIDDEN
         );

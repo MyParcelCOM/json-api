@@ -22,8 +22,7 @@ class QueryFilter implements FilterInterface
     }
 
     /**
-     * Applies a filter to the current query. Filters given column on given
-     * value using given operator.
+     * Applies a filter to the current query. Filters given column on given value using given operator.
      *
      * @param string|string[] $column
      * @param string          $operator
@@ -98,8 +97,7 @@ class QueryFilter implements FilterInterface
     }
 
     /**
-     * Iterate over the values array and search for
-     * the values in each column using the like operator.
+     * Iterate over the values array and search for the values in each column using the like operator.
      *
      * @param array  $columns
      * @param string $operator

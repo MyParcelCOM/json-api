@@ -7,13 +7,10 @@ namespace MyParcelCom\JsonApi\Exceptions;
 use Throwable;
 
 /**
- * This exception is thrown when an endpoint
- * does not support the http method used to
- * call the endpoint.
+ * This exception is thrown when an endpoint does not support the http method used to call the endpoint.
  *
  * For example:
- * A `PUT` request is made to `/some-endpoint`, but
- * `/some-endpoint` only supports GET requests
+ * A `PUT` request is made to `/some-endpoint`, but `/some-endpoint` only supports GET requests.
  */
 class MethodNotAllowedException extends AbstractException
 {

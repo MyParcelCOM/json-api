@@ -10,7 +10,7 @@ use Throwable;
 class MissingBillingInformationException extends AbstractException
 {
     /**
-     * @param array           $missingBillingInformation
+     * @param array          $missingBillingInformation
      * @param Throwable|null $previous
      */
     public function __construct(array $missingBillingInformation, Throwable $previous = null)

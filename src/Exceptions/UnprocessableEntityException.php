@@ -14,7 +14,7 @@ use Throwable;
 class UnprocessableEntityException extends AbstractException
 {
     /**
-     * @param string          $detail
+     * @param string         $detail
      * @param Throwable|null $previous
      */
     public function __construct(string $detail, Throwable $previous = null)

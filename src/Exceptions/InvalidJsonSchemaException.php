@@ -13,7 +13,7 @@ use Throwable;
 class InvalidJsonSchemaException extends AbstractException
 {
     /**
-     * @param array           $errors
+     * @param array          $errors
      * @param Throwable|null $previous
      */
     public function __construct(array $errors, Throwable $previous = null)

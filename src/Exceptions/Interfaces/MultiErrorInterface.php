@@ -10,7 +10,7 @@ interface MultiErrorInterface
      * Set array of JSON API errors.
      *
      * @param JsonSchemaErrorInterface[] $errors
-     * @return self
+     * @return $this
      */
     public function setErrors(array $errors): MultiErrorInterface;
 
@@ -32,7 +32,7 @@ interface MultiErrorInterface
      * Set meta object containing non-standard meta-information about the error.
      *
      * @param array $meta
-     * @return self
+     * @return $this
      */
     public function setMeta(array $meta): MultiErrorInterface;
 

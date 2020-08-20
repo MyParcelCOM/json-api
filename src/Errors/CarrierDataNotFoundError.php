@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Errors;
 
 /**
- * Created when an error is returned by the carrier,
- * that reflects that the requested data can not be found.
+ * Created when an error is returned by the carrier, that reflects that the requested data can not be found.
  * For instance when requesting tracking information for a shipment.
  */
 class CarrierDataNotFoundError extends AbstractCarrierError

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class InvalidCredentialsErrorTest extends TestCase
 {
-    /** @var InvalidCredentialsError() */
+    /** @var InvalidCredentialsError */
     protected $error;
 
     protected function setUp(): void

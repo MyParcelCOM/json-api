@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Errors;
 
 /**
- * Created when an error was returned by the
- * carrier, reflecting that the used credentials
- * were not valid.
+ * Created when an error was returned by the carrier, reflecting that the used credentials were not valid.
  */
 class InvalidCredentialsError extends AbstractCarrierError
 {

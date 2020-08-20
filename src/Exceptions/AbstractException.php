@@ -36,9 +36,9 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     protected $meta;
 
     /**
-     * @param string          $detail
-     * @param array           $errorType
-     * @param int             $status
+     * @param string         $detail
+     * @param array          $errorType
+     * @param int            $status
      * @param Throwable|null $previous
      */
     public function __construct(string $detail, array $errorType, int $status, Throwable $previous = null)

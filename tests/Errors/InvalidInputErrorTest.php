@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class InvalidInputErrorTest extends TestCase
 {
-    /** @var InvalidInputError() */
+    /** @var InvalidInputError */
     protected $error;
 
     protected function setUp(): void

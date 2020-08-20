@@ -157,7 +157,10 @@ class TransformerResource
         foreach ($this->resources as $resource) {
             $resourceData = $resource->getData();
             $this->data = array_merge($this->data, $resourceData);
-            $this->includes = array_merge($this->includes, $resource->getIncluded($this->requestedIncludes, $this->includes, $resourceData));
+            $this->includes = array_merge(
+                $this->includes,
+                $resource->getIncluded($this->requestedIncludes, $this->includes, $resourceData)
+            );
         }
 
         $this->includes = array_unique($this->includes, SORT_REGULAR); // remove duplicates

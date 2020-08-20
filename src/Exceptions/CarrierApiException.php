@@ -12,8 +12,8 @@ use Throwable;
 class CarrierApiException extends AbstractException
 {
     /**
-     * @param int             $status
-     * @param array           $carrierApiResponse
+     * @param int            $status
+     * @param array          $carrierApiResponse
      * @param Throwable|null $previous
      */
     public function __construct(int $status, array $carrierApiResponse, Throwable $previous = null)

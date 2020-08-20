@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MyParcelCom\JsonApi\Exceptions\Interfaces;
 
 interface JsonSchemaErrorInterface

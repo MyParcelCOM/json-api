@@ -121,8 +121,8 @@ class TransformerCollectionTest extends TestCase
      * add items to the iterator
      *
      * @param Iterator $iterator
-     * @param array     $items iterator items
-     * @param boolean   $includeCallsToKey
+     * @param array    $items iterator items
+     * @param boolean  $includeCallsToKey
      */
     public function mockIteratorItems(Iterator $iterator, array $items, $includeCallsToKey = false)
     {
