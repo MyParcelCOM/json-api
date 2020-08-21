@@ -7,6 +7,7 @@ namespace MyParcelCom\JsonApi\Exceptions;
 use Exception;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
+use Throwable;
 
 abstract class AbstractException extends Exception implements ExceptionInterface
 {
@@ -35,12 +36,12 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     protected $meta;
 
     /**
-     * @param string          $detail
-     * @param array           $errorType
-     * @param int             $status
-     * @param \Throwable|null $previous
+     * @param string         $detail
+     * @param array          $errorType
+     * @param int            $status
+     * @param Throwable|null $previous
      */
-    public function __construct(string $detail, array $errorType, int $status, \Throwable $previous = null)
+    public function __construct(string $detail, array $errorType, int $status, Throwable $previous = null)
     {
         $this->setDetail($detail);
         $this->setErrorCode($errorType['code']);

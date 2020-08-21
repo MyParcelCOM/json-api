@@ -15,7 +15,7 @@ class PromiseCollectionResourcesTest extends TestCase
     /** @var PromiseCollectionResources */
     private $resultSet;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -26,7 +26,7 @@ class PromiseCollectionResourcesTest extends TestCase
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

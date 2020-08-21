@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Mocks;
 
-use Framework\TestCase;
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use JsonSchema\Validator;
 use Mockery;
 use Mockery\Exception;
 use MyParcelCom\JsonApi\Traits\AssertionsTrait;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class AssertionsMock
@@ -46,13 +46,11 @@ class AssertionsMock
      */
     protected function getValidator(): Validator
     {
-        $validatorMock = Mockery::mock(Validator::class, [
+        return Mockery::mock(Validator::class, [
             'validate'  => true,
             'isValid'   => true,
             'getErrors' => [],
         ]);
-
-        return $validatorMock;
     }
 
     public function json($method, $url, $body, $headers)
@@ -76,9 +74,14 @@ class AssertionsMock
         $this->testCase->assertTrue($condition, $message);
     }
 
-    private function assertEquals($expected, $actual)
+    private function assertEquals($expected, $actual, $message = '')
     {
-        $this->testCase->assertEquals($expected, $actual);
+        $this->testCase->assertEquals($expected, $actual, $message);
+    }
+
+    private function assertEqualsCanonicalizing($expected, $actual, $message = '')
+    {
+        $this->testCase->assertEqualsCanonicalizing($expected, $actual, $message);
     }
 
     private function assertObjectHasAttribute($attributeName, $object, $message = '')

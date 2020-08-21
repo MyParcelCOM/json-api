@@ -10,8 +10,7 @@ use MyParcelCom\JsonApi\Filters\QueryFilter;
 trait AppliesFiltersTrait
 {
     /**
-     * Applies filters to an eloquent query builder. Requires a filters property
-     * on current class in the following format:
+     * Applies filters to eloquent query builder. Requires a filters property on current class in the following format:
      * $filters = [
      *     '<filter_name>' => [
      *         'column'   => '<column_name>',

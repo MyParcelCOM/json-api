@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Errors;
 
 /**
- * Created when an error is returned by the carrier,
- * but we are unable to map it to a specific error.
+ * Created when an error is returned by the carrier, but we are unable to map it to a specific error.
  */
 class GenericCarrierError extends AbstractCarrierError
 {

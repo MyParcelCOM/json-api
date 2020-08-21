@@ -12,7 +12,7 @@ class TimestampsTraitTest extends TestCase
 {
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

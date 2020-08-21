@@ -24,7 +24,7 @@ class TransformerServiceTest extends TestCase
     /** @var TransformerService */
     protected $transformerService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -57,7 +57,7 @@ class TransformerServiceTest extends TestCase
         ]);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

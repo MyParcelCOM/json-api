@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Throwable;
+
 class MissingScopeException extends AbstractException
 {
-    public function __construct(array $scopes, \Throwable $previous = null)
+    public function __construct(array $scopes, Throwable $previous = null)
     {
         parent::__construct(
             'The used access token does not contain the required scope(s): ' . implode(', ', $scopes) . '.',

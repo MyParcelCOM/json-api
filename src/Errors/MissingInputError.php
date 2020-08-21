@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Errors;
 
 /**
- * Created when an error is returned by the carrier,
- * that reflects that some input is missing. For instance
- * when a postal code is required, but not given.
+ * Created when an error is returned by the carrier, that reflects that some input is missing.
+ * For instance when a postal code is required, but not given.
  */
 class MissingInputError extends AbstractCarrierError
 {

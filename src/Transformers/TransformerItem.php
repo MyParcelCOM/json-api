@@ -59,11 +59,9 @@ class TransformerItem
                     continue;
                 }
 
-                if ($resource instanceof Collection) {
-                    $data = $this->transformerFactory->createTransformerCollection($resource)->getData();
-                } else {
-                    $data = [$this->transformerFactory->createTransformerItem($resource)->getData()];
-                }
+                $data = ($resource instanceof Collection)
+                    ? $this->transformerFactory->createTransformerCollection($resource)->getData()
+                    : [$this->transformerFactory->createTransformerItem($resource)->getData()];
 
                 $included = array_merge($included, $data);
             }
@@ -73,17 +71,14 @@ class TransformerItem
                     $resource = $callback();
                 }
 
-                if ($resource instanceof Collection) {
-                    $data = $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship]);
-                } else {
-                    $data = $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship]);
-                }
+                $data = ($resource instanceof Collection)
+                    ? $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship])
+                    : $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship]);
 
                 $included = array_merge($included, $data);
             }
 
-            // Unset the resource so the isset check works correctly on the next
-            // iteration #phpvariablescoping
+            // Unset the resource so the isset check works correctly on the next iteration #phpvariablescoping
             unset($resource);
         }
 

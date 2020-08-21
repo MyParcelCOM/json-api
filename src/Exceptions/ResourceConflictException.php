@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * This exception is thrown when request data contains a conflicting id or type.
@@ -12,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 class ResourceConflictException extends AbstractException
 {
     /**
-     * @param string          $field
-     * @param \Throwable|null $previous
+     * @param string         $field
+     * @param Throwable|null $previous
      */
-    public function __construct(string $field, \Throwable $previous = null)
+    public function __construct(string $field, Throwable $previous = null)
     {
         parent::__construct(
             "The supplied resource `$field` is invalid.",

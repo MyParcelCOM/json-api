@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use Illuminate\Support\Collection;
+use Iterator;
 use Mockery;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
@@ -29,7 +30,7 @@ class TransformerCollectionTest extends TestCase
     /** @var TransformerCollection */
     protected $transformerCollection;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -57,7 +58,7 @@ class TransformerCollectionTest extends TestCase
         $this->transformerCollection = new TransformerCollection($this->transformerFactory, $this->getCollectionMock($this->transformerData));
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -100,11 +101,11 @@ class TransformerCollectionTest extends TestCase
      * get an iterator
      *
      * @param array $items iterator items
-     * @return \Iterator
+     * @return Iterator
      */
     public function getIteratorMock(array $items)
     {
-        $iteratorMock = $this->getMockBuilder(\Iterator::class)->setMethods([
+        $iteratorMock = $this->getMockBuilder(Iterator::class)->setMethods([
             'rewind',
             'valid',
             'current',
@@ -119,11 +120,11 @@ class TransformerCollectionTest extends TestCase
     /**
      * add items to the iterator
      *
-     * @param \Iterator $iterator
-     * @param array     $items iterator items
-     * @param boolean   $includeCallsToKey
+     * @param Iterator $iterator
+     * @param array    $items iterator items
+     * @param boolean  $includeCallsToKey
      */
-    public function mockIteratorItems(\Iterator $iterator, array $items, $includeCallsToKey = false)
+    public function mockIteratorItems(Iterator $iterator, array $items, $includeCallsToKey = false)
     {
         $iterator->expects($this->at(0))->method('rewind');
         $counter = 1;

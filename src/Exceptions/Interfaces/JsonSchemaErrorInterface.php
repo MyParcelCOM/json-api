@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MyParcelCom\JsonApi\Exceptions\Interfaces;
 
 interface JsonSchemaErrorInterface
@@ -125,5 +127,4 @@ interface JsonSchemaErrorInterface
      * @return $this
      */
     public function setMeta(array $meta): self;
-
 }

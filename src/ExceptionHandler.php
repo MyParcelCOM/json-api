@@ -33,7 +33,6 @@ use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -142,10 +141,10 @@ class ExceptionHandler extends Handler
      * Render an exception into an HTTP response.
      *
      * @param Request   $request
-     * @param Exception $exception
+     * @param Throwable $exception
      * @return JsonResponse
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         if ($exception instanceof MaintenanceModeException) {
             return $this->responseFactory->json(
@@ -273,9 +272,9 @@ class ExceptionHandler extends Handler
     /**
      * Report or log an exception.
      *
-     * @param Exception $e
+     * @param Throwable $e
      */
-    public function report(Exception $e): void
+    public function report(Throwable $e): void
     {
         if ($this->shouldntReport($e)) {
             return;
@@ -303,7 +302,7 @@ class ExceptionHandler extends Handler
             : $this->logger->error($e->getMessage(), $context);
     }
 
-    private function isWarning(Exception $exception): bool
+    private function isWarning(Throwable $exception): bool
     {
         // Not all exceptions have the getStatus method.
         // We define it in the JsonSchemaErrorInterface, which all the exceptions that we throw implement.

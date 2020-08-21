@@ -10,7 +10,7 @@ class Paginator
 {
     const DEFAULT_PAGE_SIZE = 100;
 
-    /** @var int $total */
+    /** @var int */
     protected $total;
 
     /** @var string */

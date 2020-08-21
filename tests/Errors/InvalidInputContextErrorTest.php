@@ -9,12 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class InvalidInputContextErrorTest extends TestCase
 {
-    /**
-     * @var InvalidInputContextError()
-     */
+    /** @var InvalidInputContextError */
     protected $error;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

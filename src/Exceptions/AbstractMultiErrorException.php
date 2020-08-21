@@ -11,19 +11,13 @@ use Throwable;
 
 abstract class AbstractMultiErrorException extends Exception implements MultiErrorInterface
 {
-    /**
-     * @var JsonSchemaErrorInterface[]
-     */
+    /** @var JsonSchemaErrorInterface[] */
     protected $errors;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $meta;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $status;
 
     /**
@@ -31,7 +25,7 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
      * @param int                        $status
      * @param Throwable|null             $previous
      */
-    public function __construct(array $errors, int $status, \Throwable $previous = null)
+    public function __construct(array $errors, int $status, Throwable $previous = null)
     {
         $this->setStatus($status);
         $this->setErrors($errors);

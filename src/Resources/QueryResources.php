@@ -121,7 +121,7 @@ class QueryResources implements ResourcesInterface
      *       `get()` is called.
      *
      * @param callable $callback
-     * @return QueryResources
+     * @return $this
      */
     public function each(callable $callback): self
     {

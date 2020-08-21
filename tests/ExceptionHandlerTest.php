@@ -11,6 +11,7 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
@@ -37,7 +38,7 @@ class ExceptionHandlerTest extends TestCase
     /** @var string */
     protected $appName = 'Test app';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +56,7 @@ class ExceptionHandlerTest extends TestCase
             ->setAppName($this->appName);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -307,12 +308,12 @@ class ExceptionHandlerTest extends TestCase
         $badMethod = function ($string) {
             json_encode($string);
 
-            throw new \InvalidArgumentException(json_last_error_msg());
+            throw new InvalidArgumentException(json_last_error_msg());
         };
 
         try {
             $badMethod(file_get_contents(__DIR__ . '/Stubs/random-pictures.pdf'));
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $response = $this->handler->setDebug(true)->render($this->request, $e);
             $responseData = $response->getData();
             $this->assertEquals(

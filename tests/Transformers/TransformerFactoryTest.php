@@ -15,6 +15,7 @@ use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use MyParcelCom\JsonApi\Transformers\TransformerItem;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class TransformerFactoryTest extends TestCase
 {
@@ -29,7 +30,7 @@ class TransformerFactoryTest extends TestCase
 
     protected $dependency = 'Some random dependency';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->urlGenerator = Mockery::mock(UrlGenerator::class);
@@ -50,7 +51,7 @@ class TransformerFactoryTest extends TestCase
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -71,7 +72,7 @@ class TransformerFactoryTest extends TestCase
     public function testCreateFromModelWithInvalidModel()
     {
         $this->expectException(TransformerException::class);
-        $this->transformerFactory->createFromModel(new \stdClass());
+        $this->transformerFactory->createFromModel(new stdClass());
     }
 
     /** @test */
