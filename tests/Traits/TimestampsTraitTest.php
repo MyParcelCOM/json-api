@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Traits;
 
-use DateTime;
+use Illuminate\Support\Carbon;
 use MyParcelCom\JsonApi\Traits\TimestampsTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -22,16 +22,16 @@ class TimestampsTraitTest extends TestCase
     /** @test */
     public function testGetUpdatedAt()
     {
-        $this->model->updated_at = new DateTime();
+        $this->model->updated_at = Carbon::now();
 
-        $this->assertInstanceOf(DateTime::class, $this->model->getUpdatedAt());
+        $this->assertInstanceOf(Carbon::class, $this->model->getUpdatedAt());
     }
 
     /** @test */
     public function testGetCreatedAt()
     {
-        $this->model->created_at = new DateTime();
+        $this->model->created_at = Carbon::now();
 
-        $this->assertInstanceOf(DateTime::class, $this->model->getCreatedAt());
+        $this->assertInstanceOf(Carbon::class, $this->model->getCreatedAt());
     }
 }
