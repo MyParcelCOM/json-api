@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Traits;
 
-use DateTime;
+use Illuminate\Support\Carbon;
 
 trait TimestampsTrait
 {
     /**
-     * @return DateTime
+     * @return Carbon
      */
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): Carbon
     {
         return $this->updated_at;
     }
 
     /**
-     * @return DateTime
+     * @return Carbon
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->created_at;
     }
