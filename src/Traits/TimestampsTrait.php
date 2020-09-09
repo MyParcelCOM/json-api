@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Traits;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 trait TimestampsTrait
 {
