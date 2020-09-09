@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Traits;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use MyParcelCom\JsonApi\Traits\TimestampsTrait;
 use PHPUnit\Framework\TestCase;
 
