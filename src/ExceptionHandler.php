@@ -246,10 +246,10 @@ class ExceptionHandler extends Handler
     /**
      * Return the default error array/object.
      *
-     * @param Exception $exception
+     * @param Throwable $exception
      * @return array
      */
-    private function getDefaultError(Exception $exception): array
+    private function getDefaultError(Throwable $exception): array
     {
         $error = [
             'status' => (string) Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -314,10 +314,10 @@ class ExceptionHandler extends Handler
     /**
      * Get debug data from the exception to put in the meta of the response.
      *
-     * @param Exception $exception
+     * @param Throwable $exception
      * @return array
      */
-    private function getDebugMeta(Exception $exception)
+    private function getDebugMeta(Throwable $exception)
     {
         $trace = $exception->getTrace();
 
