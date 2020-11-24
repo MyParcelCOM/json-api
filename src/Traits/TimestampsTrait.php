@@ -6,21 +6,25 @@ namespace MyParcelCom\JsonApi\Traits;
 
 use Carbon\Carbon;
 
+/**
+ * @property Carbon|null created_at
+ * @property Carbon|null updated_at
+ */
 trait TimestampsTrait
 {
     /**
      * @return Carbon
      */
-    public function getUpdatedAt(): Carbon
+    public function getCreatedAt(): Carbon
     {
-        return $this->updated_at;
+        return $this->created_at ? $this->created_at->copy() : Carbon::now();
     }
 
     /**
      * @return Carbon
      */
-    public function getCreatedAt(): Carbon
+    public function getUpdatedAt(): Carbon
     {
-        return $this->created_at;
+        return $this->updated_at ? $this->updated_at->copy() : Carbon::now();
     }
 }
