@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Filters\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
 use MyParcelCom\JsonApi\Filters\QueryFilter;
 
@@ -25,16 +26,27 @@ trait AppliesFiltersTrait
      */
     protected function applyFiltersToQuery(array $filters, Builder $query)
     {
-        $filter = new QueryFilter($query->getQuery());
+        $filters = Arr::dot($filters);
+        $queryFilter = new QueryFilter($query->getQuery());
 
-        array_walk($filters, function ($value, $name) use ($filter) {
+        array_walk($filters, function ($value, $name) use ($queryFilter) {
             if (!isset($this->filters[$name])) {
                 return;
             }
 
+            // Append time to date, to query with <= and >= like Elasticsearch, instead of using DB::raw('DATE(column)')
+            if (strpos($name, 'date_from') !== false ||
+                strpos($name, 'date_to') !== false
+            ) {
+                if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                    throw new UnprocessableEntityException('The filter ' . $name . ' is not in ISO 8601 date format');
+                }
+                $value .= (strpos($name, 'date_to') !== false) ? ' 23:59:59' : ' 00:00:00';
+            }
+
             $values = array_filter(explode(',', $value));
 
-            $filter->apply(
+            $queryFilter->apply(
                 $this->filters[$name]['column'] ?? $name,
                 $this->filters[$name]['operator'] ?? '=',
                 $values
@@ -42,23 +54,5 @@ trait AppliesFiltersTrait
         });
 
         return $query;
-    }
-
-    /**
-     * Append time to date filters to avoid using a raw query with DATE(created_at/register_at).
-     * @param string $filter
-     * @param bool   $lastMinute
-     * @param array  $filters
-     * @throws UnprocessableEntityException
-     */
-    private function setupDateFilter(string $filter, bool $lastMinute, array &$filters): void
-    {
-        if (!empty($filters[$filter])) {
-            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $filters[$filter])) {
-                $filterPath = str_replace('.', '][', $filter);
-                throw new UnprocessableEntityException("The filter[${filterPath}] is not in ISO 8601 date format");
-            }
-            $filters[$filter] .= $lastMinute ? ' 23:59:59' : ' 00:00:00';
-        }
     }
 }
