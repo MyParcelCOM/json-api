@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi;
 
-use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
@@ -284,7 +283,11 @@ class ExceptionHandler extends Handler
             return;
         }
 
-        $context = ['trace' => array_slice($e->getTrace(), 0, 5)];
+        $context = [
+            'trace' => array_slice($e->getTrace(), 0, 5),
+            'file'  => $e->getFile(),
+            'line'  => $e->getLine(),
+        ];
 
         if ($e instanceof MultiErrorInterface) {
             $context['multi_error_errors'] = array_map(function (JsonSchemaErrorInterface $error) {
@@ -297,9 +300,11 @@ class ExceptionHandler extends Handler
             }, $e->getErrors());
         }
 
+        $message = "{$e->getMessage()}, called in {$e->getFile()} on line {$e->getLine()}";
+
         $this->isWarning($e)
-            ? $this->logger->warning($e->getMessage(), $context)
-            : $this->logger->error($e->getMessage(), $context);
+            ? $this->logger->warning($message, $context)
+            : $this->logger->error($message, $context);
     }
 
     private function isWarning(Throwable $exception): bool
