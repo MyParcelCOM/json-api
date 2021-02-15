@@ -300,11 +300,9 @@ class ExceptionHandler extends Handler
             }, $e->getErrors());
         }
 
-        $message = "{$e->getMessage()}, called in {$e->getFile()} on line {$e->getLine()}";
-
         $this->isWarning($e)
-            ? $this->logger->warning($message, $context)
-            : $this->logger->error($message, $context);
+            ? $this->logger->warning($e->getMessage(), $context)
+            : $this->logger->error($e->getMessage(), $context);
     }
 
     private function isWarning(Throwable $exception): bool

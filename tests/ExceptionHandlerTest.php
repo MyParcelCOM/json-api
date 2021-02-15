@@ -189,7 +189,7 @@ class ExceptionHandlerTest extends TestCase
 
         $logger = Mockery::mock(LoggerInterface::class);
         $logger->shouldReceive('error')->withArgs([
-            "an error occurred, called in {$exception->getFile()} on line {$exception->getLine()}",
+            "an error occurred",
             [
                 'trace' => $trace,
                 'file'  => $exception->getFile(),
@@ -201,7 +201,6 @@ class ExceptionHandlerTest extends TestCase
             $this->handler->setLogger($logger);
             $this->handler->report($exception);
         } catch (Throwable $e) {
-            dd($e->getMessage());
             $this->fail('An exception was thrown when report was called with a logger');
         }
 
@@ -223,8 +222,7 @@ class ExceptionHandlerTest extends TestCase
 
         $logger = Mockery::mock(LoggerInterface::class);
         $logger->shouldReceive('warning')->withArgs([
-            "There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`." .
-            ", called in {$exception->getFile()} on line {$exception->getLine()}",
+            "There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.",
             [
                 'trace' => $trace,
                 'file'  => $exception->getFile(),
