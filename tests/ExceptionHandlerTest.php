@@ -177,7 +177,7 @@ class ExceptionHandlerTest extends TestCase
      */
     public function testReport()
     {
-        $message = 'an error occured';
+        $message = 'an error occurred';
         $exception = new Exception($message);
         $trace = array_slice($exception->getTrace(), 0, 5);
 
@@ -188,7 +188,14 @@ class ExceptionHandlerTest extends TestCase
         }
 
         $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs([$message, ['trace' => $trace]]);
+        $logger->shouldReceive('error')->withArgs([
+            "an error occurred",
+            [
+                'trace' => $trace,
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+            ],
+        ]);
 
         try {
             $this->handler->setLogger($logger);
@@ -215,8 +222,12 @@ class ExceptionHandlerTest extends TestCase
 
         $logger = Mockery::mock(LoggerInterface::class);
         $logger->shouldReceive('warning')->withArgs([
-            'There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.',
-            ['trace' => $trace],
+            "There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.",
+            [
+                'trace' => $trace,
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+            ],
         ]);
 
         try {
