@@ -5,11 +5,12 @@ services:
     build:
       context: ./docker
       dockerfile: Dockerfile
-    image: myparcelcom/php:7.3-cli
+    image: myparcelcom/json-api:v1-dev
     working_dir: /opt/json-api
     volumes:
       - .:/opt/json-api
       - composercache:/tmp
+    user: ${CURRENT_UID}
 
 volumes:
   composercache:

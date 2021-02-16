@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Transformers;
 
+use ArrayIterator;
 use Illuminate\Support\Collection;
 use Iterator;
 use Mockery;
@@ -11,6 +12,7 @@ use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use MyParcelCom\JsonApi\Transformers\TransformerItem;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TransformerCollectionTest extends TestCase
@@ -93,49 +95,7 @@ class TransformerCollectionTest extends TestCase
         return Mockery::mock(Collection::class, [
             'offsetExists' => false,
             'offsetGet'    => null,
-            'getIterator'  => $this->getIteratorMock($items),
+            'getIterator'  => new ArrayIterator($items),
         ]);
-    }
-
-    /**
-     * get an iterator
-     *
-     * @param array $items iterator items
-     * @return Iterator
-     */
-    public function getIteratorMock(array $items)
-    {
-        $iteratorMock = $this->getMockBuilder(Iterator::class)->setMethods([
-            'rewind',
-            'valid',
-            'current',
-            'key',
-            'next',
-        ])->getMockForAbstractClass();
-        $this->mockIteratorItems($iteratorMock, $items);
-
-        return $iteratorMock;
-    }
-
-    /**
-     * add items to the iterator
-     *
-     * @param Iterator $iterator
-     * @param array    $items iterator items
-     * @param boolean  $includeCallsToKey
-     */
-    public function mockIteratorItems(Iterator $iterator, array $items, $includeCallsToKey = false)
-    {
-        $iterator->expects($this->at(0))->method('rewind');
-        $counter = 1;
-        foreach ($items as $k => $v) {
-            $iterator->expects($this->at($counter++))->method('valid')->will($this->returnValue(true));
-            $iterator->expects($this->at($counter++))->method('current')->will($this->returnValue($v));
-            if ($includeCallsToKey) {
-                $iterator->expects($this->at($counter++))->method('key')->will($this->returnValue($k));
-            }
-            $iterator->expects($this->at($counter++))->method('next');
-        }
-        $iterator->expects($this->at($counter))->method('valid')->will($this->returnValue(false));
     }
 }
