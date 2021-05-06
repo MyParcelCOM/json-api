@@ -24,7 +24,7 @@ trait AppliesFiltersTrait
      * @param Builder $query
      * @return Builder
      */
-    protected function applyFiltersToQuery(array $filters, Builder $query)
+    protected function applyFiltersToQuery(array $filters, Builder $query): Builder
     {
         $filters = Arr::dot($filters);
         $queryFilter = new QueryFilter($query->getQuery());
@@ -35,9 +35,7 @@ trait AppliesFiltersTrait
             }
 
             // Append time to date, to query with <= and >= like Elasticsearch, instead of using DB::raw('DATE(column)')
-            if (strpos($name, 'date_from') !== false ||
-                strpos($name, 'date_to') !== false
-            ) {
+            if (strpos($name, 'date_from') !== false || strpos($name, 'date_to') !== false) {
                 if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
                     throw new UnprocessableEntityException('The filter ' . $name . ' is not in ISO 8601 date format');
                 }

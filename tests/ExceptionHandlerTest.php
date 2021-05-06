@@ -372,7 +372,7 @@ class ExceptionHandlerTest extends TestCase
      */
     public function mockResponse(array $data, int $code)
     {
-        return new class($data, $code) extends JsonResponse {
+        return new class ($data, $code) extends JsonResponse {
             protected $data;
             protected $status;
             public $headers;

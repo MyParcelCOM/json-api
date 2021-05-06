@@ -22,7 +22,7 @@ class TransformerStub extends AbstractTransformer
      *
      * @return $this
      */
-    public function clearType()
+    public function clearType(): self
     {
         $this->type = null;
 

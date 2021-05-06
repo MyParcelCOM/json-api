@@ -129,7 +129,7 @@ class ExceptionHandler extends Handler
      * @param string $appName
      * @return $this
      */
-    public function setAppName(string $appName)
+    public function setAppName(string $appName): self
     {
         $this->appName = $appName;
 
@@ -227,7 +227,7 @@ class ExceptionHandler extends Handler
      * @param Request                  $request
      * @return array
      */
-    private function getMaintenanceJsonResponse(MaintenanceModeException $exception, $request)
+    private function getMaintenanceJsonResponse(MaintenanceModeException $exception, $request): array
     {
         if ($request->path() === '/') {
             return [
@@ -320,7 +320,7 @@ class ExceptionHandler extends Handler
      * @param Throwable $exception
      * @return array
      */
-    private function getDebugMeta(Throwable $exception)
+    private function getDebugMeta(Throwable $exception): array
     {
         $trace = $exception->getTrace();
 

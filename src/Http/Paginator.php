@@ -40,8 +40,8 @@ class Paginator
      */
     public function getLinks(): array
     {
-        $currentPage = (int) $this->getCurrentPage();
-        $lastPage = (int) $this->getLastPage();
+        $currentPage = $this->getCurrentPage();
+        $lastPage = $this->getLastPage();
 
         $pagination = [];
 
