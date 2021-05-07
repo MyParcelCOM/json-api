@@ -117,12 +117,15 @@ class GenericCarrierErrorTest extends TestCase
     }
 
     /** @test */
-    public function testItSetsPointer()
+    public function testPointer()
     {
-        $this->error->setPointer('data/attributes/foo-bar');
-        $this->assertEquals('data/attributes/foo-bar', $this->error->getPointer());
+        $error = new GenericCarrierError('12345', 'Some error description');
+        $this->assertNull($error->getPointer());
+
+        $error->setPointer('data/attributes/foo-bar');
+        $this->assertEquals('data/attributes/foo-bar', $error->getPointer());
         $this->assertEquals([
             'pointer' => 'data/attributes/foo-bar',
-        ], $this->error->getSource());
+        ], $error->getSource());
     }
 }

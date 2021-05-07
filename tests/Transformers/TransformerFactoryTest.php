@@ -8,6 +8,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
+use MyParcelCom\JsonApi\Tests\Stubs\OtherTransformerStub;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
@@ -66,6 +67,18 @@ class TransformerFactoryTest extends TestCase
         $this->assertInstanceOf(TransformerStub::class, $transformer);
         $this->assertEquals($this->urlGenerator, $transformer->getUrlGenerator());
         $this->assertEquals($this->dependency, $transformer->getDependency());
+    }
+
+    /** @test */
+    public function testCreateFromModelIgnoresOtherMappedDependencies()
+    {
+        $this->transformerFactory->setMapping([get_class($this->modelMock) => OtherTransformerStub::class]);
+
+        /** @var TransformerStub $transformer */
+        $transformer = $this->transformerFactory->createFromModel($this->modelMock);
+        $this->assertInstanceOf(OtherTransformerStub::class, $transformer);
+        $this->assertEquals($this->urlGenerator, $transformer->getUrlGenerator(), 'Abstract dependency should be set');
+        $this->assertNull($transformer->getDependency(), 'TransformerStub dependency should not be set');
     }
 
     /** @test */

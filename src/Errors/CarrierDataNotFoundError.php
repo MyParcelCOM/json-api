@@ -11,8 +11,6 @@ namespace MyParcelCom\JsonApi\Errors;
 class CarrierDataNotFoundError extends AbstractCarrierError
 {
     /**
-     * CarrierDataNotFoundError constructor.
-     *
      * @param string $errorCode
      * @param string $detail
      */
