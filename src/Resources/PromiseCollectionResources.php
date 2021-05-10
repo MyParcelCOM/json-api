@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Resources;
 
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use Illuminate\Support\Collection;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
-use function GuzzleHttp\Promise\unwrap;
 
 class PromiseCollectionResources implements ResourcesInterface
 {
@@ -99,14 +99,12 @@ class PromiseCollectionResources implements ResourcesInterface
     }
 
     /**
-     * Wait for the promises to resolve.
-     *
      * @return $this
      */
-    protected function wait()
+    protected function wait(): self
     {
         if (!isset($this->data)) {
-            $this->data = unwrap($this->promises);
+            $this->data = Utils::unwrap($this->promises);
         }
 
         return $this;

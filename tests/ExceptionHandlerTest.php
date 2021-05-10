@@ -17,6 +17,7 @@ use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use MyParcelCom\JsonApi\Exceptions\AbstractMultiErrorException;
 use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
+use MyParcelCom\JsonApi\Exceptions\GenericCarrierException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
@@ -73,10 +74,9 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /** @test */
-    public function testRenderJsonApiException()
+    private function createExceptionMock()
     {
-        $jsonApiException = Mockery::mock(AbstractException::class, [
+        return Mockery::mock(AbstractException::class, [
             'getId'        => 'id',
             'getLinks'     => ['about' => 'some-link'],
             'getStatus'    => 404,
@@ -91,7 +91,12 @@ class ExceptionHandlerTest extends TestCase
                 'non-standard' => 'something non standard can be in here',
             ],
         ]);
-        $response = $this->handler->render($this->request, $jsonApiException);
+    }
+
+    /** @test */
+    public function testRenderJsonApiException()
+    {
+        $response = $this->handler->render($this->request, $this->createExceptionMock());
 
         $this->assertEquals(404, $response->getStatus());
         $this->checkJson($response->getData());
@@ -102,21 +107,7 @@ class ExceptionHandlerTest extends TestCase
     {
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
             'getErrors' => [
-                Mockery::mock(AbstractException::class, [
-                    'getId'        => 'id',
-                    'getLinks'     => ['about' => 'some-link'],
-                    'getStatus'    => 404,
-                    'getErrorCode' => 8008,
-                    'getTitle'     => 'You went somewhere that doesn\'t exist',
-                    'getDetail'    => 'Don\'t pretend like you didn\'t know what you were doing!',
-                    'getSource'    => [
-                        'pointer'   => '/data/attributes/some-attribute',
-                        'parameter' => 'some-query-param',
-                    ],
-                    'getMeta'      => [
-                        'non-standard' => 'something non standard can be in here',
-                    ],
-                ]),
+                $this->createExceptionMock(),
             ],
             'getMeta'   => ['teapot'],
             'getStatus' => 418,
@@ -127,14 +118,10 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /**
-     * When debug is set to true, the render() method should produce more metadata in the response.
-     *
-     * @test
-     */
-    public function testSetDebug()
+    /** @test */
+    public function testSetDebugShouldRenderMetaData()
     {
-        $exception = Mockery::mock(Exception::class);
+        $exception = new Exception();
 
         $this->handler->setDebug(false);
         $standardResponse = $this->handler->render($this->request, $exception);
@@ -148,13 +135,14 @@ class ExceptionHandlerTest extends TestCase
 
         $debugData = array_diff_key($debugError['meta'], $standardError['meta'] ?? []);
         $this->assertNotEmpty($debugData, 'Debug error should contain more metadata than standard error');
+
+        $multiException = new GenericCarrierException([], 0);
+        $debugResponse = $this->handler->render($this->request, $multiException);
+
+        $this->assertArrayHasKey('meta', $debugResponse->getData(), 'Response should have meta information');
     }
 
-    /**
-     * When contact link is set, the response should contain a contact link.
-     *
-     * @test
-     */
+    /** @test */
     public function testSetContactLink()
     {
         $exception = Mockery::mock(Exception::class);
@@ -170,16 +158,10 @@ class ExceptionHandlerTest extends TestCase
         $this->assertArrayHasKey('contact', $error['links'], 'Json error should have contact link when contact link is set');
     }
 
-    /**
-     * Test whether reporting works.
-     *
-     * @test
-     */
+    /** @test */
     public function testReport()
     {
-        $message = 'an error occurred';
-        $exception = new Exception($message);
-        $trace = array_slice($exception->getTrace(), 0, 5);
+        $exception = new Exception('an error occurred');
 
         try {
             $this->handler->report($exception);
@@ -188,14 +170,14 @@ class ExceptionHandlerTest extends TestCase
         }
 
         $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs([
-            "an error occurred",
-            [
-                'trace' => $trace,
+        $logger->shouldReceive('error')->andReturnUsing(function ($message, $context) use ($exception) {
+            $this->assertEquals('an error occurred', $message);
+            $this->assertEquals([
+                'trace' => array_slice($exception->getTrace(), 0, 5),
                 'file'  => $exception->getFile(),
                 'line'  => $exception->getLine(),
-            ],
-        ]);
+            ], $context);
+        });
 
         try {
             $this->handler->setLogger($logger);
@@ -203,9 +185,32 @@ class ExceptionHandlerTest extends TestCase
         } catch (Throwable $e) {
             $this->fail('An exception was thrown when report was called with a logger');
         }
+    }
 
-        // Mockery didn't throw any errors, so the test succeeded.
-        $this->assertTrue(true);
+    /** @test */
+    public function testReportMultiErrorException()
+    {
+        $exception = Mockery::mock(AbstractMultiErrorException::class, [
+            'getErrors' => [
+                $this->createExceptionMock(),
+            ],
+        ]);
+        $logger = Mockery::mock(LoggerInterface::class);
+        $logger->shouldReceive('error')->andReturnUsing(function ($message, $context) {
+            $this->assertEquals([
+                [
+                    'code'   => '8008',
+                    'title'  => 'You went somewhere that doesn\'t exist',
+                    'detail' => 'Don\'t pretend like you didn\'t know what you were doing!',
+                    'source' => [
+                        'pointer'   => '/data/attributes/some-attribute',
+                        'parameter' => 'some-query-param',
+                    ],
+                ],
+            ], $context['multi_error_errors']);
+        });
+
+        $this->handler->setLogger($logger)->report($exception);
     }
 
     /** @test */
@@ -372,7 +377,7 @@ class ExceptionHandlerTest extends TestCase
      */
     public function mockResponse(array $data, int $code)
     {
-        return new class($data, $code) extends JsonResponse {
+        return new class ($data, $code) extends JsonResponse {
             protected $data;
             protected $status;
             public $headers;

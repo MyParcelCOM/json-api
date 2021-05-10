@@ -9,6 +9,7 @@ services:
     working_dir: /opt/json-api
     volumes:
       - .:/opt/json-api
+      - ./docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - composercache:/tmp
     user: ${CURRENT_UID}
 

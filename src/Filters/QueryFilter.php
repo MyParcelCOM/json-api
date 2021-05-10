@@ -54,7 +54,7 @@ class QueryFilter implements FilterInterface
      * @param string $operator
      * @return bool
      */
-    private function isNegation(string $operator)
+    private function isNegation(string $operator): bool
     {
         return strpos($operator, '!') !== false || strpos($operator, 'not') !== false;
     }
@@ -67,7 +67,7 @@ class QueryFilter implements FilterInterface
      * @param string|string[] $column
      * @return array
      */
-    private function prepareOperatorValueAndColumn(string $operator, $value, $column)
+    private function prepareOperatorValueAndColumn(string $operator, $value, $column): array
     {
         $operator = strtolower($operator);
 

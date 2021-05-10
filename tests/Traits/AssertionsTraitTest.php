@@ -37,6 +37,8 @@ class AssertionsTraitTest extends TestCase
     public function testAssertJsonDataCount()
     {
         $this->testClass->assertJsonDataCount(2, 'human', ['head']);
+        $this->testClass->assertJsonDataCount(1, 'human', ['tail']);
+        $this->testClass->assertJsonDataCount(0, 'human', ['horn']);
     }
 
     /** @test */

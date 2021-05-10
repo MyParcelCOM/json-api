@@ -11,7 +11,11 @@ class AppliesFiltersMock
     use AppliesFiltersTrait;
 
     private $filters = [
-        'coffee' => [
+        'date_from' => [
+            'column'   => 'created_at',
+            'operator' => '>=',
+        ],
+        'coffee'    => [
             'column'   => 'sugar',
             'operator' => 'nope',
         ],

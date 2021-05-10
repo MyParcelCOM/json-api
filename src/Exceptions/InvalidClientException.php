@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class InvalidClientException extends AbstractException
 {
-    /**
-     * InvalidOAuthClientException constructor.
-     */
     public function __construct()
     {
         parent::__construct(

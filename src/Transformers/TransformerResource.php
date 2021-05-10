@@ -79,7 +79,7 @@ class TransformerResource
      * @return $this
      * @throws TransformerException
      */
-    public function addMeta($meta)
+    public function addMeta($meta): self
     {
         if (is_array($meta)) {
             $this->meta = array_merge_recursive($meta, $this->meta);

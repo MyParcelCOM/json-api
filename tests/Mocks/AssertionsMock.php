@@ -20,8 +20,6 @@ class AssertionsMock
     private $testCase;
 
     /**
-     * AssertionsMock constructor.
-     *
      * @param $testCase
      */
     public function __construct($testCase)
@@ -59,11 +57,16 @@ class AssertionsMock
         $responseMock->shouldReceive('assertStatus')->withArgs([101]);
         $responseMock->shouldReceive('assertHeader')->withArgs(['Content-Type', 'application/vnd.api+json']);
         $responseMock->shouldReceive('getContent')->andReturnUsing(function () use ($method, $url, $body, $headers) {
-            if (json_encode([$method, $url, $body, $headers]) !== '["GET","human",[],["head"]]') {
-                throw new Exception('unexpected json() parameters');
+            switch (json_encode([$method, $url, $body, $headers])) {
+                case '["GET","human",[],["head"]]':
+                    return '{"data":[{"id":0},{"id":1}]}';
+                case '["GET","human",[],["tail"]]':
+                    return '{"data":{"id":2}}';
+                case '["GET","human",[],["horn"]]':
+                    return '{"data":null}';
+                default:
+                    throw new Exception('unexpected json() parameters');
             }
-
-            return '{"data":[{"id":0},{"id":1}]}';
         });
 
         return $responseMock;

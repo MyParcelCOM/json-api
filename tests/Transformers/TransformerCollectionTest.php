@@ -6,13 +6,11 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use ArrayIterator;
 use Illuminate\Support\Collection;
-use Iterator;
 use Mockery;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use MyParcelCom\JsonApi\Transformers\TransformerItem;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TransformerCollectionTest extends TestCase
@@ -90,7 +88,7 @@ class TransformerCollectionTest extends TestCase
      * @param array $items iterator items
      * @return Collection
      */
-    protected function getCollectionMock(array $items)
+    protected function getCollectionMock(array $items): Collection
     {
         return Mockery::mock(Collection::class, [
             'offsetExists' => false,
