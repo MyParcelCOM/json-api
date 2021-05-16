@@ -50,5 +50,5 @@ interface RequestInterface
      *
      * @return string
      */
-    public function fullUrl(): string;
+    public function fullUrl();
 }
