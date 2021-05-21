@@ -28,12 +28,11 @@ trait AssertionsTrait
     {
         /** @var TestResponse $response */
         $response = $this->json($method, $url, $body, $headers);
+        $accept = $headers['Accept'] ?? 'application/vnd.api+json';
 
         // Response should have correct header and status.
         $response->assertStatus($status);
-        $response->assertHeader('Content-Type', 'application/vnd.api+json');
-
-        $accept = $headers['Accept'] ?? 'application/vnd.api+json';
+        $response->assertHeader('Content-Type', $accept);
 
         // Content should adhere to the schema.
         $content = json_decode($response->getContent());
