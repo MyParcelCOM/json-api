@@ -10,6 +10,7 @@ use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierApiException;
 use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\ExternalRequestException;
+use MyParcelCom\JsonApi\Exceptions\ForbiddenException;
 use MyParcelCom\JsonApi\Exceptions\GenericCarrierException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
@@ -326,5 +327,20 @@ class ExceptionsTest extends TestCase
         ], $exception->setMeta([
             'foo' => 'bar',
         ])->getMeta());
+    }
+
+    /** @test */
+    public function testForbiddenException()
+    {
+        $exception = new ForbiddenException();
+
+        $this->assertEquals('This user is not allowed to perform this action.', $exception->getMessage());
+        $this->assertEquals(403, $exception->getStatus());
+
+        $exception = new ForbiddenException('This user cannot do this specific action that they are trying to do!');
+        $this->assertEquals(
+            'This user cannot do this specific action that they are trying to do!',
+            $exception->getMessage()
+        );
     }
 }
