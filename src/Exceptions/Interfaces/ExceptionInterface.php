@@ -72,6 +72,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Relationship cannot be modified.',
     ];
 
+    const FORBIDDEN = [
+        'code'  => '10013',
+        'title' => 'Action not allowed.',
+    ];
+
     // Billing/payment related errors 11000 - 11999
     const MISSING_BILLING_INFORMATION = [
         'code'  => '11000',
