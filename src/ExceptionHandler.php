@@ -18,6 +18,7 @@ use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\InvalidAccessTokenException;
 use MyParcelCom\JsonApi\Exceptions\InvalidClientException;
+use MyParcelCom\JsonApi\Exceptions\InvalidCredentialsException;
 use MyParcelCom\JsonApi\Exceptions\InvalidInputException;
 use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
@@ -58,6 +59,7 @@ class ExceptionHandler extends Handler
         CarrierDataNotFoundException::class,
         InvalidAccessTokenException::class,
         InvalidClientException::class,
+        InvalidCredentialsException::class,
         InvalidInputException::class,
         InvalidJsonSchemaException::class,
         InvalidScopeException::class,
