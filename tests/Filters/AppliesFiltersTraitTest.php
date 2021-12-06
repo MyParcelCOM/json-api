@@ -13,6 +13,13 @@ use PHPUnit\Framework\TestCase;
 
 class AppliesFiltersTraitTest extends TestCase
 {
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
+
     /** @test */
     public function testApplyFiltersToQuery()
     {
@@ -46,7 +53,7 @@ class AppliesFiltersTraitTest extends TestCase
     }
 
     /** @test */
-    public function testApplyDateFilters()
+    public function testApplyDateFiltersDateFormat()
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
         $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) {
@@ -67,6 +74,30 @@ class AppliesFiltersTraitTest extends TestCase
         ]);
 
         (new AppliesFiltersMock())->applyFilters(['date_from' => '1987-03-17'], $builderMock);
+    }
+
+    /** @test */
+    public function testApplyDateFiltersTimestamp()
+    {
+        $queryMock = Mockery::mock(QueryBuilder::class);
+        $queryMock->shouldReceive('where')->once()->andReturnUsing(function ($closure) {
+            $param = Mockery::mock(QueryBuilder::class);
+            $param->shouldReceive('orWhere')->once()->andReturnUsing(function ($columnName, $operator, $values) {
+                $this->assertEquals('created_at', $columnName);
+                $this->assertEquals('>=', $operator);
+                $this->assertEquals('2021-12-06 16:18:36', $values);
+            });
+
+            $closure($param);
+
+            return $param;
+        });
+
+        $builderMock = Mockery::mock(Builder::class, [
+            'getQuery' => $queryMock,
+        ]);
+
+        (new AppliesFiltersMock())->applyFilters(['date_from' => '1638807516'], $builderMock);
     }
 
     /** @test */
