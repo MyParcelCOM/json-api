@@ -37,15 +37,17 @@ trait AppliesFiltersTrait
 
             // Append time to date, to query with <= and >= like Elasticsearch, instead of using DB::raw('DATE(column)')
             if (strpos($name, 'date_from') !== false || strpos($name, 'date_to') !== false) {
-                if (!preg_match('/^(\d{4}-\d{2}-\d{2})|(\d+)$/', $value)) {
-                    throw new UnprocessableEntityException('The filter ' . $name . ' is not a timestamp or in ISO 8601 date format.');
-                }
-                // We can safely assume that a timestamp is used if it's numeric.
-                if (is_numeric($value)) {
+                // Date string 0000-00-00
+                if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                    $value .= (strpos($name, 'date_to') !== false) ? ' 23:59:59' : ' 00:00:00';
+                    // ISO 8601 date string 0000-00-00T00:00:00+0000
+                } elseif (preg_match('/^\d{4}-\d{2}-\d{2}T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\+\d{4}$/', $value)) {
+                    $value = (new Carbon($value))->utc()->format('Y-m-d H:i:s');
+                    // Timestamp
+                } elseif (is_numeric($value)) {
                     $value = Carbon::createFromTimestamp($value)->format('Y-m-d H:i:s');
                 } else {
-                    // Otherwise, we have to append a time string to include whole days in the results.
-                    $value .= (strpos($name, 'date_to') !== false) ? ' 23:59:59' : ' 00:00:00';
+                    throw new UnprocessableEntityException('The filter ' . $name . ' is not a timestamp, date string or in ISO 8601 date format.');
                 }
             }
 
