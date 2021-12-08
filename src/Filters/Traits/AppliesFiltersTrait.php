@@ -40,8 +40,8 @@ trait AppliesFiltersTrait
                 // Date string 0000-00-00
                 if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
                     $value .= (strpos($name, 'date_to') !== false) ? ' 23:59:59' : ' 00:00:00';
-                    // ISO 8601 date string 0000-00-00T00:00:00+0000
-                } elseif (preg_match('/^\d{4}-\d{2}-\d{2}T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\+\d{4}$/', $value)) {
+                    // ISO 8601 date string 0000-00-00T00:00:00 with optionally .000, Z or +0000 or +00:00
+                } elseif (preg_match('/^\d{4}-(?:0[1-9]|1[0-2])-(?:[0-2][0-9]|3[0-1])T(?:[0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.\d{3})?(Z|\+\d{2}:?\d{2})$/', $value)) {
                     $value = (new Carbon($value))->utc()->format('Y-m-d H:i:s');
                     // Timestamp
                 } elseif (is_numeric($value)) {
