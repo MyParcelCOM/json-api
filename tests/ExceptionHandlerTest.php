@@ -11,6 +11,8 @@ use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Mockery;
 use MyParcelCom\JsonApi\ExceptionHandler;
@@ -100,6 +102,22 @@ class ExceptionHandlerTest extends TestCase
 
         $this->assertEquals(404, $response->getStatus());
         $this->checkJson($response->getData());
+    }
+
+    /** @test */
+    public function testRenderValidationException()
+    {
+        $exception = Mockery::mock(ValidationException::class, [
+            'errors' => [
+                'data.attributes.some-attribute' => [
+                    'Something wrong with data.attributes.some-attribute',
+                ],
+            ],
+        ]);
+        $response = $this->handler->render($this->request, $exception);
+
+        $this->assertEquals(422, $response->getStatus());
+        $this->assertEquals('Something wrong with some-attribute', Arr::get($response->getData(), 'errors.0.detail'));
     }
 
     /** @test */

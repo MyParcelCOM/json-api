@@ -11,6 +11,8 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use MyParcelCom\JsonApi\Errors\InvalidInputError;
 use MyParcelCom\JsonApi\Exceptions\AuthException;
 use MyParcelCom\JsonApi\Exceptions\CarrierDataNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\ExceptionInterface;
@@ -164,6 +166,15 @@ class ExceptionHandler extends Handler
 
         if ($exception instanceof MethodNotAllowedHttpException) {
             $exception = new MethodNotAllowedException($request->getMethod());
+        }
+
+        if ($exception instanceof ValidationException) {
+            $exception = new InvalidInputException(
+                collect($exception->errors())->map(function ($errors, $pointer) {
+                    $error = str_replace(['data.attributes.', 'data.relationships.'], '', $errors[0]);
+                    return new InvalidInputError('422', $error, '/' . str_replace('.', '/', $pointer));
+                })->toArray()
+            );
         }
 
         if ($exception instanceof MultiErrorInterface) {
