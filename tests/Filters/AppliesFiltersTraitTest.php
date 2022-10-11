@@ -72,16 +72,19 @@ class AppliesFiltersTraitTest extends TestCase
         (new AppliesFiltersMock())->applyFilters(['date_from' => '1987-03-17'], $builderMock);
     }
 
-    /** @test */
-    public function testApplyDateFiltersISO8601()
+    /**
+     * @test
+     * @dataProvider dateFilterProvider
+     */
+    public function testApplyDateFiltersISO8601($expectation, $dateFrom)
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
-        $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) {
+        $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) use ($expectation) {
             $param = Mockery::mock(QueryBuilder::class);
-            $param->shouldReceive('orWhere')->andReturnUsing(function ($columnName, $operator, $values) {
+            $param->shouldReceive('orWhere')->andReturnUsing(function ($columnName, $operator, $values) use ($expectation) {
                 $this->assertEquals('created_at', $columnName);
                 $this->assertEquals('>=', $operator);
-                $this->assertEquals('1993-05-31 05:27:12', $values);
+                $this->assertEquals($expectation, $values);
             });
 
             $closure($param);
@@ -93,31 +96,19 @@ class AppliesFiltersTraitTest extends TestCase
             'getQuery' => $queryMock,
         ]);
 
-        (new AppliesFiltersMock())->applyFilters(['date_from' => '1993-05-31T10:27:12+0500'], $builderMock);
+        (new AppliesFiltersMock())->applyFilters(['date_from' => $dateFrom], $builderMock);
     }
 
-    /** @test */
-    public function testApplyDateFiltersTimestamp()
+    public function dateFilterProvider(): array
     {
-        $queryMock = Mockery::mock(QueryBuilder::class);
-        $queryMock->shouldReceive('where')->once()->andReturnUsing(function ($closure) {
-            $param = Mockery::mock(QueryBuilder::class);
-            $param->shouldReceive('orWhere')->once()->andReturnUsing(function ($columnName, $operator, $values) {
-                $this->assertEquals('created_at', $columnName);
-                $this->assertEquals('>=', $operator);
-                $this->assertEquals('2021-12-06 16:18:36', $values);
-            });
-
-            $closure($param);
-
-            return $param;
-        });
-
-        $builderMock = Mockery::mock(Builder::class, [
-            'getQuery' => $queryMock,
-        ]);
-
-        (new AppliesFiltersMock())->applyFilters(['date_from' => '1638807516'], $builderMock);
+        return [
+            ['2021-12-06 16:18:36', '1638807516'],
+            ['2021-12-06 00:00:00', '2021-12-06'],
+            ['2021-12-05 23:23:45', '2021-12-06T01:23:45+0200'],
+            ['2021-12-06 03:23:45', '2021-12-06T01:23:45-0200'],
+            ['2021-12-06 00:23:45', '2021-12-06T01:23:45.123+01:00'],
+            ['2021-12-06 02:23:45', '2021-12-06T01:23:45.123456-01:00'],
+        ];
     }
 
     /** @test */
