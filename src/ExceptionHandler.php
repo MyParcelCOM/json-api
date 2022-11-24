@@ -261,7 +261,7 @@ class ExceptionHandler extends Handler
      * @param Throwable $exception
      * @return array
      */
-    private function getDefaultError(Throwable $exception): array
+    protected function getDefaultError(Throwable $exception): array
     {
         $error = [
             'status' => (string) Response::HTTP_INTERNAL_SERVER_ERROR,
