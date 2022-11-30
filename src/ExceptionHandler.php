@@ -296,22 +296,7 @@ class ExceptionHandler extends Handler
             return;
         }
 
-        $context = [
-            'trace' => array_slice($e->getTrace(), 0, 5),
-            'file'  => $e->getFile(),
-            'line'  => $e->getLine(),
-        ];
-
-        if ($e instanceof MultiErrorInterface) {
-            $context['multi_error_errors'] = array_map(function (JsonSchemaErrorInterface $error) {
-                return [
-                    'code'   => $error->getErrorCode(),
-                    'title'  => $error->getTitle(),
-                    'detail' => $error->getDetail(),
-                    'source' => $error->getSource(),
-                ];
-            }, $e->getErrors());
-        }
+        $context = $this->getReportContext($e);
 
         $this->isWarning($e)
             ? $this->logger->warning($e->getMessage(), $context)
@@ -350,5 +335,27 @@ class ExceptionHandler extends Handler
             'message'   => $exception->getMessage(),
             'trace'     => $trace,
         ];
+    }
+
+    protected function getReportContext(Throwable $e): array
+    {
+        $context = [
+            'trace' => array_slice($e->getTrace(), 0, 5),
+            'file'  => $e->getFile(),
+            'line'  => $e->getLine(),
+        ];
+
+        if ($e instanceof MultiErrorInterface) {
+            $context['multi_error_errors'] = array_map(function (JsonSchemaErrorInterface $error) {
+                return [
+                    'code'   => $error->getErrorCode(),
+                    'title'  => $error->getTitle(),
+                    'detail' => $error->getDetail(),
+                    'source' => $error->getSource(),
+                ];
+            }, $e->getErrors());
+        }
+
+        return $context;
     }
 }
