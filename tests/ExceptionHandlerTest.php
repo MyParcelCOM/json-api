@@ -211,21 +211,18 @@ class ExceptionHandlerTest extends TestCase
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
             'getErrors' => [
                 $this->createExceptionMock(),
+                $this->createExceptionMock(),
             ],
         ]);
         $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->andReturnUsing(function ($message, $context) {
+        $logger->shouldReceive('error')->twice()->andReturnUsing(function ($message, $context) {
+            $this->assertEquals('You went somewhere that doesn\'t exist', $message);
+            $this->assertEquals('8008', $context['code']);
+            $this->assertEquals('Don\'t pretend like you didn\'t know what you were doing!', $context['detail']);
             $this->assertEquals([
-                [
-                    'code'   => '8008',
-                    'title'  => 'You went somewhere that doesn\'t exist',
-                    'detail' => 'Don\'t pretend like you didn\'t know what you were doing!',
-                    'source' => [
-                        'pointer'   => '/data/attributes/some-attribute',
-                        'parameter' => 'some-query-param',
-                    ],
-                ],
-            ], $context['multi_error_errors']);
+                'pointer'   => '/data/attributes/some-attribute',
+                'parameter' => 'some-query-param',
+            ], $context['source']);
         });
 
         $this->handler->setLogger($logger)->report($exception);

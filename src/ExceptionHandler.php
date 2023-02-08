@@ -77,9 +77,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Set the Response Factory.
-     *
-     * @param ResponseFactory $factory
-     * @return $this
      */
     public function setResponseFactory(ResponseFactory $factory): self
     {
@@ -90,9 +87,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Set the debug value.
-     *
-     * @param bool $debug
-     * @return $this
      */
     public function setDebug(bool $debug): self
     {
@@ -103,9 +97,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Set the contact link.
-     *
-     * @param string $link
-     * @return $this
      */
     public function setContactLink(string $link): self
     {
@@ -116,9 +107,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Set the logger for error reporting.
-     *
-     * @param LoggerInterface $logger
-     * @return $this
      */
     public function setLogger(LoggerInterface $logger): self
     {
@@ -129,9 +117,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Set the name of the running app.
-     *
-     * @param string $appName
-     * @return $this
      */
     public function setAppName(string $appName): self
     {
@@ -257,9 +242,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Return the default error array/object.
-     *
-     * @param Throwable $exception
-     * @return array
      */
     protected function getDefaultError(Throwable $exception): array
     {
@@ -283,8 +265,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Report or log an exception.
-     *
-     * @param Throwable $e
      */
     public function report(Throwable $e): void
     {
@@ -298,9 +278,19 @@ class ExceptionHandler extends Handler
 
         $context = $this->getReportContext($e);
 
-        $this->isWarning($e)
-            ? $this->logger->warning($e->getMessage(), $context)
-            : $this->logger->error($e->getMessage(), $context);
+        if ($e instanceof MultiErrorInterface) {
+            foreach ($e->getErrors() as $error) {
+                $this->logger->error($error->getTitle(), array_merge($context, [
+                    'code'   => $error->getErrorCode(),
+                    'detail' => $error->getDetail(),
+                    'source' => $error->getSource(),
+                ]));
+            }
+        } else {
+            $this->isWarning($e)
+                ? $this->logger->warning($e->getMessage(), $context)
+                : $this->logger->error($e->getMessage(), $context);
+        }
     }
 
     private function isWarning(Throwable $exception): bool
@@ -314,9 +304,6 @@ class ExceptionHandler extends Handler
 
     /**
      * Get debug data from the exception to put in the meta of the response.
-     *
-     * @param Throwable $exception
-     * @return array
      */
     private function getDebugMeta(Throwable $exception): array
     {
@@ -339,23 +326,10 @@ class ExceptionHandler extends Handler
 
     protected function getReportContext(Throwable $e): array
     {
-        $context = [
+        return [
             'trace' => array_slice($e->getTrace(), 0, 5),
             'file'  => $e->getFile(),
             'line'  => $e->getLine(),
         ];
-
-        if ($e instanceof MultiErrorInterface) {
-            $context['multi_error_errors'] = array_map(function (JsonSchemaErrorInterface $error) {
-                return [
-                    'code'   => $error->getErrorCode(),
-                    'title'  => $error->getTitle(),
-                    'detail' => $error->getDetail(),
-                    'source' => $error->getSource(),
-                ];
-            }, $e->getErrors());
-        }
-
-        return $context;
     }
 }

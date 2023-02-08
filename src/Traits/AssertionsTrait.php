@@ -69,7 +69,7 @@ trait AssertionsTrait
         $response = $this->json('GET', $url, [], $headers);
         $content = json_decode($response->getContent());
 
-        $this->assertTrue(property_exists($content, 'data'), 'content has no property "data" for url:' . $url);
+        $this->assertTrue(property_exists($content, 'data'), 'content has no property "data" for url: ' . $url);
         if (is_array($content->data)) {
             $this->assertEquals($count, count($content->data), 'data amount is ' . count($content->data) . ' expecting ' . $count . ' for url:' . $url);
         } elseif (is_object($content->data)) {
@@ -94,7 +94,7 @@ trait AssertionsTrait
         $response = $this->json('GET', $url, [], $headers);
         $content = json_decode($response->getContent());
 
-        $this->assertObjectHasAttribute('data', $content, print_r($content, true));
+        $this->assertTrue(property_exists($content, 'data'), 'content has no property "data" for url: ' . $url);
         $data = is_array($content->data) ? $content->data : [$content->data];
         $this->assertCount(count($ids), $data, 'Number of expected id\'s did not match number of resources in the response');
 
