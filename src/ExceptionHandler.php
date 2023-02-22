@@ -6,7 +6,6 @@ namespace MyParcelCom\JsonApi;
 
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Exceptions\Handler;
-use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -134,13 +133,6 @@ class ExceptionHandler extends Handler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof MaintenanceModeException) {
-            return $this->responseFactory->json(
-                $this->getMaintenanceJsonResponse($exception, $request),
-                Response::HTTP_SERVICE_UNAVAILABLE
-            );
-        }
-
         if ($exception instanceof NotFoundHttpException) {
             $exception = new NotFoundException('The endpoint could not be found.');
         }
@@ -218,26 +210,6 @@ class ExceptionHandler extends Handler
                 'Content-Type' => 'application/vnd.api+json',
             ]
         );
-    }
-
-    /**
-     * @param MaintenanceModeException $exception
-     * @param Request                  $request
-     * @return array
-     */
-    private function getMaintenanceJsonResponse(MaintenanceModeException $exception, $request): array
-    {
-        if ($request->path() === '/') {
-            return [
-                'title'  => $this->appName,
-                'status' => 'Service Unavailable',
-            ];
-        }
-
-        $error = $this->getDefaultError($exception);
-        $error['status'] = (string) Response::HTTP_SERVICE_UNAVAILABLE;
-
-        return ['errors' => [$error]];
     }
 
     /**
