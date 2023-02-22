@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerResourceTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var TransformerResource */
     protected $transformerResource;
 
@@ -55,13 +57,6 @@ class TransformerResourceTest extends TestCase
             'getCount' => 0,
             'getLinks' => [],
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 class AssertionsTraitTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var AssertionsMock */
     private $testClass;
 
@@ -18,13 +20,6 @@ class AssertionsTraitTest extends TestCase
         parent::setUp();
 
         $this->testClass = new AssertionsMock($this);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

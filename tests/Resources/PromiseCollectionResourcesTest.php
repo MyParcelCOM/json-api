@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 
 class PromiseCollectionResourcesTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var PromiseCollectionResources */
     private $resultSet;
 
@@ -24,13 +26,6 @@ class PromiseCollectionResourcesTest extends TestCase
                 'wait' => new Collection(['some', 'random', 'data']),
             ])
         );
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

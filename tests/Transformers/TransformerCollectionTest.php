@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerCollectionTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var array */
     protected $transformerData;
 
@@ -56,13 +58,6 @@ class TransformerCollectionTest extends TestCase
         ]);
 
         $this->transformerCollection = new TransformerCollection($this->transformerFactory, $this->getCollectionMock($this->transformerData));
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

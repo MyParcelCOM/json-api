@@ -32,6 +32,8 @@ use Throwable;
 
 class ExceptionHandlerTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var ExceptionHandler */
     protected $handler;
 
@@ -57,13 +59,6 @@ class ExceptionHandlerTest extends TestCase
         $this->handler = (new ExceptionHandler(Mockery::mock(Container::class, ['get' => $this->request])))
             ->setResponseFactory($factory)
             ->setAppName($this->appName);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */
