@@ -21,7 +21,7 @@ class PromiseCollectionResources implements ResourcesInterface
     protected $limit;
 
     /** @var int */
-    protected $offset;
+    protected $offset = 0;
 
     /**
      * @param PromiseInterface[] $promises

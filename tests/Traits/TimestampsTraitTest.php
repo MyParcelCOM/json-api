@@ -16,22 +16,26 @@ class TimestampsTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->model = $this->getMockForTrait(TimestampsTrait::class);
+        $this->model = new class(Carbon::now(), Carbon::now()) {
+            use TimestampsTrait;
+
+            public function __construct(
+                private $created_at,
+                private $updated_at,
+            ) {
+            }
+        };
     }
 
     /** @test */
     public function testGetUpdatedAt()
     {
-        $this->model->updated_at = Carbon::now();
-
         $this->assertInstanceOf(Carbon::class, $this->model->getUpdatedAt());
     }
 
     /** @test */
     public function testGetCreatedAt()
     {
-        $this->model->created_at = Carbon::now();
-
         $this->assertInstanceOf(Carbon::class, $this->model->getCreatedAt());
     }
 }

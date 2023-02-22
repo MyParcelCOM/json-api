@@ -99,7 +99,7 @@ class AppliesFiltersTraitTest extends TestCase
         (new AppliesFiltersMock())->applyFilters(['date_from' => $dateFrom], $builderMock);
     }
 
-    public function dateFilterProvider(): array
+    public static function dateFilterProvider(): array
     {
         return [
             ['2021-12-06 16:18:36', '1638807516'],
