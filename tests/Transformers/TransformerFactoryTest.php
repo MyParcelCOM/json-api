@@ -20,6 +20,8 @@ use stdClass;
 
 class TransformerFactoryTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var TransformerFactory */
     protected $transformerFactory;
 
@@ -50,13 +52,6 @@ class TransformerFactoryTest extends TestCase
                 ],
             ]);
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

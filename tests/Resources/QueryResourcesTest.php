@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 
 class QueryResourcesTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var QueryResources */
     private $resultSet;
 
@@ -61,13 +63,6 @@ class QueryResourcesTest extends TestCase
         $builder->shouldReceive('toBase')->andReturnSelf();
 
         $this->resultSet = new QueryResources($builder);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

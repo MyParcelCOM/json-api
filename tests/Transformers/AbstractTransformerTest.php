@@ -16,6 +16,8 @@ use stdClass;
 
 class AbstractTransformerTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var Model */
     private $model;
 
@@ -32,13 +34,6 @@ class AbstractTransformerTest extends TestCase
             'createFromModel' => new TransformerStub(Mockery::mock(TransformerFactory::class)),
         ]);
         $this->transformer = new TransformerStub($transformerFactory);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerServiceTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var TransformerService */
     protected $transformerService;
 
@@ -55,13 +57,6 @@ class TransformerServiceTest extends TestCase
                 ],
             ],
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */

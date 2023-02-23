@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 
 class QueryFilterTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var QueryFilter */
     private $queryFilter;
 
@@ -30,13 +32,6 @@ class QueryFilterTest extends TestCase
         ]);
         $this->query = new Builder($connection);
         $this->queryFilter = new QueryFilter($this->query);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
     }
 
     /** @test */
