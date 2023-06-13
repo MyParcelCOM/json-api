@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 
+/** @template TModel */
 abstract class AbstractTransformer implements TransformerInterface
 {
     /** @var UrlGenerator */
@@ -38,7 +39,7 @@ abstract class AbstractTransformer implements TransformerInterface
     /**
      * Transform the model to JSON Api output.
      *
-     * @param object $model
+     * @param TModel $model
      * @return array transformed data
      */
     public function transform($model): array
@@ -198,7 +199,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return array
      */
     public function getIncluded($model): array
@@ -207,7 +208,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return array
      */
     public function getRelationships($model): array
@@ -216,7 +217,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return array
      */
     public function getLinks($model): array
@@ -229,7 +230,7 @@ abstract class AbstractTransformer implements TransformerInterface
     /**
      * Get a link to the model
      *
-     * @param mixed $model
+     * @param TModel $model
      * @return string
      */
     public function getLink($model): string
@@ -240,7 +241,7 @@ abstract class AbstractTransformer implements TransformerInterface
     /**
      * Get a link to the relation
      *
-     * @param mixed $model
+     * @param TModel $model
      * @return string
      */
     public function getRelationLink($model): string
@@ -249,7 +250,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return array
      */
     public function getAttributes($model): array
@@ -258,7 +259,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return array
      */
     public function getMeta($model): array
@@ -267,7 +268,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param mixed $model
+     * @param TModel $model
      * @return mixed
      */
     abstract public function getId($model);
