@@ -7,10 +7,13 @@ namespace MyParcelCom\JsonApi\Transformers;
 use DateTime;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
+use MyParcelCom\JsonApi\Traits\ArrayFilterTrait;
 
 /** @template TModel */
 abstract class AbstractTransformer implements TransformerInterface
 {
+    use ArrayFilterTrait;
+
     /** @var UrlGenerator */
     protected $urlGenerator;
 
@@ -52,29 +55,6 @@ abstract class AbstractTransformer implements TransformerInterface
             'links'         => $this->getLinks($model),
             'relationships' => $this->getRelationships($model),
         ]);
-    }
-
-    /**
-     * Do a deep filter on an array to remove all null values
-     *
-     * @param array $array
-     * @return array
-     */
-    private function arrayDeepFilter(array $array): array
-    {
-        $array = array_filter($array, function ($var) {
-            return ($var !== null);
-        });
-        foreach ($array as $key => $subPart) {
-            if (is_array($subPart)) {
-                $array[$key] = $this->arrayDeepFilter($subPart);
-                if (count($array[$key]) < 1) {
-                    unset($array[$key]);
-                }
-            }
-        }
-
-        return $array;
     }
 
     /**

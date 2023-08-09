@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Http\Traits;
 
 use MyParcelCom\JsonApi\Http\Paginator;
+use MyParcelCom\JsonApi\Traits\ArrayFilterTrait;
 
 trait RequestTrait
 {
+    use ArrayFilterTrait;
+
     /**
      * Get the pagination from the current url.
      *
@@ -85,20 +88,5 @@ trait RequestTrait
     public function getFilter(): array
     {
         return $this->arrayDeepFilter($this->query('filter', []));
-    }
-
-    /**
-     * @param array $array
-     * @return array
-     */
-    private function arrayDeepFilter(array $array): array
-    {
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $array[$key] = $this->arrayDeepFilter($value);
-            }
-        }
-
-        return array_filter($array);
     }
 }
