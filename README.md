@@ -1,11 +1,11 @@
 # MyParcel.com JSON API
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/MyParcelCOM/json-api/ci.yml)](https://github.com/MyParcelCOM/json-api/actions)
 [![Packagist](https://img.shields.io/packagist/v/MyParcelCOM/json-api.svg)](https://packagist.org/packages/myparcelcom/json-api)
-[![CircleCI](https://circleci.com/gh/MyParcelCOM/json-api.svg?style=shield&circle-token=f759f94ecf52a91475773a9dfb74f1e7edc89c64)](https://circleci.com/gh/MyParcelCOM/json-api)
 
 Shared library with JSON API related exceptions, interfaces, traits and utility classes.
 
 ## Installation
-The library uses Docker to run php and composer. To install Docker, follow the steps in the [documentation](https://docs.myparcel.com/development/#docker).
+The library uses Docker to run php and composer. To install Docker, follow the steps in the [documentation](https://docs.myparcel.com/development.html#docker).
 
 ### Setup
 To setup the project, run:
@@ -29,4 +29,4 @@ A few composer scripts have been defined, you can call these using the following
 `./mp.sh composer fix-style` - Automatically fix non-PSR-2 code (not all errors can be automatically fixed).
 
 ## License
-All software by MyParcel.com is licensed under the [MyParcel.com general terms and conditions](https://www.myparcel.com/terms). 
+All software by MyParcel.com is licensed under the [MyParcel.com general terms and conditions](https://www.myparcel.com/legal). 

@@ -11,28 +11,18 @@ use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class QueryResources implements ResourcesInterface
 {
-    /** @var Builder */
-    protected $builder;
-
-    /** @var int */
-    protected $count;
+    protected ?int $count = null;
 
     /** @var callable[] */
-    protected $eachCallbacks = [];
+    protected array $eachCallbacks = [];
 
-    /**
-     * @param Builder $builder the root query
-     */
-    public function __construct(Builder $builder)
-    {
-        $this->builder = $builder;
+    public function __construct(
+        protected Builder $builder,
+    ) {
     }
 
     /**
      * Skip n amount of records.
-     *
-     * @param int $offset
-     * @return ResourcesInterface
      */
     public function offset(int $offset): ResourcesInterface
     {
@@ -43,9 +33,6 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Take n amount of records.
-     *
-     * @param int $limit
-     * @return ResourcesInterface
      */
     public function limit(int $limit): ResourcesInterface
     {
@@ -56,8 +43,6 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Get the result set.
-     *
-     * @return Collection
      */
     public function get(): Collection
     {
@@ -72,8 +57,6 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Get the first or the result set.
-     *
-     * @return Model|null
      */
     public function first(): ?Model
     {
@@ -82,8 +65,6 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Get the ids or the result set.
-     *
-     * @return array ids
      */
     public function getIds(): array
     {
@@ -92,12 +73,10 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Get the amount of existing records.
-     *
-     * @return int count
      */
     public function count(): int
     {
-        if (!isset($this->count)) {
+        if ($this->count === null) {
             $this->count = $this->builder->toBase()->getCountForPagination();
         }
 
@@ -106,8 +85,6 @@ class QueryResources implements ResourcesInterface
 
     /**
      * Returns a copy of the current query builder.
-     *
-     * @return Builder
      */
     public function getQuery(): Builder
     {
@@ -119,9 +96,6 @@ class QueryResources implements ResourcesInterface
      *
      * @note For performance purposes, these callbacks will be executed when
      *       `get()` is called.
-     *
-     * @param callable $callback
-     * @return $this
      */
     public function each(callable $callback): self
     {

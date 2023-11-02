@@ -33,14 +33,11 @@ class ExceptionHandlerTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var ExceptionHandler */
-    protected $handler;
+    protected ExceptionHandler $handler;
 
-    /** @var Request */
-    protected $request;
+    protected Request $request;
 
-    /** @var string */
-    protected $appName = 'Test app';
+    protected string $appName = 'Test app';
 
     protected function setUp(): void
     {
@@ -177,7 +174,7 @@ class ExceptionHandlerTest extends TestCase
 
         try {
             $this->handler->report($exception);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $this->fail('An exception was thrown when report was called without a logger');
         }
 
@@ -194,7 +191,7 @@ class ExceptionHandlerTest extends TestCase
         try {
             $this->handler->setLogger($logger);
             $this->handler->report($exception);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $this->fail('An exception was thrown when report was called with a logger');
         }
     }
@@ -230,7 +227,7 @@ class ExceptionHandlerTest extends TestCase
 
         try {
             $this->handler->report($exception);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $this->fail('An exception was thrown when report was called without a logger');
         }
 
@@ -247,7 +244,7 @@ class ExceptionHandlerTest extends TestCase
         try {
             $this->handler->setLogger($logger);
             $this->handler->report($exception);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $this->fail('An exception was thrown when report was called with a logger');
         }
 
@@ -323,8 +320,6 @@ class ExceptionHandlerTest extends TestCase
 
     /**
      * Check if the json array is a valid jsonapi response.
-     *
-     * @param array $json
      */
     private function checkJson(array $json)
     {
@@ -336,7 +331,7 @@ class ExceptionHandlerTest extends TestCase
 
         $validRootKeys = ['errors', 'meta', 'jsonapi', 'links'];
         $invalidRootKeys = array_diff(array_keys($json), $validRootKeys);
-        $this->assertEmpty($invalidRootKeys, 'Json error reponse contained invalid root keys: ' . implode(', ', $invalidRootKeys));
+        $this->assertEmpty($invalidRootKeys, 'Json error response contained invalid root keys: ' . implode(', ', $invalidRootKeys));
 
         foreach ($json['errors'] as $error) {
             $this->assertNotEmpty($error, 'Error should contain information relating to the error');
@@ -351,12 +346,8 @@ class ExceptionHandlerTest extends TestCase
 
     /**
      * Create a mocked JsonResponse with exposed properties.
-     *
-     * @param array $data
-     * @param int   $code
-     * @return JsonResponse
      */
-    public function mockResponse(array $data, int $code)
+    public function mockResponse(array $data, int $code): JsonResponse
     {
         return new class ($data, $code) extends JsonResponse {
             protected $data;

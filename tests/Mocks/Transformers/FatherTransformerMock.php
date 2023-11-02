@@ -10,19 +10,15 @@ use MyParcelCom\JsonApi\Transformers\TransformerInterface;
 
 class FatherTransformerMock implements TransformerInterface
 {
-    /**
-     * @param mixed $model
-     * @return string
-     */
+    public function __construct(TransformerFactory $transformerFactory)
+    {
+    }
+
     public function getId($model): string
     {
         return $model->getId();
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function transform($model): array
     {
         return [
@@ -31,13 +27,6 @@ class FatherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * Transform a relationship identifier.
-     *
-     * @param mixed $model
-     * @param bool  $includeMeta
-     * @return array
-     */
     public function transformIdentifier($model, bool $includeMeta = false): array
     {
         $identifier = [
@@ -52,31 +41,20 @@ class FatherTransformerMock implements TransformerInterface
         return $identifier;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return 'father';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getIncluded($model): array
     {
         return [
             'father' => function () use ($model) {
-                return new FatherMock((string) ($this->getId($model) + 1));
+                return new FatherMock((string) (intval($this->getId($model)) + 1));
             },
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getRelationships($model): array
     {
         return [
@@ -89,10 +67,6 @@ class FatherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getLinks($model): array
     {
         return [
@@ -100,28 +74,16 @@ class FatherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getLink($model): string
     {
         return '/link/to/father';
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getRelationLink($model): string
     {
         return '/link/to/father/relation';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getAttributes($model): array
     {
         return [
@@ -129,19 +91,8 @@ class FatherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getMeta($model): array
     {
         return [];
-    }
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     */
-    public function __construct(TransformerFactory $transformerFactory)
-    {
     }
 }

@@ -9,25 +9,19 @@ use MyParcelCom\JsonApi\Http\Paginator;
 class TransformerResource
 {
     /** @var TransformerItem[] */
-    protected $resources = [];
+    protected array $resources = [];
 
-    /** @var Paginator */
-    protected $paginator;
+    protected ?Paginator $paginator = null;
 
-    /** @var array */
-    protected $requestedIncludes = [];
+    protected array $requestedIncludes = [];
 
-    /** @var array */
-    protected $data = [];
+    protected array $data = [];
 
-    /** @var array */
-    protected $includes = [];
+    protected array $includes = [];
 
-    /** @var array */
-    protected $meta = [];
+    protected array $meta = [];
 
-    /** @var bool */
-    protected $multipleResult = false;
+    protected bool $multipleResult = false;
 
     /**
      * @param TransformerItem[] $resources
@@ -37,11 +31,7 @@ class TransformerResource
         $this->resources = $resources;
     }
 
-    /**
-     * @param bool $multipleResult
-     * @return $this
-     */
-    public function multipleResult($multipleResult = true): self
+    public function multipleResult(bool $multipleResult = true): self
     {
         $this->multipleResult = $multipleResult;
 
@@ -50,9 +40,6 @@ class TransformerResource
 
     /**
      * Set the paginator for the json output.
-     *
-     * @param Paginator $paginator
-     * @return $this
      */
     public function setPaginator(Paginator $paginator): self
     {
@@ -63,9 +50,6 @@ class TransformerResource
 
     /**
      * Set what includes we need to include.
-     *
-     * @param array $requestedIncludes
-     * @return $this
      */
     public function setRequestedIncludes(array $requestedIncludes): self
     {
@@ -75,8 +59,6 @@ class TransformerResource
     }
 
     /**
-     * @param array $meta
-     * @return $this
      * @throws TransformerException
      */
     public function addMeta($meta): self
@@ -90,9 +72,6 @@ class TransformerResource
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         $this->prepareData();
@@ -105,7 +84,6 @@ class TransformerResource
     /**
      * Transform the data to a json api formatted array.
      *
-     * @return array
      * @throws TransformerException
      */
     public function toArrayMultiple(): array
@@ -134,8 +112,6 @@ class TransformerResource
 
     /**
      * Transform the data to a json api formatted array.
-     *
-     * @return array
      */
     public function toArraySingle(): array
     {

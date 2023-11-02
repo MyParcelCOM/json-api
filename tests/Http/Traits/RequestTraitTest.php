@@ -90,10 +90,7 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /**
-     * @return RequestInterface
-     */
-    private function createRequestTraitMock()
+    private function createRequestTraitMock(): RequestInterface
     {
         return new class implements RequestInterface {
             use RequestTrait;
@@ -122,11 +119,6 @@ class RequestTraitTest extends TestCase
                 return $this->data[$key] ?? $default;
             }
 
-            /**
-             * Get the full URL for the request.
-             *
-             * @return string
-             */
             public function fullUrl(): string
             {
                 return 'https://some.url.com/resource?page[size]=5&page[number]=3&include=all,the,things';

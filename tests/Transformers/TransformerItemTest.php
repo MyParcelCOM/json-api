@@ -17,26 +17,19 @@ class TransformerItemTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var array */
-    protected $transformerData;
+    protected array $transformerData;
 
-    /** @var array */
-    protected $includedRelationship;
+    protected array $includedRelationship;
 
-    /** @var array */
-    protected $includedResource;
+    protected array $includedResource;
 
-    /** @var array */
-    protected $includedData;
+    protected array $includedData;
 
-    /** @var AbstractTransformer */
-    protected $transformer;
+    protected AbstractTransformer $transformer;
 
-    /** @var TransformerFactory */
-    protected $transformerFactory;
+    protected TransformerFactory $transformerFactory;
 
-    /** @var TransformerItem */
-    protected $transformerItem;
+    protected TransformerItem $transformerItem;
 
     protected function setUp(): void
     {

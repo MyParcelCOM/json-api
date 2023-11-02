@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class InvalidHeaderException extends AbstractException
 {
-    /**
-     * @param string $detail
-     * @param int    $status
-     */
     public function __construct(string $detail, int $status = Response::HTTP_NOT_ACCEPTABLE)
     {
         parent::__construct(

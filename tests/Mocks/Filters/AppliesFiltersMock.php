@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Mocks\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use MyParcelCom\JsonApi\Filters\Traits\AppliesFiltersTrait;
 
 class AppliesFiltersMock
 {
     use AppliesFiltersTrait;
 
-    private $filters = [
+    private array $filters = [
         'date_from' => [
             'column'   => 'created_at',
             'operator' => '>=',
@@ -21,7 +22,7 @@ class AppliesFiltersMock
         ],
     ];
 
-    public function applyFilters($filters, $query)
+    public function applyFilters($filters, $query): Builder
     {
         return $this->applyFiltersToQuery($filters, $query);
     }

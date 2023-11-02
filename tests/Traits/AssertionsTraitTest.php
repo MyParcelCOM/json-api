@@ -12,8 +12,7 @@ class AssertionsTraitTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var AssertionsMock */
-    private $testClass;
+    private AssertionsMock $testClass;
 
     protected function setUp(): void
     {

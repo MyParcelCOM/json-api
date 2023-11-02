@@ -14,9 +14,9 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
 
-        $urlBuilder->setUrl('http://username:password@hostname:9090/path?arg=value#anchor');
-        $this->assertEquals('http://username:password@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
-        $this->assertEquals('http://username:password@hostname:9090/path?arg=value#anchor', (string) $urlBuilder);
+        $urlBuilder->setUrl('https://username:password@hostname:9090/path?arg=value#anchor');
+        $this->assertEquals('https://username:password@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
+        $this->assertEquals('https://username:password@hostname:9090/path?arg=value#anchor', (string) $urlBuilder);
 
         $urlBuilder->setUrl('https://username@hostname:9090/path?arg=value#anchor');
         $this->assertEquals('https://username@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
@@ -32,7 +32,7 @@ class UrlBuilderTest extends TestCase
             'Empty url should return an empty query array'
         );
 
-        $urlBuilder = new UrlBuilder('http://url?foo=bar&bar=baz&baz=foo');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar&bar=baz&baz=foo');
         $this->assertEquals(
             [
                 'foo' => 'bar',
@@ -47,11 +47,11 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetQuery()
     {
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
 
         $urlBuilder->setQuery(['mode' => 'god']);
         $this->assertEquals(
-            'http://url?mode=god',
+            'https://url?mode=god',
             $urlBuilder->getUrl(),
             'Set query was not added to build url or did not override earlier set query'
         );
@@ -60,11 +60,11 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testAddQuery()
     {
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
 
         $urlBuilder->addQuery(['mode' => 'god']);
         $this->assertEquals(
-            'http://url?foo=bar&mode=god',
+            'https://url?foo=bar&mode=god',
             $urlBuilder->getUrl(),
             'Added query was not added to build url'
         );
@@ -72,7 +72,7 @@ class UrlBuilderTest extends TestCase
         $urlBuilder->addQuery(['foo' => 'baz']);
         $this->assertContains(
             $urlBuilder->getUrl(),
-            ['http://url?foo=baz&mode=god', 'http://url?mode=god&foo=baz'],
+            ['https://url?foo=baz&mode=god', 'https://url?mode=god&foo=baz'],
             'Added query did not override earlier set query '
         );
     }
@@ -82,8 +82,8 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getScheme());
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
-        $this->assertEquals('http', $urlBuilder->getScheme());
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
+        $this->assertEquals('https', $urlBuilder->getScheme());
         $urlBuilder = new UrlBuilder('ftp://url?foo=bar');
         $this->assertEquals('ftp', $urlBuilder->getScheme());
     }
@@ -91,7 +91,7 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetScheme()
     {
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
         $urlBuilder->setScheme('https');
         $this->assertEquals(
             'https://url?foo=bar',
@@ -110,7 +110,7 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getHost());
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
         $this->assertEquals('url', $urlBuilder->getHost());
         $urlBuilder = new UrlBuilder('https://some.random-url.com?foo=bar#yolo');
         $this->assertEquals('some.random-url.com', $urlBuilder->getHost());
@@ -119,10 +119,10 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetHost()
     {
-        $urlBuilder = new UrlBuilder('http://url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar');
         $urlBuilder->setHost('some.random-url.com');
         $this->assertEquals(
-            'http://some.random-url.com?foo=bar',
+            'https://some.random-url.com?foo=bar',
             (string) $urlBuilder,
             'Set host was not set in build url'
         );
@@ -138,17 +138,17 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder('https://some.random-url.com?foo=bar#yolo');
         $this->assertNull($urlBuilder->getPort());
-        $urlBuilder = new UrlBuilder('http://url:9001?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url:9001?foo=bar');
         $this->assertEquals(9001, $urlBuilder->getPort());
     }
 
     /** @test */
     public function testSetPort()
     {
-        $urlBuilder = new UrlBuilder('http://url:9001?foo=bar');
+        $urlBuilder = new UrlBuilder('https://url:9001?foo=bar');
         $urlBuilder->setPort(1337);
         $this->assertEquals(
-            'http://url:1337?foo=bar',
+            'https://url:1337?foo=bar',
             (string) $urlBuilder,
             'Set port was not set in build url'
         );
@@ -164,7 +164,7 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getUser());
-        $urlBuilder = new UrlBuilder('http://sam@url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://sam@url?foo=bar');
         $this->assertEquals('sam', $urlBuilder->getUser());
         $urlBuilder = new UrlBuilder('https://thomas:martin@some.random-url.com?foo=bar#yolo');
         $this->assertEquals('thomas', $urlBuilder->getUser());
@@ -173,10 +173,10 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetUser()
     {
-        $urlBuilder = new UrlBuilder('http://fidel@url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://fidel@url?foo=bar');
         $urlBuilder->setUser('patrick');
         $this->assertEquals(
-            'http://patrick@url?foo=bar',
+            'https://patrick@url?foo=bar',
             (string) $urlBuilder,
             'Set user was not set in build url'
         );
@@ -192,7 +192,7 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getPassword());
-        $urlBuilder = new UrlBuilder('http://sam@url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://sam@url?foo=bar');
         $this->assertNull($urlBuilder->getPassword());
         $urlBuilder = new UrlBuilder('https://thomas:martin@some.random-url.com?foo=bar#yolo');
         $this->assertEquals('martin', $urlBuilder->getPassword());
@@ -201,10 +201,10 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetPassword()
     {
-        $urlBuilder = new UrlBuilder('http://fidel:secret@url?foo=bar');
+        $urlBuilder = new UrlBuilder('https://fidel:secret@url?foo=bar');
         $urlBuilder->setPassword('welkom123');
         $this->assertEquals(
-            'http://fidel:welkom123@url?foo=bar',
+            'https://fidel:welkom123@url?foo=bar',
             (string) $urlBuilder,
             'Set password was not set in build url'
         );
@@ -220,7 +220,7 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getPath());
-        $urlBuilder = new UrlBuilder('http://sam@url/look/i/am/an/amazing/path?foo=bar');
+        $urlBuilder = new UrlBuilder('https://sam@url/look/i/am/an/amazing/path?foo=bar');
         $this->assertEquals('/look/i/am/an/amazing/path', $urlBuilder->getPath());
         $urlBuilder = new UrlBuilder('https://thomas:martin@some.random-url.com/some-other-path?foo=bar#yolo');
         $this->assertEquals('/some-other-path', $urlBuilder->getPath());
@@ -229,10 +229,10 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetPath()
     {
-        $urlBuilder = new UrlBuilder('http://fidel:secret@url/to/narnia?foo=bar');
+        $urlBuilder = new UrlBuilder('https://fidel:secret@url/to/narnia?foo=bar');
         $urlBuilder->setPath('/to/somwhere/else');
         $this->assertEquals(
-            'http://fidel:secret@url/to/somwhere/else?foo=bar',
+            'https://fidel:secret@url/to/somwhere/else?foo=bar',
             (string) $urlBuilder,
             'Set password was not set in build url'
         );
@@ -248,7 +248,7 @@ class UrlBuilderTest extends TestCase
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getFragment());
-        $urlBuilder = new UrlBuilder('http://sam@url?foo=bar#i-frag-your-ment');
+        $urlBuilder = new UrlBuilder('https://sam@url?foo=bar#i-frag-your-ment');
         $this->assertEquals('i-frag-your-ment', $urlBuilder->getFragment());
         $urlBuilder = new UrlBuilder('https://thomas:martin@some.random-url.com?foo=bar#yolo');
         $this->assertEquals('yolo', $urlBuilder->getFragment());
@@ -257,10 +257,10 @@ class UrlBuilderTest extends TestCase
     /** @test */
     public function testSetFragment()
     {
-        $urlBuilder = new UrlBuilder('http://url?foo=bar#hashtag');
+        $urlBuilder = new UrlBuilder('https://url?foo=bar#hashtag');
         $urlBuilder->setFragment('mom');
         $this->assertEquals(
-            'http://url?foo=bar#mom',
+            'https://url?foo=bar#mom',
             (string) $urlBuilder,
             'Set fragment was not set in build url'
         );

@@ -29,11 +29,11 @@ class ErrorTransformerTest extends TestCase
             'getMeta'      => [
                 'carrier_rules' => [
                     [
-                        "type"  => "max-length",
-                        "value" => 35,
+                        'type'  => 'max-length',
+                        'value' => 35,
                     ],
                     [
-                        "type" => "required",
+                        'type' => 'required',
                     ],
                 ],
             ],
@@ -56,11 +56,11 @@ class ErrorTransformerTest extends TestCase
             'meta'   => [
                 'carrier_rules' => [
                     [
-                        "type"  => "max-length",
-                        "value" => 35,
+                        'type'  => 'max-length',
+                        'value' => 35,
                     ],
                     [
-                        "type" => "required",
+                        'type' => 'required',
                     ],
                 ],
             ],

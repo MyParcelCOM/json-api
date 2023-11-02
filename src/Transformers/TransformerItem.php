@@ -9,29 +9,17 @@ use Illuminate\Support\Collection;
 
 class TransformerItem
 {
-    protected $resource;
+    protected TransformerInterface $transformer;
 
-    /** @var TransformerInterface */
-    protected $transformer;
-
-    /** @var TransformerFactory */
-    protected $transformerFactory;
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     * @param mixed              $resource
-     */
-    public function __construct(TransformerFactory $transformerFactory, $resource)
-    {
-        $this->resource = $resource;
-        $this->transformerFactory = $transformerFactory;
+    public function __construct(
+        protected TransformerFactory $transformerFactory,
+        protected mixed $resource,
+    ) {
         $this->transformer = $transformerFactory->createFromModel($resource);
     }
 
     /**
      * Get the transformed data.
-     *
-     * @return array
      */
     public function getData(): array
     {

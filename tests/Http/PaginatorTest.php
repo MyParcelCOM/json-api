@@ -10,23 +10,17 @@ use PHPUnit\Framework\TestCase;
 
 class PaginatorTest extends TestCase
 {
-    /** @var Paginator */
-    protected $paginator;
+    protected Paginator $paginator;
 
-    /** @var int */
-    protected $perPage;
+    protected int $perPage;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
-    /** @var int */
-    protected $curPage;
+    protected int $curPage;
 
-    /** @var int */
-    protected $start;
+    protected int $start;
 
-    /** @var int */
-    protected $end;
+    protected int $end;
 
     protected function setUp(): void
     {
@@ -36,32 +30,32 @@ class PaginatorTest extends TestCase
         $this->curPage = 1;
         $this->perPage = 5;
         $this->total = 15;
-        $this->end = ceil($this->total / $this->perPage);
+        $this->end = (int) ceil($this->total / $this->perPage);
         $this->start = (int) (($this->curPage - 1) * $this->perPage);
 
-        $this->paginator = new Paginator('http://link', $this->perPage, $this->curPage, $this->total);
+        $this->paginator = new Paginator('https://link', $this->perPage, $this->curPage, $this->total);
     }
 
     /** @test */
     public function testGetLinks()
     {
-        $this->paginator->setBaseUrl('http://foo');
+        $this->paginator->setBaseUrl('https://foo');
         $links = [
-            'self'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=' . $this->curPage,
-            'first' => 'http://foo?page[size]=' . $this->perPage . '&page[number]=1',
-            'last'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
-            'next'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=' . ($this->curPage + 1),
+            'self'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . $this->curPage,
+            'first' => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
+            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
+            'next'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ($this->curPage + 1),
         ];
 
         $this->assertEquals($links, $this->paginator->getLinks());
 
         $this->paginator->setCurrentPage(2);
         $links = [
-            'self'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=2',
-            'first' => 'http://foo?page[size]=' . $this->perPage . '&page[number]=1',
-            'last'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
-            'next'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=3',
-            'prev'  => 'http://foo?page[size]=' . $this->perPage . '&page[number]=1',
+            'self'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=2',
+            'first' => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
+            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
+            'next'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=3',
+            'prev'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
         ];
 
         $this->assertEquals($links, $this->paginator->getLinks());

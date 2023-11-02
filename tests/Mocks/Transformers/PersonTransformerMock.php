@@ -11,25 +11,15 @@ use MyParcelCom\JsonApi\Transformers\TransformerInterface;
 
 class PersonTransformerMock implements TransformerInterface
 {
-    /** @var int */
-    private static $idCounter = 0;
+    public function __construct(TransformerFactory $transformerFactory)
+    {
+    }
 
-    /** @var string */
-    private $id;
-
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getId($model): string
     {
         return $model->getId();
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function transform($model): array
     {
         return [
@@ -38,13 +28,6 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * Transform a relationship identifier.
-     *
-     * @param mixed $model
-     * @param bool  $includeMeta
-     * @return array
-     */
     public function transformIdentifier($model, bool $includeMeta = false): array
     {
         $identifier = [
@@ -59,34 +42,23 @@ class PersonTransformerMock implements TransformerInterface
         return $identifier;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return 'person';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getIncluded($model): array
     {
         return [
             'mother' => function () use ($model) {
-                return new MotherMock((string) ($this->getId($model) + 1));
+                return new MotherMock((string) (intval($this->getId($model)) + 1));
             },
             'father' => function () use ($model) {
-                return new FatherMock((string) ($this->getId($model) + 1));
+                return new FatherMock((string) (intval($this->getId($model)) + 1));
             },
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getRelationships($model): array
     {
         return [
@@ -105,10 +77,6 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getLinks($model): array
     {
         return [
@@ -116,28 +84,16 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getLink($model): string
     {
         return '/link/to/person';
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getRelationLink($model): string
     {
         return '/link/to/person/relation';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getAttributes($model): array
     {
         return [
@@ -145,19 +101,8 @@ class PersonTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getMeta($model): array
     {
         return [];
-    }
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     */
-    public function __construct(TransformerFactory $transformerFactory)
-    {
     }
 }

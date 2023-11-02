@@ -23,8 +23,7 @@ class TransformerServiceTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var TransformerService */
-    protected $transformerService;
+    protected TransformerService $transformerService;
 
     protected function setUp(): void
     {
@@ -63,8 +62,8 @@ class TransformerServiceTest extends TestCase
     public function testSetMaxPageSize()
     {
         $paginator = Mockery::mock(Paginator::class);
-        $paginator->shouldReceive('setMaxPageSize')->andReturnUsing(function ($maxPageSsize) use ($paginator) {
-            $this->assertEquals(3, $maxPageSsize);
+        $paginator->shouldReceive('setMaxPageSize')->andReturnUsing(function ($maxPageSize) use ($paginator) {
+            $this->assertEquals(3, $maxPageSize);
 
             return $paginator;
         });

@@ -8,23 +8,17 @@ use Illuminate\Support\Collection;
 
 class TransformerFactory
 {
-    /** @var array */
-    protected $dependencies = [];
+    protected array $dependencies = [];
 
-    /** @var array */
-    protected $transformerMap = [];
+    protected array $transformerMap = [];
 
     /**
      * Local transformer cache.
      *
      * @var TransformerInterface[]
      */
-    private $transformers = [];
+    private array $transformers = [];
 
-    /**
-     * @param array $mapping
-     * @return $this
-     */
     public function setMapping(array $mapping): self
     {
         $this->transformerMap = $mapping;
@@ -41,9 +35,6 @@ class TransformerFactory
      *         },
      *     ],
      * ]
-     *
-     * @param array $dependencies
-     * @return $this
      */
     public function setDependencies(array $dependencies): self
     {
@@ -56,7 +47,6 @@ class TransformerFactory
      * Create a new transformer for a model.
      *
      * @param object|string $model
-     * @return TransformerInterface
      */
     public function createFromModel($model): TransformerInterface
     {
@@ -75,10 +65,6 @@ class TransformerFactory
         throw new TransformerException('No transformer found for class ' . get_class($model));
     }
 
-    /**
-     * @param TransformerInterface $transformer
-     * @return TransformerInterface
-     */
     protected function injectDependencies(TransformerInterface $transformer): TransformerInterface
     {
         array_walk($this->dependencies, function ($dependencies, $class) use ($transformer) {
@@ -98,7 +84,6 @@ class TransformerFactory
      * Create a new transformer item for a model.
      *
      * @param object $model
-     * @return TransformerItem
      */
     public function createTransformerItem($model): TransformerItem
     {
@@ -107,9 +92,6 @@ class TransformerFactory
 
     /**
      * Create a new transformer collection for a model.
-     *
-     * @param Collection $collection
-     * @return TransformerCollection self
      */
     public function createTransformerCollection(Collection $collection): TransformerCollection
     {

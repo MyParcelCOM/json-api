@@ -10,15 +10,9 @@ use MyParcelCom\JsonApi\Filters\Interfaces\FilterInterface;
 
 class QueryFilter implements FilterInterface
 {
-    /** @var Builder */
-    protected $query;
-
-    /**
-     * @param Builder $query
-     */
-    public function __construct(Builder $query)
-    {
-        $this->query = $query;
+    public function __construct(
+        protected Builder $query,
+    ) {
     }
 
     /**
@@ -37,7 +31,7 @@ class QueryFilter implements FilterInterface
             return $this->filterNullValue($columns, $operator);
         }
 
-        if (strpos($operator, 'like') !== false) {
+        if (str_contains($operator, 'like')) {
             return $this->filterUsingLikeOperator($columns, $operator, $values);
         }
 
@@ -50,13 +44,10 @@ class QueryFilter implements FilterInterface
 
     /**
      * Check if given operator is a negation.
-     *
-     * @param string $operator
-     * @return bool
      */
     private function isNegation(string $operator): bool
     {
-        return strpos($operator, '!') !== false || strpos($operator, 'not') !== false;
+        return str_contains($operator, '!') || str_contains($operator, 'not');
     }
 
     /**
@@ -83,7 +74,7 @@ class QueryFilter implements FilterInterface
             return [$operator, $value, $column];
         }
 
-        if (strpos($operator, 'like') !== false) {
+        if (str_contains($operator, 'like')) {
             if (!is_array($value)) {
                 $value = [$value];
             }
@@ -98,11 +89,6 @@ class QueryFilter implements FilterInterface
 
     /**
      * Iterate over the values array and search for the values in each column using the like operator.
-     *
-     * @param array  $columns
-     * @param string $operator
-     * @param array  $values
-     * @return Builder
      */
     private function filterUsingLikeOperator(array $columns, string $operator, array $values): Builder
     {
@@ -121,10 +107,6 @@ class QueryFilter implements FilterInterface
 
     /**
      * Filter for value is or is not null.
-     *
-     * @param array  $columns
-     * @param string $operator
-     * @return Builder
      */
     private function filterNullValue(array $columns, string $operator): Builder
     {
@@ -143,11 +125,6 @@ class QueryFilter implements FilterInterface
 
     /**
      * Filter for when values is an array.
-     *
-     * @param array  $columns
-     * @param string $operator
-     * @param array  $values
-     * @return Builder
      */
     private function filterValuesArray(array $columns, string $operator, array $values): Builder
     {
@@ -162,11 +139,6 @@ class QueryFilter implements FilterInterface
 
     /**
      * Filter the query for the given values in the given columns.
-     *
-     * @param array  $columns
-     * @param string $operator
-     * @param string $values
-     * @return Builder
      */
     public function filterQuery(array $columns, string $operator, string $values): Builder
     {

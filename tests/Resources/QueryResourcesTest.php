@@ -16,17 +16,14 @@ class QueryResourcesTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var QueryResources */
-    private $resultSet;
+    private QueryResources $resultSet;
 
     /** @var Model[] */
-    private $data;
+    private array $data;
 
-    /** @var int */
-    private $skip = 0;
+    private int $skip = 0;
 
-    /** @var int */
-    private $take = 30;
+    private int $take = 30;
 
     protected function setUp(): void
     {
@@ -155,8 +152,8 @@ class QueryResourcesTest extends TestCase
             $called = true;
         });
 
-        $this->assertEquals(false, $called);
+        $this->assertFalse($called);
         $this->resultSet->get();
-        $this->assertEquals(true, $called);
+        $this->assertTrue($called);
     }
 }

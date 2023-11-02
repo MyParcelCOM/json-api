@@ -11,27 +11,22 @@ use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
 class TransformerStub extends AbstractTransformer
 {
-    /** @var mixed */
-    protected $dependency;
+    protected mixed $dependency = null;
 
-    /** @var string */
-    protected $type = 'test';
+    protected string $type = 'test';
 
     /**
      * Helper function to reset the type for the abstract exception test.
-     *
-     * @return $this
      */
     public function clearType(): self
     {
-        $this->type = null;
+        $this->type = '';
 
         return $this;
     }
 
     /**
      * @param mixed $model
-     * @return string
      */
     public function getId($model): string
     {
@@ -45,9 +40,6 @@ class TransformerStub extends AbstractTransformer
     {
     }
 
-    /**
-     * @return UrlGenerator
-     */
     public function getUrlGenerator(): UrlGenerator
     {
         return $this->urlGenerator;
@@ -55,7 +47,6 @@ class TransformerStub extends AbstractTransformer
 
     /**
      * @param mixed $dependency
-     * @return $this
      */
     public function setDependency($dependency): self
     {

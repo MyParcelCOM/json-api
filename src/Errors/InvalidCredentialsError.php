@@ -9,10 +9,6 @@ namespace MyParcelCom\JsonApi\Errors;
  */
 class InvalidCredentialsError extends AbstractCarrierError
 {
-    /**
-     * @param string $errorCode
-     * @param string $detail
-     */
     public function __construct(string $errorCode, string $detail)
     {
         parent::__construct($errorCode, 'Invalid carrier credentials', $detail);

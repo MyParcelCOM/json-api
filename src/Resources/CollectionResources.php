@@ -10,27 +10,17 @@ use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class CollectionResources implements ResourcesInterface
 {
-    /** @var Collection */
-    protected $collection;
+    protected int $limit = Paginator::DEFAULT_PAGE_SIZE;
 
-    /** @var int */
-    protected $limit = Paginator::DEFAULT_PAGE_SIZE;
+    protected int $offset = 0;
 
-    /** @var int */
-    protected $offset = 0;
-
-    /**
-     * @param Collection $collection
-     */
-    public function __construct(Collection $collection)
-    {
-        $this->collection = $collection;
+    public function __construct(
+        protected Collection $collection,
+    ) {
     }
 
     /**
      * Get the data from the collection, starting at set offset with a length of given limit.
-     *
-     * @return Collection
      */
     public function get(): Collection
     {
@@ -39,18 +29,12 @@ class CollectionResources implements ResourcesInterface
 
     /**
      * Get the total number of elements
-     *
-     * @return int
      */
     public function count(): int
     {
         return count($this->collection);
     }
 
-    /**
-     * @param int $offset
-     * @return ResourcesInterface
-     */
     public function offset(int $offset): ResourcesInterface
     {
         $this->offset = $offset;
@@ -58,10 +42,6 @@ class CollectionResources implements ResourcesInterface
         return $this;
     }
 
-    /**
-     * @param int $limit
-     * @return ResourcesInterface
-     */
     public function limit(int $limit): ResourcesInterface
     {
         $this->limit = $limit;

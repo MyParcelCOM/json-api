@@ -11,50 +11,32 @@ use Throwable;
 
 abstract class AbstractException extends Exception implements ExceptionInterface
 {
-    /** @var string */
-    protected $id;
+    protected ?string $id = null;
 
-    /** @var array */
-    protected $links;
+    protected array $links = [];
 
-    /** @var int */
-    protected $status;
+    protected ?string $errorCode = null;
 
-    /** @var string */
-    protected $errorCode;
+    protected ?string $title = null;
 
-    /** @var string */
-    protected $title;
+    protected array $source = [];
 
-    /** @var string */
-    protected $detail;
+    protected array $meta = [];
 
-    /** @var array */
-    protected $source;
-
-    /** @var array */
-    protected $meta;
-
-    /**
-     * @param string         $detail
-     * @param array          $errorType
-     * @param int            $status
-     * @param Throwable|null $previous
-     */
-    public function __construct(string $detail, array $errorType, int $status, Throwable $previous = null)
-    {
-        $this->setDetail($detail);
+    public function __construct(
+        protected string $detail,
+        array $errorType,
+        protected int $status,
+        Throwable $previous = null,
+    ) {
         $this->setErrorCode($errorType['code']);
         $this->setTitle($errorType['title']);
-        $this->setStatus($status);
 
         parent::__construct($detail, (int) $this->getErrorCode(), $previous);
     }
 
     /**
      * Get the id for this occurrence of the exception.
-     *
-     * @return string
      */
     public function getId(): ?string
     {
@@ -63,9 +45,6 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Set the id for this occurrence of the exception.
-     *
-     * @param string $id
-     * @return $this
      */
     public function setId(string $id): JsonSchemaErrorInterface
     {
@@ -76,22 +55,16 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get the links related to the exception.
-     *
-     * @return array
      */
-    public function getLinks(): ?array
+    public function getLinks(): array
     {
         return $this->links;
     }
 
     /**
      * Add a link to the existing links array.
-     *
-     * @param string $name
-     * @param mixed  $url
-     * @return $this
      */
-    public function addLink(string $name, $url): JsonSchemaErrorInterface
+    public function addLink(string $name, string $url): JsonSchemaErrorInterface
     {
         $this->links[$name] = $url;
 
@@ -100,9 +73,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Set the links related to the exception.
-     *
-     * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
-     * @return $this
+     * Should contain an about link that leads to further details about this particular occurrence of the problem.
      */
     public function setLinks(array $links): JsonSchemaErrorInterface
     {
@@ -113,19 +84,14 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Return the http status for the request.
-     *
-     * @return int
      */
-    public function getStatus(): ?int
+    public function getStatus(): int
     {
         return $this->status;
     }
 
     /**
      * Set the http status code for the request.
-     *
-     * @param int $status
-     * @return $this
      */
     public function setStatus(int $status): JsonSchemaErrorInterface
     {
@@ -136,8 +102,6 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get the application specific error code.
-     *
-     * @return string
      */
     public function getErrorCode(): ?string
     {
@@ -147,9 +111,6 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     /**
      * Set the application specific error code.
      * This should be retrieved from one of the defined constants.
-     *
-     * @param string $errorCode
-     * @return $this
      */
     public function setErrorCode(string $errorCode): JsonSchemaErrorInterface
     {
@@ -160,8 +121,6 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get the description linked to the code.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -171,9 +130,6 @@ abstract class AbstractException extends Exception implements ExceptionInterface
     /**
      * Set the description linked to the code.
      * This should be retrieved from one of the defined constants.
-     *
-     * @param string $title
-     * @return $this
      */
     public function setTitle(string $title): JsonSchemaErrorInterface
     {
@@ -184,19 +140,14 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get the detailed message for the exception.
-     *
-     * @return string
      */
-    public function getDetail(): ?string
+    public function getDetail(): string
     {
         return $this->detail;
     }
 
     /**
      * Set the detailed message for the exception.
-     *
-     * @param string $detail
-     * @return $this
      */
     public function setDetail(string $detail): JsonSchemaErrorInterface
     {
@@ -207,19 +158,14 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get an array containing references to the source of the exception.
-     *
-     * @return array
      */
-    public function getSource(): ?array
+    public function getSource(): array
     {
         return $this->source;
     }
 
     /**
      * Set an array containing references to the source of the exception.
-     *
-     * @param array $source
-     * @return $this
      */
     public function setSource(array $source): JsonSchemaErrorInterface
     {
@@ -230,19 +176,14 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Get meta object containing non-standard meta-information about the exception.
-     *
-     * @return array
      */
-    public function getMeta(): ?array
+    public function getMeta(): array
     {
         return $this->meta;
     }
 
     /**
      * Set meta object containing non-standard meta-information about the exception.
-     *
-     * @param array $meta
-     * @return $this
      */
     public function setMeta(array $meta): JsonSchemaErrorInterface
     {
@@ -253,12 +194,8 @@ abstract class AbstractException extends Exception implements ExceptionInterface
 
     /**
      * Add meta values to the existing meta object.
-     *
-     * @param string $key
-     * @param mixed  $value
-     * @return $this
      */
-    public function addMeta(string $key, $value): JsonSchemaErrorInterface
+    public function addMeta(string $key, mixed $value): JsonSchemaErrorInterface
     {
         $this->meta[$key] = $value;
 

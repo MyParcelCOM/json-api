@@ -10,10 +10,6 @@ namespace MyParcelCom\JsonApi\Errors;
  */
 class CarrierDataNotFoundError extends AbstractCarrierError
 {
-    /**
-     * @param string $errorCode
-     * @param string $detail
-     */
     public function __construct(string $errorCode, string $detail)
     {
         parent::__construct($errorCode, 'Carrier data not found', $detail);

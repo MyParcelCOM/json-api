@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class MissingTokenException extends AbstractException
@@ -13,7 +14,7 @@ class MissingTokenException extends AbstractException
         parent::__construct(
             'No access token was provided for the request. Please add this to the \'Authorization: Bearer\' header.',
             self::AUTH_MISSING_TOKEN,
-            401,
+            Response::HTTP_UNAUTHORIZED,
             $previous
         );
     }

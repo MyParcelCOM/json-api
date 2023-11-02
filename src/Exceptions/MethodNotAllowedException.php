@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
@@ -20,7 +21,7 @@ class MethodNotAllowedException extends AbstractException
         parent::__construct(
             "The '{$httpMethod}' method is not allowed on this endpoint.",
             self::METHOD_NOT_ALLOWED,
-            405,
+            Response::HTTP_METHOD_NOT_ALLOWED,
             $previous
         );
     }

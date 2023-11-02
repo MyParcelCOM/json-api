@@ -6,36 +6,24 @@ namespace MyParcelCom\JsonApi\Http;
 
 class UrlBuilder
 {
-    /** @var string */
-    protected $url;
+    protected string $url;
 
-    /** @var string */
-    protected $scheme;
+    protected ?string $scheme = null;
 
-    /** @var string */
-    protected $host;
+    protected ?string $host = null;
 
-    /** @var int */
-    protected $port;
+    protected ?int $port = null;
 
-    /** @var string */
-    protected $user;
+    protected ?string $user = null;
 
-    /** @var string */
-    protected $password;
+    protected ?string $password = null;
 
-    /** @var string */
-    protected $path;
+    protected ?string $path = null;
 
-    /** @var array */
-    protected $query = [];
+    protected array $query = [];
 
-    /** @var string */
-    protected $fragment;
+    protected ?string $fragment = null;
 
-    /**
-     * @param string|null $url
-     */
     public function __construct(string $url = null)
     {
         if ($url !== null) {
@@ -45,9 +33,6 @@ class UrlBuilder
 
     /**
      * Set the base url.
-     *
-     * @param string $url
-     * @return $this
      */
     public function setUrl(string $url): self
     {
@@ -72,8 +57,6 @@ class UrlBuilder
 
     /**
      * Get the compiled url.
-     *
-     * @return string
      */
     public function getUrl(): string
     {
@@ -109,8 +92,6 @@ class UrlBuilder
 
     /**
      * Get the GET query params.
-     *
-     * @return array
      */
     public function getQuery(): array
     {
@@ -119,9 +100,6 @@ class UrlBuilder
 
     /**
      * Set the GET query params.
-     *
-     * @param array $query
-     * @return $this
      */
     public function setQuery(array $query): self
     {
@@ -132,9 +110,6 @@ class UrlBuilder
 
     /**
      * Add GET query params.
-     *
-     * @param array $query
-     * @return $this
      */
     public function addQuery(array $query): self
     {
@@ -145,8 +120,6 @@ class UrlBuilder
 
     /**
      * Get the scheme of the url.
-     *
-     * @return string|null
      */
     public function getScheme(): ?string
     {
@@ -155,9 +128,6 @@ class UrlBuilder
 
     /**
      * Set the scheme of the url.
-     *
-     * @param string $scheme
-     * @return $this
      */
     public function setScheme(string $scheme): self
     {
@@ -168,8 +138,6 @@ class UrlBuilder
 
     /**
      * Get the host of the url.
-     *
-     * @return string|null
      */
     public function getHost(): ?string
     {
@@ -178,9 +146,6 @@ class UrlBuilder
 
     /**
      * Set the host of the url.
-     *
-     * @param string $host
-     * @return $this
      */
     public function setHost(string $host): self
     {
@@ -191,8 +156,6 @@ class UrlBuilder
 
     /**
      * Get the url port.
-     *
-     * @return int|null
      */
     public function getPort(): ?int
     {
@@ -201,9 +164,6 @@ class UrlBuilder
 
     /**
      * Set the url port
-     *
-     * @param int $port
-     * @return $this
      */
     public function setPort(int $port): self
     {
@@ -214,8 +174,6 @@ class UrlBuilder
 
     /**
      * Get the HTTP auth user.
-     *
-     * @return string|null
      */
     public function getUser(): ?string
     {
@@ -224,9 +182,6 @@ class UrlBuilder
 
     /**
      * Set the HTTP auth user.
-     *
-     * @param string $user
-     * @return $this
      */
     public function setUser(string $user): self
     {
@@ -237,8 +192,6 @@ class UrlBuilder
 
     /**
      * Get the HTTP auth password.
-     *
-     * @return string|null
      */
     public function getPassword(): ?string
     {
@@ -247,9 +200,6 @@ class UrlBuilder
 
     /**
      * Set the HTTP auth password.
-     *
-     * @param string $password
-     * @return $this
      */
     public function setPassword(string $password): self
     {
@@ -260,8 +210,6 @@ class UrlBuilder
 
     /**
      * Get the path in the url.
-     *
-     * @return string|null
      */
     public function getPath(): ?string
     {
@@ -270,9 +218,6 @@ class UrlBuilder
 
     /**
      * Set the url path.
-     *
-     * @param string $path
-     * @return $this
      */
     public function setPath(string $path): self
     {
@@ -283,8 +228,6 @@ class UrlBuilder
 
     /**
      * Get the string after `#` in the url.
-     *
-     * @return string|null
      */
     public function getFragment(): ?string
     {
@@ -293,9 +236,6 @@ class UrlBuilder
 
     /**
      * Set the string after `#` in the url.
-     *
-     * @param string $fragment
-     * @return $this
      */
     public function setFragment(string $fragment): self
     {
@@ -306,8 +246,6 @@ class UrlBuilder
 
     /**
      * Get the compiled url string.
-     *
-     * @return string
      */
     public function __toString(): string
     {

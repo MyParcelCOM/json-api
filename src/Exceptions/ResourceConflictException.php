@@ -12,10 +12,6 @@ use Throwable;
  */
 class ResourceConflictException extends AbstractException
 {
-    /**
-     * @param string         $field
-     * @param Throwable|null $previous
-     */
     public function __construct(string $field, Throwable $previous = null)
     {
         parent::__construct(

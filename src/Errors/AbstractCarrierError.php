@@ -4,46 +4,27 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Errors;
 
+use Illuminate\Support\Arr;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 
 abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 {
-    /** @var string */
-    protected $id;
+    protected ?string $id = null;
 
-    /** @var array */
-    protected $links;
+    protected array $links = [];
 
-    /** @var int */
-    protected $status;
+    protected ?int $status = null;
 
-    /** @var string */
-    protected $errorCode;
+    protected array $source = [];
 
-    /** @var string */
-    protected $title;
+    protected array $meta = [];
 
-    /** @var string */
-    protected $detail;
-
-    /** @var array */
-    protected $source;
-
-    /** @var array */
-    protected $meta;
-
-    /***
-     * @param string      $errorCode
-     * @param string      $title
-     * @param string      $detail
-     * @param string|null $pointer
-     */
-    public function __construct(string $errorCode, string $title, string $detail, string $pointer = null)
-    {
-        $this->setErrorCode($errorCode);
-        $this->setTitle($title);
-        $this->setDetail($detail);
-
+    public function __construct(
+        protected string $errorCode,
+        protected string $title,
+        protected string $detail,
+        string $pointer = null,
+    ) {
         if ($pointer !== null) {
             $this->setPointer($pointer);
         }
@@ -51,8 +32,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get the id for this occurrence of the exception.
-     *
-     * @return string|null
      */
     public function getId(): ?string
     {
@@ -61,9 +40,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Set the id for this occurrence of the exception.
-     *
-     * @param string $id
-     * @return $this
      */
     public function setId(string $id): JsonSchemaErrorInterface
     {
@@ -74,22 +50,16 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get the links related to the exception.
-     *
-     * @return array|null
      */
-    public function getLinks(): ?array
+    public function getLinks(): array
     {
         return $this->links;
     }
 
     /**
      * Add a link to the existing links array.
-     *
-     * @param string $name
-     * @param mixed  $url
-     * @return $this
      */
-    public function addLink(string $name, $url): JsonSchemaErrorInterface
+    public function addLink(string $name, string $url): JsonSchemaErrorInterface
     {
         $this->links[$name] = $url;
 
@@ -98,9 +68,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Set the links related to the exception.
-     *
-     * @param array $links Should contain an about link that leads to further details about this particular occurrence of the problem.
-     * @return $this
+     * Should contain an "about" link that leads to further details about this particular occurrence of the problem.
      */
     public function setLinks(array $links): JsonSchemaErrorInterface
     {
@@ -111,8 +79,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Return the http status for the request.
-     *
-     * @return int|null
      */
     public function getStatus(): ?int
     {
@@ -121,9 +87,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Set the http status code for the request.
-     *
-     * @param int $status
-     * @return $this
      */
     public function setStatus(int $status): JsonSchemaErrorInterface
     {
@@ -134,8 +97,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get the application specific error code.
-     *
-     * @return string
      */
     public function getErrorCode(): string
     {
@@ -145,9 +106,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Set the application specific error code.
      * This should be retrieved from one of the defined constants.
-     *
-     * @param string $errorCode
-     * @return $this
      */
     public function setErrorCode(string $errorCode): JsonSchemaErrorInterface
     {
@@ -158,8 +116,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get the description linked to the code.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -169,9 +125,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
     /**
      * Set the description linked to the code.
      * This should be retrieved from one of the defined constants.
-     *
-     * @param string $title
-     * @return $this
      */
     public function setTitle(string $title): JsonSchemaErrorInterface
     {
@@ -182,8 +135,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get the detailed message for the error.
-     *
-     * @return string
      */
     public function getDetail(): string
     {
@@ -192,9 +143,6 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Set the detailed message for the error.
-     *
-     * @param string $detail
-     * @return $this
      */
     public function setDetail(string $detail): JsonSchemaErrorInterface
     {
@@ -205,19 +153,14 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get an array containing references to the source of the error.
-     *
-     * @return array|null
      */
-    public function getSource(): ?array
+    public function getSource(): array
     {
         return $this->source;
     }
 
     /**
      * Set an array containing references to the source of the error.
-     *
-     * @param array $source
-     * @return $this
      */
     public function setSource(array $source): JsonSchemaErrorInterface
     {
@@ -228,19 +171,14 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Get meta object containing non-standard meta-information about the error.
-     *
-     * @return array|null
      */
-    public function getMeta(): ?array
+    public function getMeta(): array
     {
         return $this->meta;
     }
 
     /**
      * Set meta object containing non-standard meta-information about the error.
-     *
-     * @param array $meta
-     * @return $this
      */
     public function setMeta(array $meta): JsonSchemaErrorInterface
     {
@@ -251,47 +189,26 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
 
     /**
      * Add meta values to the existing meta object.
-     *
-     * @param string $key
-     * @param mixed  $value
-     * @return $this
      */
-    public function addMeta(string $key, $value): JsonSchemaErrorInterface
+    public function addMeta(string $key, mixed $value): JsonSchemaErrorInterface
     {
         $this->meta[$key] = $value;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPointer(): ?string
     {
-        if ($this->getSource() === null || !array_key_exists('pointer', $this->getSource())) {
-            return null;
-        }
-
-        return $this->getSource()['pointer'];
+        return Arr::get($this->getSource(), 'pointer');
     }
 
-    /**
-     * @param string $pointer
-     * @return $this
-     */
     public function setPointer(string $pointer): self
     {
-        if ($this->getSource() === null) {
-            $this->setSource([
+        $this->setSource(
+            array_merge($this->getSource(), [
                 'pointer' => $pointer,
-            ]);
-
-            return $this;
-        }
-
-        $this->setSource(array_merge($this->getSource(), [
-            'pointer' => $pointer,
-        ]));
+            ]),
+        );
 
         return $this;
     }

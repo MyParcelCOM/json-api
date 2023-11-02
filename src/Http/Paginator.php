@@ -10,33 +10,24 @@ class Paginator
 {
     const DEFAULT_PAGE_SIZE = 100;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
-    /** @var string */
-    protected $baseUrl;
+    protected int $currentPage;
 
-    /** @var int */
-    protected $perPage;
+    protected int $maxPageSize = self::DEFAULT_PAGE_SIZE;
 
-    /** @var int */
-    protected $currentPage;
-
-    /** @var int */
-    protected $maxPageSize = self::DEFAULT_PAGE_SIZE;
-
-    public function __construct(string $url = '', int $perPage = self::DEFAULT_PAGE_SIZE, int $currentPage = 1, int $total = 0)
-    {
-        $this->setBaseUrl($url);
-        $this->setPerPage($perPage);
+    public function __construct(
+        protected string $baseUrl = '',
+        protected int $perPage = self::DEFAULT_PAGE_SIZE,
+        int $currentPage = 1,
+        int $total = 0,
+    ) {
         $this->setCurrentPage($currentPage);
         $this->setTotal($total);
     }
 
     /**
      * Get the links for other pages in this pagination.
-     *
-     * @return array
      */
     public function getLinks(): array
     {
@@ -61,13 +52,6 @@ class Paginator
         return $pagination;
     }
 
-    /**
-     * Set the current page number.
-     *
-     * @param int $currentPage
-     * @return $this
-     * @throws PaginatorException
-     */
     public function setCurrentPage(int $currentPage): self
     {
         $this->currentPage = max(1, $currentPage);
@@ -75,28 +59,16 @@ class Paginator
         return $this;
     }
 
-    /**
-     * Get the current page.
-     *
-     * @return int
-     */
     public function getCurrentPage(): int
     {
-        return (int) $this->currentPage;
+        return $this->currentPage;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxPageSize(): int
     {
-        return (int) $this->maxPageSize;
+        return $this->maxPageSize;
     }
 
-    /**
-     * @param int $maxPageSize
-     * @return Paginator
-     */
     public function setMaxPageSize(int $maxPageSize): self
     {
         $this->maxPageSize = $maxPageSize;
@@ -106,10 +78,6 @@ class Paginator
 
     /**
      * Set the amount we want to retrieve per page
-     *
-     * @param int $perPage
-     * @return $this
-     * @throws PaginatorException
      */
     public function setPerPage(int $perPage): self
     {
@@ -120,8 +88,6 @@ class Paginator
 
     /**
      * Get the number per page.
-     *
-     * @return int
      */
     public function getPerPage(): int
     {
@@ -133,10 +99,6 @@ class Paginator
     }
 
     /**
-     * Set the total.
-     *
-     * @param int $total
-     * @return $this
      * @throws PaginatorException
      */
     public function setTotal(int $total): self
@@ -151,9 +113,6 @@ class Paginator
 
     /**
      * Add to the total.
-     *
-     * @param int $total
-     * @return $this
      */
     public function addTotal(int $total): self
     {
@@ -164,18 +123,14 @@ class Paginator
 
     /**
      * Get the total.
-     *
-     * @return int
      */
     public function getTotal(): int
     {
-        return (int) $this->total;
+        return $this->total;
     }
 
     /**
      * Get the last page.
-     *
-     * @return int
      */
     public function getLastPage(): int
     {
@@ -184,8 +139,6 @@ class Paginator
 
     /**
      * Get the amount of pages.
-     *
-     * @return int
      */
     public function getCount(): int
     {
@@ -194,8 +147,6 @@ class Paginator
 
     /**
      * Get the index of the first item that needs to be displayed.
-     *
-     * @return int
      */
     public function getStart(): int
     {
@@ -204,8 +155,6 @@ class Paginator
 
     /**
      * Get the index of the last item that needs to be displayed.
-     *
-     * @return int
      */
     public function getEnd(): int
     {
@@ -214,9 +163,6 @@ class Paginator
 
     /**
      * Set the base url for the other page links.
-     *
-     * @param string $url
-     * @return $this
      */
     public function setBaseUrl(string $url): self
     {
@@ -227,9 +173,6 @@ class Paginator
 
     /**
      * Get the url for the given page.
-     *
-     * @param int $page
-     * @return string
      */
     protected function getUrl(int $page): string
     {

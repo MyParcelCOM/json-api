@@ -16,11 +16,9 @@ class QueryFilterTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var QueryFilter */
-    private $queryFilter;
+    private QueryFilter $queryFilter;
 
-    /** @var Builder */
-    private $query;
+    private Builder $query;
 
     protected function setUp(): void
     {

@@ -9,8 +9,7 @@ use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 
 class OtherTransformerStub extends AbstractTransformer
 {
-    /** @var mixed */
-    protected $dependency;
+    protected mixed $dependency = null;
 
     public function getId($model): string
     {

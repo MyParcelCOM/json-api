@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class InvalidInputContextErrorTest extends TestCase
 {
-    /** @var InvalidInputContextError */
-    protected $error;
+    protected InvalidInputContextError $error;
 
     protected function setUp(): void
     {
@@ -59,20 +58,20 @@ class InvalidInputContextErrorTest extends TestCase
     public function testItSetsLinks()
     {
         $this->assertEquals(
-            ['self' => 'http://foo.bar/com'],
-            $this->error->setLinks(['self' => 'http://foo.bar/com'])->getLinks()
+            ['self' => 'https://foo.bar/com'],
+            $this->error->setLinks(['self' => 'https://foo.bar/com'])->getLinks()
         );
     }
 
     /** @test */
     public function testItAddsALink()
     {
-        $this->error->setLinks(['self' => 'http://foo.bar/com']);
-        $this->error->addLink('next', 'http://next.page/page=next');
+        $this->error->setLinks(['self' => 'https://foo.bar/com']);
+        $this->error->addLink('next', 'https://next.page/page=next');
         $this->assertEquals(
             [
-                'self' => 'http://foo.bar/com',
-                'next' => 'http://next.page/page=next',
+                'self' => 'https://foo.bar/com',
+                'next' => 'https://next.page/page=next',
             ],
             $this->error->getLinks()
         );

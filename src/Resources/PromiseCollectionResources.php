@@ -7,25 +7,20 @@ namespace MyParcelCom\JsonApi\Resources;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\Utils;
 use Illuminate\Support\Collection;
+use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class PromiseCollectionResources implements ResourcesInterface
 {
     /** @var PromiseInterface[] */
-    protected $promises = [];
+    protected array $promises = [];
 
-    /** @var array */
-    protected $data;
+    protected array $data = [];
 
-    /** @var int */
-    protected $limit;
+    protected int $limit = Paginator::DEFAULT_PAGE_SIZE;
 
-    /** @var int */
-    protected $offset = 0;
+    protected int $offset = 0;
 
-    /**
-     * @param PromiseInterface[] $promises
-     */
     public function __construct(PromiseInterface ...$promises)
     {
         $this->promises = $promises;
@@ -33,8 +28,6 @@ class PromiseCollectionResources implements ResourcesInterface
 
     /**
      * Get the data from the result set as a collection, starting at set offset with a length of given limit.
-     *
-     * @return Collection
      */
     public function get(): Collection
     {
@@ -50,8 +43,6 @@ class PromiseCollectionResources implements ResourcesInterface
 
     /**
      * Get the total number of elements
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -65,10 +56,6 @@ class PromiseCollectionResources implements ResourcesInterface
         return $count;
     }
 
-    /**
-     * @param int $offset
-     * @return ResourcesInterface
-     */
     public function offset(int $offset): ResourcesInterface
     {
         $this->offset = $offset;
@@ -76,10 +63,6 @@ class PromiseCollectionResources implements ResourcesInterface
         return $this;
     }
 
-    /**
-     * @param int $limit
-     * @return ResourcesInterface
-     */
     public function limit(int $limit): ResourcesInterface
     {
         $this->limit = $limit;
@@ -87,10 +70,6 @@ class PromiseCollectionResources implements ResourcesInterface
         return $this;
     }
 
-    /**
-     * @param PromiseInterface $promise
-     * @return $this
-     */
     public function addPromise(PromiseInterface $promise): self
     {
         $this->promises[] = $promise;
@@ -98,12 +77,9 @@ class PromiseCollectionResources implements ResourcesInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     protected function wait(): self
     {
-        if (!isset($this->data)) {
+        if (empty($this->data)) {
             $this->data = Utils::unwrap($this->promises);
         }
 

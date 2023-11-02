@@ -10,31 +10,18 @@ use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class TransformerService
 {
-    /** @var TransformerFactory */
-    protected $transformerFactory;
+    protected Paginator $paginator;
 
-    /** @var Paginator */
-    protected $paginator;
+    protected array $includes = [];
 
-    /** @var array */
-    protected $includes = [];
+    protected bool $multipleResult = false;
 
-    /** @var bool */
-    protected $multipleResult;
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     */
-    public function __construct(TransformerFactory $transformerFactory)
-    {
-        $this->transformerFactory = $transformerFactory;
+    public function __construct(
+        protected TransformerFactory $transformerFactory,
+    ) {
         $this->setPaginator(new Paginator());
     }
 
-    /**
-     * @param Paginator $paginator
-     * @return $this
-     */
     public function setPaginator(Paginator $paginator): self
     {
         $this->paginator = $paginator;
@@ -42,10 +29,6 @@ class TransformerService
         return $this;
     }
 
-    /**
-     * @param array $includes
-     * @return $this
-     */
     public function setIncludes(array $includes): self
     {
         $this->includes = $includes;
@@ -53,10 +36,6 @@ class TransformerService
         return $this;
     }
 
-    /**
-     * @param int $maxPageSize
-     * @return $this
-     */
     public function setMaxPageSize(int $maxPageSize): self
     {
         $this->paginator->setMaxPageSize($maxPageSize);
@@ -66,9 +45,6 @@ class TransformerService
 
     /**
      * Transform a builder to JSON Api output.
-     *
-     * @param ResourcesInterface[] $resources
-     * @return array
      */
     public function transformResources(ResourcesInterface ...$resources): array
     {
@@ -107,7 +83,6 @@ class TransformerService
      * Transform the data to JSON Api.
      *
      * @param object[]|Collection[] $data
-     * @return array
      * @throws TransformerException
      */
     public function transformResource(...$data): array

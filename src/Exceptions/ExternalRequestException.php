@@ -11,12 +11,6 @@ use Throwable;
  */
 class ExternalRequestException extends AbstractException
 {
-    /**
-     * @param int            $status
-     * @param int            $externalStatus
-     * @param array          $externalError
-     * @param Throwable|null $previous
-     */
     public function __construct(int $status, int $externalStatus, array $externalError = [], Throwable $previous = null)
     {
         parent::__construct(

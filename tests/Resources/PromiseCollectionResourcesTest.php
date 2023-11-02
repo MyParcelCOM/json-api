@@ -14,8 +14,7 @@ class PromiseCollectionResourcesTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var PromiseCollectionResources */
-    private $resultSet;
+    private PromiseCollectionResources $resultSet;
 
     protected function setUp(): void
     {
