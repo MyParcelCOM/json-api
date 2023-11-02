@@ -198,5 +198,8 @@ abstract class AbstractTransformer implements TransformerInterface
     /**
      * @param TModel $model
      */
-    abstract public function getId($model): string|int;
+    public function getId($model): string|int
+    {
+        return $model->getId();
+    }
 }
