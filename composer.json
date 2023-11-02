@@ -4,7 +4,7 @@
   "homepage": "https://www.myparcel.com",
   "type": "library",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.2",
     "ext-json": "*",
     "guzzlehttp/promises": "^1.0",
     "justinrainbow/json-schema": "^5.2",
@@ -16,10 +16,10 @@
     }
   },
   "require-dev": {
-    "mockery/mockery": "^1.4",
+    "mockery/mockery": "^1.5",
     "phpunit/phpunit": ">=9.5",
     "roave/security-advisories": "dev-latest",
-    "squizlabs/php_codesniffer": "^3.0"
+    "squizlabs/php_codesniffer": "^3.7"
   },
   "autoload-dev": {
     "psr-4": {
