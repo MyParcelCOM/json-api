@@ -9,9 +9,6 @@ use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use Throwable;
 
-/**
- * @property JsonSchemaErrorInterface[] errors
- */
 abstract class AbstractMultiErrorException extends Exception implements MultiErrorInterface
 {
     protected array $meta = [];

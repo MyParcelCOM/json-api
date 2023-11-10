@@ -6,7 +6,7 @@ namespace MyParcelCom\JsonApi\Http;
 
 class UrlBuilder
 {
-    protected string $url;
+    protected ?string $url = null;
 
     protected ?string $scheme = null;
 
