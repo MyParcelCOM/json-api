@@ -18,11 +18,9 @@ class AbstractTransformerTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var Model */
-    private $model;
+    private Model $model;
 
-    /** @var TransformerStub */
-    private $transformer;
+    private TransformerStub $transformer;
 
     protected function setUp(): void
     {

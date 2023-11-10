@@ -8,29 +8,16 @@ use Illuminate\Support\Collection;
 
 class TransformerCollection
 {
-    /** @var Collection */
-    protected $collection;
+    private ?Collection $transformerItems = null;
 
-    /** @var TransformerFactory */
-    protected $transformerFactory;
-
-    /** @var Collection */
-    private $transformerItems;
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     * @param Collection         $collection
-     */
-    public function __construct(TransformerFactory $transformerFactory, Collection $collection)
-    {
-        $this->collection = $collection;
-        $this->transformerFactory = $transformerFactory;
+    public function __construct(
+        protected TransformerFactory $transformerFactory,
+        protected Collection $collection,
+    ) {
     }
 
     /**
      * Get the transformed data for all the items.
-     *
-     * @return array
      */
     public function getData(): array
     {
@@ -67,8 +54,6 @@ class TransformerCollection
 
     /**
      * Get a collection of TransformerItems created from the resource passed at construction.
-     *
-     * @return Collection
      */
     protected function getTransformerItems(): Collection
     {

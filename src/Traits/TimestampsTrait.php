@@ -12,17 +12,11 @@ use Carbon\Carbon;
  */
 trait TimestampsTrait
 {
-    /**
-     * @return Carbon
-     */
     public function getCreatedAt(): Carbon
     {
         return $this->created_at ? $this->created_at->copy() : Carbon::now();
     }
 
-    /**
-     * @return Carbon
-     */
     public function getUpdatedAt(): Carbon
     {
         return $this->updated_at ? $this->updated_at->copy() : Carbon::now();

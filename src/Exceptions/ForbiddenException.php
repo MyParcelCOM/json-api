@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * This exception should be thrown when the requesting user does not have rights to
- * perform a specific action on a requested resource.
+ * This exception should be thrown when the requesting user does not have rights to perform a specific action on a
+ * requested resource.
  */
 class ForbiddenException extends AbstractException
 {

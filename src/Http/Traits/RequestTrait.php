@@ -13,8 +13,6 @@ trait RequestTrait
 
     /**
      * Get the pagination from the current url.
-     *
-     * @return Paginator
      */
     public function getPaginator(): Paginator
     {
@@ -33,8 +31,6 @@ trait RequestTrait
 
     /**
      * Get the requested includes from the url.
-     *
-     * @return array
      */
     public function getIncludes(): array
     {
@@ -46,13 +42,9 @@ trait RequestTrait
         return $includes;
     }
 
-    /**
-     * @param string $include
-     * @param array  $includes
-     */
     private function addInclude(string $include, array &$includes): void
     {
-        if (strpos($include, '.') === false) {
+        if (!str_contains($include, '.')) {
             $includes[] = $include;
 
             return;
@@ -67,14 +59,12 @@ trait RequestTrait
 
     /**
      * Get the sort from the requested url.
-     *
-     * @return array
      */
     public function getSort(): array
     {
         $sort = [];
         foreach (explode(',', $this->query('sort', '')) as $param) {
-            $sort[str_replace('-', '', $param)] = strpos($param, '-') === 0 ? 'DESC' : 'ASC';
+            $sort[str_replace('-', '', $param)] = str_starts_with($param, '-') ? 'DESC' : 'ASC';
         }
 
         return $sort;
@@ -82,8 +72,6 @@ trait RequestTrait
 
     /**
      * Get the filters from the requested url.
-     *
-     * @return array
      */
     public function getFilter(): array
     {

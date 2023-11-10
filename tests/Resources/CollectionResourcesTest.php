@@ -10,8 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionResourcesTest extends TestCase
 {
-    /** @var CollectionResources */
-    private $resultSet;
+    private CollectionResources $resultSet;
 
     protected function setUp(): void
     {

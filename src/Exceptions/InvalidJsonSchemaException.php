@@ -12,10 +12,6 @@ use Throwable;
  */
 class InvalidJsonSchemaException extends AbstractException
 {
-    /**
-     * @param array          $errors
-     * @param Throwable|null $previous
-     */
     public function __construct(array $errors, Throwable $previous = null)
     {
         parent::__construct(
@@ -26,7 +22,7 @@ class InvalidJsonSchemaException extends AbstractException
         );
 
         $this->setLinks([
-            'specification' => 'https://docs.myparcel.com/api-specification',
+            'specification' => 'https://api-specification.myparcel.com',
         ]);
         $this->addMeta('json_schema_errors', $errors);
     }

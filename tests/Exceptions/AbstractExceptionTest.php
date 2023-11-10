@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractExceptionTest extends TestCase
 {
-    /** @var AbstractException */
-    private $exception;
+    private AbstractException $exception;
 
     protected function setUp(): void
     {

@@ -17,20 +17,15 @@ class TransformerCollectionTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var array */
-    protected $transformerData;
+    protected array $transformerData;
 
-    /** @var array */
-    protected $includedResource;
+    protected array $includedResource;
 
-    /** @var array */
-    protected $includedData;
+    protected array $includedData;
 
-    /** @var TransformerFactory */
-    protected $transformerFactory;
+    protected TransformerFactory $transformerFactory;
 
-    /** @var TransformerCollection */
-    protected $transformerCollection;
+    protected TransformerCollection $transformerCollection;
 
     protected function setUp(): void
     {
@@ -77,12 +72,6 @@ class TransformerCollectionTest extends TestCase
         $this->assertEquals([], $this->transformerCollection->getIncluded([], ['foo']));
     }
 
-    /**
-     * get an iterable Collection mock
-     *
-     * @param array $items iterator items
-     * @return Collection
-     */
     protected function getCollectionMock(array $items): Collection
     {
         return Mockery::mock(Collection::class, [

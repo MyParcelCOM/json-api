@@ -11,26 +11,17 @@ use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 
 class PromiseResources implements ResourcesInterface
 {
-    /** @var PromiseInterface */
-    protected $promise;
+    protected ?Collection $data = null;
 
-    /** @var Collection */
-    protected $data;
+    protected int $offset = 0;
 
-    /** @var int */
-    protected $offset = 0;
+    protected int $limit = Paginator::DEFAULT_PAGE_SIZE;
 
-    /** @var int */
-    protected $limit = Paginator::DEFAULT_PAGE_SIZE;
-
-    public function __construct(PromiseInterface $promise)
-    {
-        $this->promise = $promise;
+    public function __construct(
+        protected PromiseInterface $promise,
+    ) {
     }
 
-    /**
-     * @return Collection
-     */
     public function get(): Collection
     {
         $this->wait();
@@ -38,9 +29,6 @@ class PromiseResources implements ResourcesInterface
         return $this->data->slice($this->offset, $this->limit);
     }
 
-    /**
-     * @return int
-     */
     public function count(): int
     {
         $this->wait();
@@ -53,17 +41,13 @@ class PromiseResources implements ResourcesInterface
      */
     private function wait(): void
     {
-        if (!isset($this->data)) {
+        if (empty($this->data)) {
             $this->data = new Collection(
                 $this->promise->wait()
             );
         }
     }
 
-    /**
-     * @param int $offset
-     * @return ResourcesInterface
-     */
     public function offset(int $offset): ResourcesInterface
     {
         $this->offset = $offset;
@@ -71,10 +55,6 @@ class PromiseResources implements ResourcesInterface
         return $this;
     }
 
-    /**
-     * @param int $limit
-     * @return ResourcesInterface
-     */
     public function limit(int $limit): ResourcesInterface
     {
         $this->limit = $limit;

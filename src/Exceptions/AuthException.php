@@ -11,11 +11,6 @@ use Throwable;
  */
 class AuthException extends AbstractException
 {
-    /**
-     * @param string         $detail
-     * @param int            $status
-     * @param Throwable|null $previous
-     */
     public function __construct(string $detail, int $status, Throwable $previous = null)
     {
         parent::__construct(

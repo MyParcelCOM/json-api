@@ -123,7 +123,7 @@ class ExceptionsTest extends TestCase
 
         $this->assertEquals('epic', $exception->getPrevious()->getMessage());
         $this->assertEquals(['json_schema_errors' => ['fail']], $exception->getMeta());
-        $this->assertEquals(['specification' => 'https://docs.myparcel.com/api-specification'], $exception->getLinks());
+        $this->assertEquals(['specification' => 'https://api-specification.myparcel.com'], $exception->getLinks());
     }
 
     /** @test */

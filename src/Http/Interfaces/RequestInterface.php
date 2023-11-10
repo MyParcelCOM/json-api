@@ -10,29 +10,21 @@ interface RequestInterface
 {
     /**
      * Get the pagination from the requested url.
-     *
-     * @return Paginator
      */
     public function getPaginator(): Paginator;
 
     /**
      * Get the requested includes from the url.
-     *
-     * @return array
      */
     public function getIncludes(): array;
 
     /**
      * Get the sort from the requested url.
-     *
-     * @return array
      */
     public function getSort(): array;
 
     /**
      * Get the filters from the requested url.
-     *
-     * @return array
      */
     public function getFilter(): array;
 

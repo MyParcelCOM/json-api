@@ -9,25 +9,15 @@ use MyParcelCom\JsonApi\Transformers\TransformerInterface;
 
 class MotherTransformerMock implements TransformerInterface
 {
-    /** @var int */
-    private static $idCounter = 0;
+    public function __construct(TransformerFactory $transformerFactory)
+    {
+    }
 
-    /** @var string */
-    private $id;
-
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getId($model): string
     {
         return $model->getId();
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function transform($model): array
     {
         return [
@@ -36,13 +26,6 @@ class MotherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * Transform a relationship identifier.
-     *
-     * @param mixed $model
-     * @param bool  $includeMeta
-     * @return array
-     */
     public function transformIdentifier($model, bool $includeMeta = false): array
     {
         $identifier = [
@@ -57,36 +40,21 @@ class MotherTransformerMock implements TransformerInterface
         return $identifier;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return 'mother';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getIncluded($model): array
     {
         return [];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getRelationships($model): array
     {
         return [];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getLinks($model): array
     {
         return [
@@ -94,28 +62,16 @@ class MotherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getLink($model): string
     {
         return '/link/to/mother';
     }
 
-    /**
-     * @param mixed $model
-     * @return string
-     */
     public function getRelationLink($model): string
     {
         return '/link/to/mother/relation';
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getAttributes($model): array
     {
         return [
@@ -123,19 +79,8 @@ class MotherTransformerMock implements TransformerInterface
         ];
     }
 
-    /**
-     * @param mixed $model
-     * @return array
-     */
     public function getMeta($model): array
     {
         return [];
-    }
-
-    /**
-     * @param TransformerFactory $transformerFactory
-     */
-    public function __construct(TransformerFactory $transformerFactory)
-    {
     }
 }

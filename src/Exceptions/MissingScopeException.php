@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class MissingScopeException extends AbstractException
@@ -13,7 +14,7 @@ class MissingScopeException extends AbstractException
         parent::__construct(
             'The used access token does not contain the required scope(s): ' . implode(', ', $scopes) . '.',
             self::AUTH_MISSING_SCOPE,
-            403,
+            Response::HTTP_FORBIDDEN,
             $previous
         );
     }

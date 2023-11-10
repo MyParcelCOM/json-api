@@ -14,24 +14,15 @@ abstract class AbstractTransformer implements TransformerInterface
 {
     use ArrayFilterTrait;
 
-    /** @var UrlGenerator */
-    protected $urlGenerator;
+    protected UrlGenerator $urlGenerator;
 
-    /** @var TransformerFactory */
-    protected $transformerFactory;
+    protected string $type = '';
 
-    /** @var string */
-    protected $type;
-
-    public function __construct(TransformerFactory $transformerFactory)
-    {
-        $this->transformerFactory = $transformerFactory;
+    public function __construct(
+        protected TransformerFactory $transformerFactory,
+    ) {
     }
 
-    /**
-     * @param UrlGenerator $urlGenerator
-     * @return $this
-     */
     public function setUrlGenerator(UrlGenerator $urlGenerator): self
     {
         $this->urlGenerator = $urlGenerator;
@@ -43,7 +34,6 @@ abstract class AbstractTransformer implements TransformerInterface
      * Transform the model to JSON Api output.
      *
      * @param TModel $model
-     * @return array transformed data
      */
     public function transform($model): array
     {
@@ -59,12 +49,8 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * Transform the model relationships to JSON Api output.
-     *
-     * @param mixed $model
-     * @param bool  $inDataTag
-     * @return array transformed relationships
      */
-    protected function transformRelationship($model, $inDataTag = true): array
+    protected function transformRelationship(mixed $model, bool $inDataTag = true): array
     {
         $transformer = $this->transformerFactory->createFromModel($model);
         $relationship = $transformer->transformIdentifier($model);
@@ -81,8 +67,7 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @param $model
-     * @return array|null
+     * @param TModel $model
      */
     protected function getAttributesFromModel($model): ?array
     {
@@ -93,26 +78,11 @@ abstract class AbstractTransformer implements TransformerInterface
         return $this->transformerFactory->createFromModel($model)->getAttributes($model);
     }
 
-    /**
-     * @param DateTime|null $dateTime
-     * @return int|null
-     */
     protected function getTimestamp(?DateTime $dateTime): ?int
     {
-        if (!$dateTime) {
-            return null;
-        }
-
-        return $dateTime->getTimestamp();
+        return $dateTime?->getTimestamp();
     }
 
-    /**
-     * @param string      $id
-     * @param string      $type
-     * @param string      $class
-     * @param string|null $parentId
-     * @return array
-     */
     protected function transformRelationshipForIdentifier(string $id, string $type, string $class, string $parentId = null): array
     {
         $resource = new ResourceIdentifier($id, $type, $parentId);
@@ -128,28 +98,16 @@ abstract class AbstractTransformer implements TransformerInterface
         return $relationship;
     }
 
-    /**
-     * @param string[]   $ids
-     * @param string     $type
-     * @param array|null $links
-     * @return array
-     */
     protected function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
     {
         return array_filter([
-            'data'  => array_map(function ($id) use ($type) {
-                return (new ResourceIdentifier($id, $type))->jsonSerialize();
-            }, $ids),
+            'data'  => array_map(fn ($id) => (new ResourceIdentifier($id, $type))->jsonSerialize(), $ids),
             'links' => $links,
         ]);
     }
 
     /**
      * Transform a relationship identifier.
-     *
-     * @param mixed $model
-     * @param bool  $includeMeta
-     * @return array
      */
     public function transformIdentifier($model, bool $includeMeta = false): array
     {
@@ -166,13 +124,12 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
-     * @return string
      * @throws TransformerException
      */
     public function getType(): string
     {
-        if (!isset($this->type)) {
-            throw new TransformerException('Error no transformer resource type set for model');
+        if (empty($this->type)) {
+            throw new TransformerException('Error no transformer resource `type` set for model');
         }
 
         return $this->type;
@@ -180,7 +137,6 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param TModel $model
-     * @return array
      */
     public function getIncluded($model): array
     {
@@ -189,7 +145,6 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param TModel $model
-     * @return array
      */
     public function getRelationships($model): array
     {
@@ -198,7 +153,6 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param TModel $model
-     * @return array
      */
     public function getLinks($model): array
     {
@@ -211,7 +165,6 @@ abstract class AbstractTransformer implements TransformerInterface
      * Get a link to the model
      *
      * @param TModel $model
-     * @return string
      */
     public function getLink($model): string
     {
@@ -220,18 +173,14 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * Get a link to the relation
-     *
-     * @param TModel $model
-     * @return string
      */
-    public function getRelationLink($model): string
+    public function getRelationLink(mixed $model): string
     {
         return '';
     }
 
     /**
      * @param TModel $model
-     * @return array
      */
     public function getAttributes($model): array
     {
@@ -240,7 +189,6 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param TModel $model
-     * @return array
      */
     public function getMeta($model): array
     {
@@ -249,7 +197,9 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param TModel $model
-     * @return mixed
      */
-    abstract public function getId($model);
+    public function getId($model): string|int
+    {
+        return $model->getId();
+    }
 }

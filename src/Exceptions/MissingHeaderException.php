@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class MissingHeaderException extends AbstractException
@@ -13,7 +14,7 @@ class MissingHeaderException extends AbstractException
         parent::__construct(
             'The request does not contain the required header(s): ' . implode(', ', $headers) . '.',
             self::MISSING_REQUEST_HEADER,
-            403,
+            Response::HTTP_FORBIDDEN,
             $previous
         );
     }

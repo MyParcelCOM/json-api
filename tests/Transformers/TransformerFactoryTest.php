@@ -22,16 +22,13 @@ class TransformerFactoryTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var TransformerFactory */
-    protected $transformerFactory;
+    protected TransformerFactory $transformerFactory;
 
-    /** @var Model */
-    protected $modelMock;
+    protected Model $modelMock;
 
-    /** @var UrlGenerator */
-    protected $urlGenerator;
+    protected UrlGenerator $urlGenerator;
 
-    protected $dependency = 'Some random dependency';
+    protected string $dependency = 'Some random dependency';
 
     protected function setUp(): void
     {

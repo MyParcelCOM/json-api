@@ -16,32 +16,16 @@ class AssertionsMock
 {
     use AssertionsTrait;
 
-    /** @var TestCase */
-    private $testCase;
-
-    /**
-     * @param $testCase
-     */
-    public function __construct($testCase)
-    {
-        $this->testCase = $testCase;
+    public function __construct(
+        private TestCase $testCase,
+    ) {
     }
 
-    /**
-     * @param string $schemaPath
-     * @param string $method
-     * @param int    $status
-     * @param string $accept
-     * @return stdClass
-     */
     protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass
     {
         return json_decode('{"paths":{"swag":{"get":{"responses":{"101":{"schema":{"data":[{"id":0},{"id":1}]}}}}}}}');
     }
 
-    /**
-     * @return Validator
-     */
     protected function getValidator(): Validator
     {
         return Mockery::mock(Validator::class, [
@@ -57,16 +41,12 @@ class AssertionsMock
         $responseMock->shouldReceive('assertStatus')->withArgs([101]);
         $responseMock->shouldReceive('assertHeader')->withArgs(['Content-Type', 'application/vnd.api+json']);
         $responseMock->shouldReceive('getContent')->andReturnUsing(function () use ($method, $url, $body, $headers) {
-            switch (json_encode([$method, $url, $body, $headers])) {
-                case '["GET","human",[],["head"]]':
-                    return '{"data":[{"id":0},{"id":1}]}';
-                case '["GET","human",[],["tail"]]':
-                    return '{"data":{"id":2}}';
-                case '["GET","human",[],["horn"]]':
-                    return '{"data":null}';
-                default:
-                    throw new Exception('unexpected json() parameters');
-            }
+            return match (json_encode([$method, $url, $body, $headers])) {
+                '["GET","human",[],["head"]]' => '{"data":[{"id":0},{"id":1}]}',
+                '["GET","human",[],["tail"]]' => '{"data":{"id":2}}',
+                '["GET","human",[],["horn"]]' => '{"data":null}',
+                default                       => throw new Exception('unexpected json() parameters'),
+            };
         });
 
         return $responseMock;
@@ -85,11 +65,6 @@ class AssertionsMock
     private function assertEqualsCanonicalizing($expected, $actual, $message = '')
     {
         $this->testCase->assertEqualsCanonicalizing($expected, $actual, $message);
-    }
-
-    private function assertObjectHasAttribute($attributeName, $object, $message = '')
-    {
-        $this->testCase->assertObjectHasAttribute($attributeName, $object, $message);
     }
 
     private function assertCount($expectedCount, $haystack, $message = '')

@@ -20,10 +20,6 @@ trait AppliesFiltersTrait
      *         'operator' => '<operator>',
      *     ],
      * ];
-     *
-     * @param array   $filters
-     * @param Builder $query
-     * @return Builder
      */
     protected function applyFiltersToQuery(array $filters, Builder $query): Builder
     {
@@ -36,10 +32,10 @@ trait AppliesFiltersTrait
             }
 
             // Append time to date, to query with <= and >= like Elasticsearch, instead of using DB::raw('DATE(column)')
-            if (strpos($name, 'date_from') !== false || strpos($name, 'date_to') !== false) {
+            if (str_contains($name, 'date_from') || str_contains($name, 'date_to')) {
                 // Date string 0000-00-00
                 if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
-                    $value .= (strpos($name, 'date_to') !== false) ? ' 23:59:59' : ' 00:00:00';
+                    $value .= (str_contains($name, 'date_to')) ? ' 23:59:59' : ' 00:00:00';
                     // ISO 8601 date string 0000-00-00T00:00:00 with optionally .0 to .000000 or Z +/- 00:00 or 0000
                 } elseif (preg_match('/^\d{4}-(?:0[1-9]|1[0-2])-(?:[0-2][0-9]|3[0-1])T(?:[0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.\d{1,6})?(Z|[+-]\d{2}:?\d{2})$/', $value)) {
                     $value = (new Carbon($value))->utc()->format('Y-m-d H:i:s');

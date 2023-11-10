@@ -10,20 +10,11 @@ use stdClass;
 
 /**
  * This trait can be used to extend the Phpunit assertions inside a Laravel project.
- * The Validator class dependencies should me resolved out of the IoC container.
+ * The Validator class dependencies should be resolved out of the IoC container.
  * The json schema itself should be resolved out of the IoC container with 'schema'.
  */
 trait AssertionsTrait
 {
-    /**
-     * @param string $schemaPath
-     * @param string $url
-     * @param array  $headers
-     * @param array  $body
-     * @param string $method
-     * @param int    $status
-     * @return TestResponse
-     */
     public function assertJsonSchema(string $schemaPath, string $url, array $headers = [], array $body = [], string $method = 'get', int $status = 200): TestResponse
     {
         /** @var TestResponse $response */
@@ -43,10 +34,6 @@ trait AssertionsTrait
         return $response;
     }
 
-    /**
-     * @param $content
-     * @param $schema
-     */
     private function assertValidJsonSchema($content, $schema): void
     {
         $validator = $this->getValidator();
@@ -58,12 +45,6 @@ trait AssertionsTrait
         ], true));
     }
 
-    /**
-     * @param int    $count
-     * @param string $url
-     * @param array  $headers
-     * @return TestResponse
-     */
     public function assertJsonDataCount(int $count, string $url, array $headers = []): TestResponse
     {
         $response = $this->json('GET', $url, [], $headers);
@@ -84,11 +65,6 @@ trait AssertionsTrait
         return $response;
     }
 
-    /**
-     * @param string $url
-     * @param array  $ids
-     * @param array  $headers
-     */
     public function assertJsonDataContainsIds(string $url, array $ids = [], array $headers = [])
     {
         $response = $this->json('GET', $url, [], $headers);
@@ -104,17 +80,7 @@ trait AssertionsTrait
         $this->assertEqualsCanonicalizing($ids, $expectedIds, 'Missing expected ids');
     }
 
-    /**
-     * @param string $schemaPath
-     * @param string $method
-     * @param int    $status
-     * @param string $accept
-     * @return stdClass
-     */
     abstract protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass;
 
-    /**
-     * @return Validator
-     */
     abstract protected function getValidator(): Validator;
 }

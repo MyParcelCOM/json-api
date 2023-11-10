@@ -15,20 +15,15 @@ class TransformerResourceTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /** @var TransformerResource */
-    protected $transformerResource;
+    protected TransformerResource $transformerResource;
 
-    /** @var  TransformerResource */
-    protected $transformerResourceNoIncluded;
+    protected TransformerResource $transformerResourceNoIncluded;
 
-    /** @var array */
-    protected $included;
+    protected array $included;
 
-    /** @var array */
-    protected $data;
+    protected array $data;
 
-    /** @var Paginator */
-    protected $paginator;
+    protected Paginator $paginator;
 
     protected function setUp(): void
     {

@@ -8,46 +8,23 @@ use JsonSerializable;
 
 class ResourceIdentifier implements JsonSerializable
 {
-    /** @var string */
-    private $id;
-
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $parentId;
-
-    /**
-     * @param string      $id
-     * @param string      $type
-     * @param string|null $parentId
-     */
-    public function __construct(string $id, string $type, string $parentId = null)
-    {
-        $this->id = $id;
-        $this->type = $type;
-        $this->parentId = $parentId;
+    public function __construct(
+        private string $id,
+        private string $type,
+        private ?string $parentId = null,
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getParentId(): ?string
     {
         return $this->parentId;
