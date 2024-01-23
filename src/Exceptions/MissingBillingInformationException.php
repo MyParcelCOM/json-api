@@ -17,7 +17,7 @@ class MissingBillingInformationException extends AbstractException
             $detail,
             self::MISSING_BILLING_INFORMATION,
             Response::HTTP_PAYMENT_REQUIRED,
-            $previous
+            $previous,
         );
     }
 }

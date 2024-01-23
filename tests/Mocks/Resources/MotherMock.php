@@ -9,7 +9,7 @@ class MotherMock
     private static int $idCounter = 0;
 
     public function __construct(
-        private ?string $id = null
+        private ?string $id = null,
     ) {
     }
 

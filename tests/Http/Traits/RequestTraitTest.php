@@ -19,7 +19,7 @@ class RequestTraitTest extends TestCase
         $paginator = $request->getPaginator();
         $this->assertInstanceOf(
             Paginator::class,
-            $paginator
+            $paginator,
         );
 
         $paginator->setTotal(25);
@@ -31,7 +31,7 @@ class RequestTraitTest extends TestCase
                 'next'  => 'https://some.url.com/resource?page[size]=5&page[number]=4&include=all,the,things',
                 'last'  => 'https://some.url.com/resource?page[size]=5&page[number]=5&include=all,the,things',
             ],
-            $paginator->getLinks()
+            $paginator->getLinks(),
         );
     }
 
@@ -58,7 +58,7 @@ class RequestTraitTest extends TestCase
                     ],
                 ],
             ],
-            $request->getIncludes()
+            $request->getIncludes(),
         );
     }
 
@@ -71,7 +71,7 @@ class RequestTraitTest extends TestCase
                 'this' => 'DESC',
                 'that' => 'ASC',
             ],
-            $request->getSort()
+            $request->getSort(),
         );
     }
 
@@ -86,7 +86,7 @@ class RequestTraitTest extends TestCase
                     'some' => 'thing',
                 ],
             ],
-            $request->getFilter()
+            $request->getFilter(),
         );
     }
 

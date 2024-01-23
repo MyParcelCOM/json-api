@@ -157,14 +157,22 @@ class ExceptionHandlerTest extends TestCase
         $exception = Mockery::mock(Exception::class);
         $response = $this->handler->render($this->request, $exception);
         if (isset($response->getData()['links'])) {
-            $this->assertArrayNotHasKey('contact', $response->getData()['links'], 'Json error response should not contain a contact link when no contact link is set');
+            $this->assertArrayNotHasKey(
+                'contact',
+                $response->getData()['links'],
+                'Json error response should not contain a contact link when no contact link is set',
+            );
         }
 
         $this->handler->setContactLink('test@myparcel.com');
         $response = $this->handler->render($this->request, $exception);
         $error = reset($response->getData()['errors']);
         $this->assertArrayHasKey('links', $error, 'Json error should have links when contact link is set');
-        $this->assertArrayHasKey('contact', $error['links'], 'Json error should have contact link when contact link is set');
+        $this->assertArrayHasKey(
+            'contact',
+            $error['links'],
+            'Json error should have contact link when contact link is set',
+        );
     }
 
     /** @test */
@@ -313,7 +321,7 @@ class ExceptionHandlerTest extends TestCase
             $this->assertEquals(
                 'Trace is not available.',
                 $responseData['errors'][0]['meta']['debug']['trace'],
-                'Binary data cannot be json encoded and should therefore cause the trace to not be rendered'
+                'Binary data cannot be json encoded and should therefore cause the trace to not be rendered',
             );
         }
     }
@@ -331,7 +339,10 @@ class ExceptionHandlerTest extends TestCase
 
         $validRootKeys = ['errors', 'meta', 'jsonapi', 'links'];
         $invalidRootKeys = array_diff(array_keys($json), $validRootKeys);
-        $this->assertEmpty($invalidRootKeys, 'Json error response contained invalid root keys: ' . implode(', ', $invalidRootKeys));
+        $this->assertEmpty(
+            $invalidRootKeys,
+            'Json error response contained invalid root keys: ' . implode(', ', $invalidRootKeys),
+        );
 
         foreach ($json['errors'] as $error) {
             $this->assertNotEmpty($error, 'Error should contain information relating to the error');

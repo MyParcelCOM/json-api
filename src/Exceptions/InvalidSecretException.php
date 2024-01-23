@@ -18,7 +18,7 @@ class InvalidSecretException extends AbstractException
             'The provided secret is invalid. Please try again later. If the problem persists, contact customer support.',
             self::INVALID_SECRET,
             Response::HTTP_UNAUTHORIZED,
-            $previous
+            $previous,
         );
     }
 }

@@ -23,7 +23,7 @@ class ErrorTransformer
                 'detail' => (string) $exception->getDetail(),
                 'source' => $exception->getSource(),
                 'meta'   => $exception->getMeta(),
-            ]
+            ],
         );
     }
 }

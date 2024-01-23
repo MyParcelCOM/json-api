@@ -47,12 +47,15 @@ class TransformerCollectionTest extends TestCase
                     'getIncluded'      => $this->includedData,
                     'getRelationships' => $this->transformerData,
                     'transform'        => $this->transformerData,
-                ]
+                ],
             ),
             'createTransformerItem' => Mockery::mock(TransformerItem::class, ['getData' => $this->includedResource]),
         ]);
 
-        $this->transformerCollection = new TransformerCollection($this->transformerFactory, $this->getCollectionMock($this->transformerData));
+        $this->transformerCollection = new TransformerCollection(
+            $this->transformerFactory,
+            $this->getCollectionMock($this->transformerData),
+        );
     }
 
     /** @test */

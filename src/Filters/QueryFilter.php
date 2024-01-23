@@ -98,7 +98,7 @@ class QueryFilter implements FilterInterface
                     $query->orWhere(
                         new Expression('lower(' . $columnName . ')'),
                         $operator,
-                        $v
+                        $v,
                     );
                 });
             });

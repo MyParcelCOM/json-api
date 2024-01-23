@@ -138,7 +138,9 @@ class ExceptionHandler extends Handler
         }
 
         if ($exception instanceof ThrottleRequestsException) {
-            $exception = new TooManyRequestsException('Too many requests were made to this endpoint. Please wait before making any more requests.');
+            $exception = new TooManyRequestsException(
+                'Too many requests were made to this endpoint. Please wait before making any more requests.',
+            );
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
@@ -149,8 +151,9 @@ class ExceptionHandler extends Handler
             $exception = new InvalidInputException(
                 collect($exception->errors())->map(function ($errors, $pointer) {
                     $error = str_replace(['data.attributes.', 'data.relationships.'], '', $errors[0]);
+
                     return new InvalidInputError('422', $error, '/' . str_replace('.', '/', $pointer));
-                })->toArray()
+                })->toArray(),
             );
         }
 
@@ -175,7 +178,7 @@ class ExceptionHandler extends Handler
                 $exception->getStatus(),
                 [
                     'Content-Type' => 'application/vnd.api+json',
-                ]
+                ],
             );
         }
 
@@ -195,7 +198,7 @@ class ExceptionHandler extends Handler
                 $exception->getStatus(),
                 [
                     'Content-Type' => 'application/vnd.api+json',
-                ]
+                ],
             );
         }
 
@@ -208,7 +211,7 @@ class ExceptionHandler extends Handler
             Response::HTTP_INTERNAL_SERVER_ERROR,
             [
                 'Content-Type' => 'application/vnd.api+json',
-            ]
+            ],
         );
     }
 

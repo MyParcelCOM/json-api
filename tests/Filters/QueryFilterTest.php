@@ -41,7 +41,7 @@ class QueryFilterTest extends TestCase
 
         $this->assertEquals(
             'select * where ("column_a" is not null or "column_b" is not null) and ("column_c" is not null) and ("column_d" is null)',
-            $this->query->toSql()
+            $this->query->toSql(),
         );
     }
 
@@ -54,7 +54,7 @@ class QueryFilterTest extends TestCase
 
         $this->assertEquals(
             'select * where (lower(column_a)::text like ? or lower(column_b)::text like ?) and (lower(column_c)::text like ? or lower(column_c)::text like ?) and (lower(column_d)::text like ? or lower(column_e)::text like ? or lower(column_d)::text like ? or lower(column_e)::text like ?)',
-            $this->query->toSql()
+            $this->query->toSql(),
         );
 
         $this->assertEquals([
@@ -78,7 +78,7 @@ class QueryFilterTest extends TestCase
 
         $this->assertEquals(
             'select * where ("column_a" in (?, ?)) and ("column_b" not in (?, ?) or "column_c" not in (?, ?)) and ("column_d" not in (?, ?))',
-            $this->query->toSql()
+            $this->query->toSql(),
         );
 
         $this->assertEquals([
@@ -101,7 +101,7 @@ class QueryFilterTest extends TestCase
 
         $this->assertEquals(
             'select * where ("column_a" > ?) and ("column_b" = ? or "column_c" = ?)',
-            $this->query->toSql()
+            $this->query->toSql(),
         );
 
         $this->assertEquals([

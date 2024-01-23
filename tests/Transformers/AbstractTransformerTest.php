@@ -84,7 +84,7 @@ class AbstractTransformerTest extends TestCase
                     'related' => '#32',
                 ],
             ],
-            $this->transformer->transformRelationship($this->model)
+            $this->transformer->transformRelationship($this->model),
         );
     }
 
@@ -96,7 +96,7 @@ class AbstractTransformerTest extends TestCase
             [
                 'at' => 'tribute',
             ],
-            $this->transformer->getAttributesFromModel($this->model)
+            $this->transformer->getAttributesFromModel($this->model),
         );
     }
 
@@ -122,7 +122,7 @@ class AbstractTransformerTest extends TestCase
                     'related' => '#32',
                 ],
             ],
-            $this->transformer->transformRelationshipForIdentifier('joe', 'person', stdClass::class)
+            $this->transformer->transformRelationshipForIdentifier('joe', 'person', stdClass::class),
         );
     }
 
@@ -161,8 +161,8 @@ class AbstractTransformerTest extends TestCase
                     'anna',
                 ],
                 'person',
-                ['related' => 'i-link/to.everyone']
-            )
+                ['related' => 'i-link/to.everyone'],
+            ),
         );
     }
 

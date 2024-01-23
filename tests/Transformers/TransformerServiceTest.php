@@ -94,7 +94,7 @@ class TransformerServiceTest extends TestCase
                     'self' => 'me',
                 ],
             ],
-            $this->transformerService->transformResources($resources)
+            $this->transformerService->transformResources($resources),
         );
     }
 
@@ -127,7 +127,7 @@ class TransformerServiceTest extends TestCase
                     ],
                 ],
             ],
-            $this->transformerService->transformResource($resource)
+            $this->transformerService->transformResource($resource),
         );
     }
 
@@ -198,7 +198,7 @@ class TransformerServiceTest extends TestCase
                     'self' => 'me',
                 ],
             ],
-            $this->transformerService->transformResources($resources)
+            $this->transformerService->transformResources($resources),
         );
     }
 }

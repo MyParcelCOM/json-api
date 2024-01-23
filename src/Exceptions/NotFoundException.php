@@ -18,7 +18,7 @@ class NotFoundException extends AbstractException
             $detail,
             self::NOT_FOUND,
             Response::HTTP_NOT_FOUND,
-            $previous
+            $previous,
         );
     }
 }

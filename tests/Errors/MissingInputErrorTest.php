@@ -39,7 +39,7 @@ class MissingInputErrorTest extends TestCase
     /** @test */
     public function testItSetsErrorDescription()
     {
-        $this->assertEquals('Some other error description', $this->error->setDetail('Some other error description')->getDetail());
+        $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class MissingInputErrorTest extends TestCase
     {
         $this->assertEquals(
             ['self' => 'https://foo.bar/com'],
-            $this->error->setLinks(['self' => 'https://foo.bar/com'])->getLinks()
+            $this->error->setLinks(['self' => 'https://foo.bar/com'])->getLinks(),
         );
     }
 
@@ -73,7 +73,7 @@ class MissingInputErrorTest extends TestCase
                 'self' => 'https://foo.bar/com',
                 'next' => 'https://next.page/page=next',
             ],
-            $this->error->getLinks()
+            $this->error->getLinks(),
         );
     }
 

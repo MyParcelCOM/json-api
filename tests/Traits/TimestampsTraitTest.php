@@ -16,7 +16,7 @@ class TimestampsTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->model = new class(Carbon::now(), Carbon::now()) {
+        $this->model = new class (Carbon::now(), Carbon::now()) {
             use TimestampsTrait;
 
             public function __construct(

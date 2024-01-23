@@ -8,7 +8,7 @@ Shared library with JSON API related exceptions, interfaces, traits and utility 
 The library uses Docker to run php and composer. To install Docker, follow the steps in the [documentation](https://docs.myparcel.com/development.html#docker).
 
 ### Setup
-To setup the project, run:
+To set up the project, run:
 ```bash
 ./mp.sh setup
 ```

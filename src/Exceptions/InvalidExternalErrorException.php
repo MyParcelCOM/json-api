@@ -18,7 +18,7 @@ class InvalidExternalErrorException extends AbstractException
             'An error was thrown during the request to the external source. We cannot provide more information since the returned error was improperly formatted.',
             self::INVALID_ERROR_SCHEMA,
             Response::HTTP_INTERNAL_SERVER_ERROR,
-            $previous
+            $previous,
         );
 
         $this->addLink('about', 'https://jsonapi.org/format/#errors');

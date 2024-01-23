@@ -23,7 +23,7 @@ class PromiseCollectionResourcesTest extends TestCase
         $this->resultSet = new PromiseCollectionResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
-            ])
+            ]),
         );
     }
 
@@ -64,7 +64,7 @@ class PromiseCollectionResourcesTest extends TestCase
         $this->resultSet->addPromise(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['more', 'crazy', 'things']),
-            ])
+            ]),
         );
 
         $this->assertEquals(6, $this->resultSet->count(), 'Offset should not influence the count');

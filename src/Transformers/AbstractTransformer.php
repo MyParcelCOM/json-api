@@ -83,8 +83,12 @@ abstract class AbstractTransformer implements TransformerInterface
         return $dateTime?->getTimestamp();
     }
 
-    protected function transformRelationshipForIdentifier(string $id, string $type, string $class, string $parentId = null): array
-    {
+    protected function transformRelationshipForIdentifier(
+        string $id,
+        string $type,
+        string $class,
+        string $parentId = null,
+    ): array {
         $resource = new ResourceIdentifier($id, $type, $parentId);
         $transformer = $this->transformerFactory->createFromModel($class);
         $relationship = ['data' => $resource->jsonSerialize()];

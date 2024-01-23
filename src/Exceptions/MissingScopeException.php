@@ -15,7 +15,7 @@ class MissingScopeException extends AbstractException
             'The used access token does not contain the required scope(s): ' . implode(', ', $scopes) . '.',
             self::AUTH_MISSING_SCOPE,
             Response::HTTP_FORBIDDEN,
-            $previous
+            $previous,
         );
     }
 }

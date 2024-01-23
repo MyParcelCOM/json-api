@@ -21,8 +21,12 @@ class AssertionsMock
     ) {
     }
 
-    protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass
-    {
+    protected function getSchema(
+        string $schemaPath,
+        string $method = 'get',
+        int $status = 200,
+        string $accept = 'application/vnd.api+json',
+    ): stdClass {
         return json_decode('{"paths":{"swag":{"get":{"responses":{"101":{"schema":{"data":[{"id":0},{"id":1}]}}}}}}}');
     }
 

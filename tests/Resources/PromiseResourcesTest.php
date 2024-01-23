@@ -23,7 +23,7 @@ class PromiseResourcesTest extends TestCase
         $this->resultSet = new PromiseResources(
             Mockery::mock(PromiseInterface::class, [
                 'wait' => new Collection(['some', 'random', 'data']),
-            ])
+            ]),
         );
     }
 

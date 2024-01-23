@@ -91,7 +91,10 @@ class TransformerItemTest extends TestCase
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], []));
-        $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], [], ['relationships' => $this->transformerData]));
+        $this->assertEquals(
+            [$this->includedResource],
+            $this->transformerItem->getIncluded(['resourceName'], [], ['relationships' => $this->transformerData]),
+        );
         $this->assertEquals([], $this->transformerItem->getIncluded([], [$this->includedResource]));
         $this->assertEquals([], $this->transformerItem->getIncluded([], []));
         $this->assertEquals([], $this->transformerItem->getIncluded(['foo'], []));
@@ -99,7 +102,7 @@ class TransformerItemTest extends TestCase
         $this->assertEquals([], $this->transformerItem->getIncluded([], ['foo']));
         $this->assertEquals(
             [$this->includedRelationship],
-            $this->transformerItem->getIncluded(['resourceName' => ['relatedResource']])
+            $this->transformerItem->getIncluded(['resourceName' => ['relatedResource']]),
         );
     }
 
@@ -110,11 +113,11 @@ class TransformerItemTest extends TestCase
 
         $this->assertEquals(
             [$this->includedResource, $this->includedResource],
-            $transformerItem->getIncluded(['resourceCollection'], [])
+            $transformerItem->getIncluded(['resourceCollection'], []),
         );
         $this->assertEquals(
             [$this->includedRelationship, $this->includedRelationship],
-            $this->transformerItem->getIncluded(['resourceCollection' => ['relatedCollection']])
+            $this->transformerItem->getIncluded(['resourceCollection' => ['relatedCollection']]),
         );
     }
 }
