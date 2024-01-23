@@ -32,6 +32,7 @@ use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -177,7 +178,7 @@ class ExceptionHandler extends Handler
                 $errorResponse,
                 $exception->getStatus(),
                 [
-                    'Content-Type' => 'application/vnd.api+json',
+                    'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
                 ],
             );
         }
@@ -197,7 +198,7 @@ class ExceptionHandler extends Handler
                 ],
                 $exception->getStatus(),
                 [
-                    'Content-Type' => 'application/vnd.api+json',
+                    'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
                 ],
             );
         }
@@ -210,7 +211,7 @@ class ExceptionHandler extends Handler
             ],
             Response::HTTP_INTERNAL_SERVER_ERROR,
             [
-                'Content-Type' => 'application/vnd.api+json',
+                'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
             ],
         );
     }

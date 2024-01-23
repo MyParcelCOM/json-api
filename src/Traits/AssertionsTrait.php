@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Traits;
 
 use Illuminate\Testing\TestResponse;
 use JsonSchema\Validator;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use stdClass;
 
 /**
@@ -25,7 +26,7 @@ trait AssertionsTrait
     ): TestResponse {
         /** @var TestResponse $response */
         $response = $this->json($method, $url, $body, $headers);
-        $accept = $headers['Accept'] ?? 'application/vnd.api+json';
+        $accept = $headers['Accept'] ?? RequestInterface::CONTENT_TYPE_JSON_API;
 
         // Response should have correct header and status.
         $response->assertStatus($status);
@@ -99,7 +100,7 @@ trait AssertionsTrait
         string $schemaPath,
         string $method = 'get',
         int $status = 200,
-        string $accept = 'application/vnd.api+json',
+        string $accept = RequestInterface::CONTENT_TYPE_JSON_API,
     ): stdClass;
 
     abstract protected function getValidator(): Validator;

@@ -8,6 +8,8 @@ use MyParcelCom\JsonApi\Http\Paginator;
 
 interface RequestInterface
 {
+    public const CONTENT_TYPE_JSON_API = 'application/vnd.api+json';
+
     /**
      * Get the pagination from the requested url.
      */
