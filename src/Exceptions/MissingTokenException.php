@@ -15,7 +15,7 @@ class MissingTokenException extends AbstractException
             'No access token was provided for the request. Please add this to the \'Authorization: Bearer\' header.',
             self::AUTH_MISSING_TOKEN,
             Response::HTTP_UNAUTHORIZED,
-            $previous
+            $previous,
         );
     }
 }

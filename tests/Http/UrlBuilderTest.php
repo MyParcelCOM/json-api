@@ -29,7 +29,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             [],
             $urlBuilder->getQuery(),
-            'Empty url should return an empty query array'
+            'Empty url should return an empty query array',
         );
 
         $urlBuilder = new UrlBuilder('https://url?foo=bar&bar=baz&baz=foo');
@@ -40,7 +40,7 @@ class UrlBuilderTest extends TestCase
                 'baz' => 'foo',
             ],
             $urlBuilder->getQuery(),
-            'Query did not contain all query params in url'
+            'Query did not contain all query params in url',
         );
     }
 
@@ -53,7 +53,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://url?mode=god',
             $urlBuilder->getUrl(),
-            'Set query was not added to build url or did not override earlier set query'
+            'Set query was not added to build url or did not override earlier set query',
         );
     }
 
@@ -66,14 +66,14 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://url?foo=bar&mode=god',
             $urlBuilder->getUrl(),
-            'Added query was not added to build url'
+            'Added query was not added to build url',
         );
 
         $urlBuilder->addQuery(['foo' => 'baz']);
         $this->assertContains(
             $urlBuilder->getUrl(),
             ['https://url?foo=baz&mode=god', 'https://url?mode=god&foo=baz'],
-            'Added query did not override earlier set query '
+            'Added query did not override earlier set query ',
         );
     }
 
@@ -96,12 +96,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://url?foo=bar',
             (string) $urlBuilder,
-            'Set scheme was not set in build url'
+            'Set scheme was not set in build url',
         );
         $this->assertEquals(
             'https',
             $urlBuilder->getScheme(),
-            'Set scheme was not retrieved with `getScheme()` method'
+            'Set scheme was not retrieved with `getScheme()` method',
         );
     }
 
@@ -124,12 +124,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://some.random-url.com?foo=bar',
             (string) $urlBuilder,
-            'Set host was not set in build url'
+            'Set host was not set in build url',
         );
         $this->assertEquals(
             'some.random-url.com',
             $urlBuilder->getHost(),
-            'Set host was not retrieved with `getHost()` method'
+            'Set host was not retrieved with `getHost()` method',
         );
     }
 
@@ -150,12 +150,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://url:1337?foo=bar',
             (string) $urlBuilder,
-            'Set port was not set in build url'
+            'Set port was not set in build url',
         );
         $this->assertEquals(
             1337,
             $urlBuilder->getPort(),
-            'Set port was not retrieved with `getPort()` method'
+            'Set port was not retrieved with `getPort()` method',
         );
     }
 
@@ -178,12 +178,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://patrick@url?foo=bar',
             (string) $urlBuilder,
-            'Set user was not set in build url'
+            'Set user was not set in build url',
         );
         $this->assertEquals(
             'patrick',
             $urlBuilder->getUser(),
-            'Set user was not retrieved with `getUser()` method'
+            'Set user was not retrieved with `getUser()` method',
         );
     }
 
@@ -206,12 +206,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://fidel:welkom123@url?foo=bar',
             (string) $urlBuilder,
-            'Set password was not set in build url'
+            'Set password was not set in build url',
         );
         $this->assertEquals(
             'welkom123',
             $urlBuilder->getPassword(),
-            'Set password was not retrieved with `getPassword()` method'
+            'Set password was not retrieved with `getPassword()` method',
         );
     }
 
@@ -234,12 +234,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://fidel:secret@url/to/somwhere/else?foo=bar',
             (string) $urlBuilder,
-            'Set password was not set in build url'
+            'Set password was not set in build url',
         );
         $this->assertEquals(
             '/to/somwhere/else',
             $urlBuilder->getPath(),
-            'Set path was not retrieved with `getPath()` method'
+            'Set path was not retrieved with `getPath()` method',
         );
     }
 
@@ -262,12 +262,12 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(
             'https://url?foo=bar#mom',
             (string) $urlBuilder,
-            'Set fragment was not set in build url'
+            'Set fragment was not set in build url',
         );
         $this->assertEquals(
             'mom',
             $urlBuilder->getFragment(),
-            'Set path was not retrieved with `getFragment()` method'
+            'Set path was not retrieved with `getFragment()` method',
         );
     }
 }

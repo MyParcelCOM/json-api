@@ -15,7 +15,9 @@ class InvalidInputContextErrorTest extends TestCase
     {
         parent::setUp();
 
-        $this->error = new InvalidInputContextError('12345', 'Some error description', 'data/attributes/some-attribute');
+        $this->error = new InvalidInputContextError(
+            '12345', 'Some error description', 'data/attributes/some-attribute',
+        );
     }
 
     /** @test */
@@ -39,7 +41,7 @@ class InvalidInputContextErrorTest extends TestCase
     /** @test */
     public function testItSetsErrorDescription()
     {
-        $this->assertEquals('Some other error description', $this->error->setDetail('Some other error description')->getDetail());
+        $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
     /** @test */
@@ -59,7 +61,7 @@ class InvalidInputContextErrorTest extends TestCase
     {
         $this->assertEquals(
             ['self' => 'https://foo.bar/com'],
-            $this->error->setLinks(['self' => 'https://foo.bar/com'])->getLinks()
+            $this->error->setLinks(['self' => 'https://foo.bar/com'])->getLinks(),
         );
     }
 
@@ -73,7 +75,7 @@ class InvalidInputContextErrorTest extends TestCase
                 'self' => 'https://foo.bar/com',
                 'next' => 'https://next.page/page=next',
             ],
-            $this->error->getLinks()
+            $this->error->getLinks(),
         );
     }
 

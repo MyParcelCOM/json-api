@@ -66,7 +66,9 @@ class TransformerResource
         if (is_array($meta)) {
             $this->meta = array_merge_recursive($meta, $this->meta);
         } else {
-            throw new TransformerException('Invalid meta object added, expected array or MetaInterface, got: ' . get_class($meta));
+            throw new TransformerException(
+                'Invalid meta object added, expected array or MetaInterface, got: ' . get_class($meta),
+            );
         }
 
         return $this;
@@ -135,7 +137,7 @@ class TransformerResource
             $this->data = array_merge($this->data, $resourceData);
             $this->includes = array_merge(
                 $this->includes,
-                $resource->getIncluded($this->requestedIncludes, $this->includes, $resourceData)
+                $resource->getIncluded($this->requestedIncludes, $this->includes, $resourceData),
             );
         }
 

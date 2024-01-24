@@ -15,7 +15,7 @@ class RelationshipCannotBeModifiedException extends AbstractException
             "The relationship of type '{$relationshipType}' cannot be modified on this resource.",
             self::RELATIONSHIP_CANNOT_BE_MODIFIED,
             Response::HTTP_FORBIDDEN,
-            $previous
+            $previous,
         );
     }
 }

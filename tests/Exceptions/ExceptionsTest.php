@@ -184,7 +184,10 @@ class ExceptionsTest extends TestCase
         $exception1 = new ModelTypeException(new Exception(), 'Acception');
         $exception2 = new ModelTypeException(30931, '1337');
 
-        $this->assertEquals('Invalid model of type `Exception`, expected model of type `Acception`', $exception1->getMessage());
+        $this->assertEquals(
+            'Invalid model of type `Exception`, expected model of type `Acception`',
+            $exception1->getMessage(),
+        );
         $this->assertEquals('Invalid model of type `30931`, expected model of type `1337`', $exception2->getMessage());
     }
 
@@ -200,7 +203,10 @@ class ExceptionsTest extends TestCase
     /** @test */
     public function testTooManyRequestsException()
     {
-        $exception = new TooManyRequestsException('Too many requests.', new Exception('Go stand in the time-out corner!'));
+        $exception = new TooManyRequestsException(
+            'Too many requests.',
+            new Exception('Go stand in the time-out corner!'),
+        );
 
         $this->assertEquals('Go stand in the time-out corner!', $exception->getPrevious()->getMessage());
         $this->assertEquals('Too many requests.', $exception->getMessage());
@@ -266,11 +272,10 @@ class ExceptionsTest extends TestCase
         $exception->setStatus(300);
         $this->assertEquals(300, $exception->getStatus());
 
-        $this->assertEquals([
-            'foo' => 'bar',
-        ], $exception->setMeta([
-            'foo' => 'bar',
-        ])->getMeta());
+        $this->assertEquals(
+            ['foo' => 'bar'],
+            $exception->setMeta(['foo' => 'bar'])->getMeta(),
+        );
     }
 
     /** @test */
@@ -286,11 +291,10 @@ class ExceptionsTest extends TestCase
         $exception->setStatus(300);
         $this->assertEquals(300, $exception->getStatus());
 
-        $this->assertEquals([
-            'foo' => 'bar',
-        ], $exception->setMeta([
-            'foo' => 'bar',
-        ])->getMeta());
+        $this->assertEquals(
+            ['foo' => 'bar'],
+            $exception->setMeta(['foo' => 'bar'])->getMeta(),
+        );
     }
 
     /** @test */
@@ -305,7 +309,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Relationship cannot be modified.', $exception->getTitle());
         $this->assertEquals(
             "The relationship of type '{$relationshipType}' cannot be modified on this resource.",
-            $exception->getMessage()
+            $exception->getMessage(),
         );
     }
 
@@ -322,11 +326,10 @@ class ExceptionsTest extends TestCase
         $exception->setStatus(300);
         $this->assertEquals(300, $exception->getStatus());
 
-        $this->assertEquals([
-            'foo' => 'bar',
-        ], $exception->setMeta([
-            'foo' => 'bar',
-        ])->getMeta());
+        $this->assertEquals(
+            ['foo' => 'bar'],
+            $exception->setMeta(['foo' => 'bar'])->getMeta(),
+        );
     }
 
     /** @test */
@@ -340,7 +343,7 @@ class ExceptionsTest extends TestCase
         $exception = new ForbiddenException('This user cannot do this specific action that they are trying to do!');
         $this->assertEquals(
             'This user cannot do this specific action that they are trying to do!',
-            $exception->getMessage()
+            $exception->getMessage(),
         );
     }
 }

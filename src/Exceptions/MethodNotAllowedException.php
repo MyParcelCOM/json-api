@@ -22,7 +22,7 @@ class MethodNotAllowedException extends AbstractException
             "The '{$httpMethod}' method is not allowed on this endpoint.",
             self::METHOD_NOT_ALLOWED,
             Response::HTTP_METHOD_NOT_ALLOWED,
-            $previous
+            $previous,
         );
     }
 }

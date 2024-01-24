@@ -45,7 +45,7 @@ class TransformerCollection
         foreach ($this->getTransformerItems() as $item) {
             $included = array_merge(
                 $included,
-                $item->getIncluded($relationships, array_merge($included, $alreadyIncluded), $item->getData())
+                $item->getIncluded($relationships, array_merge($included, $alreadyIncluded), $item->getData()),
             );
         }
 

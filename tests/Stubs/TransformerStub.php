@@ -108,8 +108,12 @@ class TransformerStub extends AbstractTransformer
         return parent::getTimestamp($dateTime);
     }
 
-    public function transformRelationshipForIdentifier(string $id, string $type, string $class, string $parentId = null): array
-    {
+    public function transformRelationshipForIdentifier(
+        string $id,
+        string $type,
+        string $class,
+        string $parentId = null,
+    ): array {
         return parent::transformRelationshipForIdentifier($id, $type, $class, $parentId);
     }
 

@@ -19,7 +19,7 @@ class UnprocessableEntityException extends AbstractException
             $detail,
             self::UNPROCESSABLE_ENTITY,
             Response::HTTP_UNPROCESSABLE_ENTITY,
-            $previous
+            $previous,
         );
     }
 }

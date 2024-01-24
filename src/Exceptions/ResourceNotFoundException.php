@@ -17,7 +17,7 @@ class ResourceNotFoundException extends AbstractException
             $message,
             self::RESOURCE_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
-            $previous
+            $previous,
         );
     }
 }

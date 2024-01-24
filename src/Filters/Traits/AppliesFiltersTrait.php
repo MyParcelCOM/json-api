@@ -43,7 +43,9 @@ trait AppliesFiltersTrait
                 } elseif (is_numeric($value)) {
                     $value = Carbon::createFromTimestamp($value)->format('Y-m-d H:i:s');
                 } else {
-                    throw new UnprocessableEntityException('The filter ' . $name . ' is not a timestamp, date string or in ISO 8601 date format.');
+                    throw new UnprocessableEntityException(
+                        'The filter ' . $name . ' is not a timestamp, date string or in ISO 8601 date format.',
+                    );
                 }
             }
 
@@ -52,7 +54,7 @@ trait AppliesFiltersTrait
             $queryFilter->apply(
                 $this->filters[$name]['column'] ?? $name,
                 $this->filters[$name]['operator'] ?? '=',
-                $values
+                $values,
             );
         });
 

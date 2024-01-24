@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Exceptions;
 
 use Exception;
-use MyParcelCom\JsonApi\Exceptions\Interfaces\JsonSchemaErrorInterface;
 use MyParcelCom\JsonApi\Exceptions\Interfaces\MultiErrorInterface;
 use Throwable;
 
@@ -16,7 +15,7 @@ abstract class AbstractMultiErrorException extends Exception implements MultiErr
     public function __construct(
         protected array $errors,
         protected int $status,
-        Throwable $previous = null
+        Throwable $previous = null,
     ) {
         parent::__construct('Response contains multiple errors.', $status, $previous);
     }

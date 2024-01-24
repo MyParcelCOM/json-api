@@ -85,7 +85,7 @@ class TransformerFactoryTest extends TestCase
     {
         $this->assertInstanceOf(
             TransformerItem::class,
-            $this->transformerFactory->createTransformerItem($this->modelMock)
+            $this->transformerFactory->createTransformerItem($this->modelMock),
         );
     }
 
@@ -95,7 +95,7 @@ class TransformerFactoryTest extends TestCase
         $collection = Mockery::mock(Collection::class, ['offsetExists' => false, 'offsetGet' => null]);
         $this->assertInstanceOf(
             TransformerCollection::class,
-            $this->transformerFactory->createTransformerCollection($collection)
+            $this->transformerFactory->createTransformerCollection($collection),
         );
     }
 }

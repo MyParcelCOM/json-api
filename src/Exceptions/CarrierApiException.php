@@ -17,7 +17,7 @@ class CarrierApiException extends AbstractException
             'There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.',
             self::CARRIER_API_ERROR,
             $status,
-            $previous
+            $previous,
         );
 
         $this->addMeta('carrier_response', $carrierApiResponse);

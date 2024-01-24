@@ -67,12 +67,12 @@ class QueryResourcesTest extends TestCase
     {
         $this->assertInstanceOf(
             Collection::class,
-            $this->resultSet->get()
+            $this->resultSet->get(),
         );
 
         $this->assertEquals(
             [['id' => 1], ['id' => 2], ['id' => 3]],
-            $this->resultSet->get()->toArray()
+            $this->resultSet->get()->toArray(),
         );
     }
 
@@ -81,7 +81,7 @@ class QueryResourcesTest extends TestCase
     {
         $this->assertEquals(
             3,
-            $this->resultSet->count()
+            $this->resultSet->count(),
         );
     }
 
@@ -92,12 +92,12 @@ class QueryResourcesTest extends TestCase
         $this->assertEquals(
             3,
             $this->resultSet->count(),
-            'Offset should not influence the count'
+            'Offset should not influence the count',
         );
 
         $this->assertEquals(
             [['id' => 2], ['id' => 3]],
-            array_values($this->resultSet->get()->toArray())
+            array_values($this->resultSet->get()->toArray()),
         );
     }
 
@@ -108,12 +108,12 @@ class QueryResourcesTest extends TestCase
         $this->assertEquals(
             3,
             $this->resultSet->count(),
-            'Limit should not influence the count'
+            'Limit should not influence the count',
         );
 
         $this->assertEquals(
             [['id' => 1]],
-            $this->resultSet->get()->toArray()
+            $this->resultSet->get()->toArray(),
         );
     }
 
@@ -122,7 +122,7 @@ class QueryResourcesTest extends TestCase
     {
         $this->assertEquals(
             $this->data[0],
-            $this->resultSet->first()
+            $this->resultSet->first(),
         );
     }
 
@@ -131,7 +131,7 @@ class QueryResourcesTest extends TestCase
     {
         $this->assertEquals(
             [1, 2, 3],
-            $this->resultSet->getIds()
+            $this->resultSet->getIds(),
         );
     }
 

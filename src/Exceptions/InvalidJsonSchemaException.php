@@ -18,7 +18,7 @@ class InvalidJsonSchemaException extends AbstractException
             'The supplied data is invalid according to our API Specification. See meta for details.',
             self::INVALID_JSON_SCHEMA,
             Response::HTTP_BAD_REQUEST,
-            $previous
+            $previous,
         );
 
         $this->setLinks([

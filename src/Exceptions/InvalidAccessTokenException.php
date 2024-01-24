@@ -18,7 +18,7 @@ class InvalidAccessTokenException extends AbstractException
             $detail,
             self::AUTH_INVALID_TOKEN,
             Response::HTTP_UNAUTHORIZED,
-            $previous
+            $previous,
         );
     }
 }

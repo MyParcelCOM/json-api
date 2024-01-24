@@ -19,7 +19,7 @@ class ForbiddenException extends AbstractException
             $message ?? 'This user is not allowed to perform this action.',
             self::FORBIDDEN,
             Response::HTTP_FORBIDDEN,
-            $previous
+            $previous,
         );
     }
 }

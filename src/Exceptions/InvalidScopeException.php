@@ -19,7 +19,7 @@ class InvalidScopeException extends AbstractException
             'The following scopes are not available to the requesting client: ' . implode(', ', $slugs),
             self::AUTH_INVALID_SCOPE,
             Response::HTTP_FORBIDDEN,
-            $previous
+            $previous,
         );
     }
 }

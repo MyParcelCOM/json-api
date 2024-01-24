@@ -81,11 +81,13 @@ class AppliesFiltersTraitTest extends TestCase
         $queryMock = Mockery::mock(QueryBuilder::class);
         $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) use ($expectation) {
             $param = Mockery::mock(QueryBuilder::class);
-            $param->shouldReceive('orWhere')->andReturnUsing(function ($columnName, $operator, $values) use ($expectation) {
-                $this->assertEquals('created_at', $columnName);
-                $this->assertEquals('>=', $operator);
-                $this->assertEquals($expectation, $values);
-            });
+            $param->shouldReceive('orWhere')->andReturnUsing(
+                function ($columnName, $operator, $values) use ($expectation) {
+                    $this->assertEquals('created_at', $columnName);
+                    $this->assertEquals('>=', $operator);
+                    $this->assertEquals($expectation, $values);
+                },
+            );
 
             $closure($param);
 

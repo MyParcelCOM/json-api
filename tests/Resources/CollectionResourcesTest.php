@@ -17,7 +17,7 @@ class CollectionResourcesTest extends TestCase
         parent::setUp();
 
         $this->resultSet = new CollectionResources(
-            new Collection(['some', 'random', 'data'])
+            new Collection(['some', 'random', 'data']),
         );
     }
 

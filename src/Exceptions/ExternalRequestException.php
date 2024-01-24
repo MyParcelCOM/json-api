@@ -17,7 +17,7 @@ class ExternalRequestException extends AbstractException
             'An error occurred while making a request to an external service. When available, details can be found in the meta of this request. If the problem persists, please contact support.',
             self::EXTERNAL_REQUEST_ERROR,
             $status,
-            $previous
+            $previous,
         );
 
         $this->addMeta('external_status', $externalStatus);

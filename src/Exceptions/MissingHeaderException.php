@@ -15,7 +15,7 @@ class MissingHeaderException extends AbstractException
             'The request does not contain the required header(s): ' . implode(', ', $headers) . '.',
             self::MISSING_REQUEST_HEADER,
             Response::HTTP_FORBIDDEN,
-            $previous
+            $previous,
         );
     }
 }

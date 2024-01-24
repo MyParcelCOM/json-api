@@ -15,7 +15,7 @@ class ResourceCannotBeModifiedException extends AbstractException
             $message,
             self::RESOURCE_CANNOT_BE_MODIFIED,
             Response::HTTP_LOCKED,
-            $previous
+            $previous,
         );
     }
 }

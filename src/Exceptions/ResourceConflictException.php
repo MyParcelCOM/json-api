@@ -18,7 +18,7 @@ class ResourceConflictException extends AbstractException
             "The supplied resource `$field` is invalid.",
             self::RESOURCE_CONFLICT,
             Response::HTTP_CONFLICT,
-            $previous
+            $previous,
         );
     }
 }

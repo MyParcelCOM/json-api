@@ -18,7 +18,7 @@ class TooManyRequestsException extends AbstractException
             $detail,
             self::TOO_MANY_REQUESTS,
             Response::HTTP_TOO_MANY_REQUESTS,
-            $previous
+            $previous,
         );
     }
 }

@@ -60,10 +60,10 @@ class TransformerItem
                 }
 
                 $data = ($resource instanceof Collection)
-                    ? $this->transformerFactory->createTransformerCollection($resource)->getIncluded($relationships[$relationship])
-                    : $this->transformerFactory->createTransformerItem($resource)->getIncluded($relationships[$relationship]);
+                    ? $this->transformerFactory->createTransformerCollection($resource)
+                    : $this->transformerFactory->createTransformerItem($resource);
 
-                $included = array_merge($included, $data);
+                $included = array_merge($included, $data->getIncluded($relationships[$relationship]));
             }
 
             // Unset the resource so the isset check works correctly on the next iteration #phpvariablescoping
@@ -81,8 +81,11 @@ class TransformerItem
      * @param array $resourceData resource data containing relationships (to avoid expensive lookups)
      * @return array
      */
-    protected function getFilteredIncludes(array $keyFilter = [], array $valueFilter = [], array $resourceData = []): array
-    {
+    protected function getFilteredIncludes(
+        array $keyFilter = [],
+        array $valueFilter = [],
+        array $resourceData = [],
+    ): array {
         $filtered = [];
         $valueFilter = array_map(function ($e) {
             return isset($e['type']) && isset($e['id']) ? $e['type'] . '-' . $e['id'] : '';

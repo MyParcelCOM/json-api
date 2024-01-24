@@ -17,7 +17,7 @@ class AuthException extends AbstractException
             $detail,
             self::AUTH_SERVER_EXCEPTION,
             $status,
-            $previous
+            $previous,
         );
     }
 }

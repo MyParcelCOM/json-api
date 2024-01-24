@@ -40,10 +40,11 @@ class PaginatorTest extends TestCase
     public function testGetLinks()
     {
         $this->paginator->setBaseUrl('https://foo');
+        $lastPage = ceil($this->total / $this->perPage);
         $links = [
             'self'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . $this->curPage,
             'first' => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
-            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
+            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . $lastPage,
             'next'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ($this->curPage + 1),
         ];
 
@@ -53,7 +54,7 @@ class PaginatorTest extends TestCase
         $links = [
             'self'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=2',
             'first' => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
-            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . ceil($this->total / $this->perPage),
+            'last'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=' . $lastPage,
             'next'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=3',
             'prev'  => 'https://foo?page[size]=' . $this->perPage . '&page[number]=1',
         ];

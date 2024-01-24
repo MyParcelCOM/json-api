@@ -16,7 +16,7 @@ class InvalidHeaderException extends AbstractException
         parent::__construct(
             $detail,
             self::INVALID_REQUEST_HEADER,
-            $status
+            $status,
         );
     }
 }

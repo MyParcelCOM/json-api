@@ -32,6 +32,7 @@ use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use MyParcelCom\JsonApi\Transformers\ErrorTransformer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -138,7 +139,9 @@ class ExceptionHandler extends Handler
         }
 
         if ($exception instanceof ThrottleRequestsException) {
-            $exception = new TooManyRequestsException('Too many requests were made to this endpoint. Please wait before making any more requests.');
+            $exception = new TooManyRequestsException(
+                'Too many requests were made to this endpoint. Please wait before making any more requests.',
+            );
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
@@ -149,8 +152,9 @@ class ExceptionHandler extends Handler
             $exception = new InvalidInputException(
                 collect($exception->errors())->map(function ($errors, $pointer) {
                     $error = str_replace(['data.attributes.', 'data.relationships.'], '', $errors[0]);
+
                     return new InvalidInputError('422', $error, '/' . str_replace('.', '/', $pointer));
-                })->toArray()
+                })->toArray(),
             );
         }
 
@@ -174,8 +178,8 @@ class ExceptionHandler extends Handler
                 $errorResponse,
                 $exception->getStatus(),
                 [
-                    'Content-Type' => 'application/vnd.api+json',
-                ]
+                    'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
+                ],
             );
         }
 
@@ -194,8 +198,8 @@ class ExceptionHandler extends Handler
                 ],
                 $exception->getStatus(),
                 [
-                    'Content-Type' => 'application/vnd.api+json',
-                ]
+                    'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
+                ],
             );
         }
 
@@ -207,8 +211,8 @@ class ExceptionHandler extends Handler
             ],
             Response::HTTP_INTERNAL_SERVER_ERROR,
             [
-                'Content-Type' => 'application/vnd.api+json',
-            ]
+                'Content-Type' => RequestInterface::CONTENT_TYPE_JSON_API,
+            ],
         );
     }
 

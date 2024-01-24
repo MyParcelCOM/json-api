@@ -43,7 +43,7 @@ class PromiseResources implements ResourcesInterface
     {
         if (empty($this->data)) {
             $this->data = new Collection(
-                $this->promise->wait()
+                $this->promise->wait(),
             );
         }
     }

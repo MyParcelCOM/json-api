@@ -8,6 +8,7 @@ use Illuminate\Testing\TestResponse;
 use JsonSchema\Validator;
 use Mockery;
 use Mockery\Exception;
+use MyParcelCom\JsonApi\Http\Interfaces\RequestInterface;
 use MyParcelCom\JsonApi\Traits\AssertionsTrait;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,8 +22,12 @@ class AssertionsMock
     ) {
     }
 
-    protected function getSchema(string $schemaPath, string $method = 'get', int $status = 200, string $accept = 'application/vnd.api+json'): stdClass
-    {
+    protected function getSchema(
+        string $schemaPath,
+        string $method = 'get',
+        int $status = 200,
+        string $accept = RequestInterface::CONTENT_TYPE_JSON_API,
+    ): stdClass {
         return json_decode('{"paths":{"swag":{"get":{"responses":{"101":{"schema":{"data":[{"id":0},{"id":1}]}}}}}}}');
     }
 
