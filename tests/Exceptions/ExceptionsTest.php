@@ -23,7 +23,6 @@ use MyParcelCom\JsonApi\Exceptions\InvalidJsonSchemaException;
 use MyParcelCom\JsonApi\Exceptions\InvalidScopeException;
 use MyParcelCom\JsonApi\Exceptions\InvalidSecretException;
 use MyParcelCom\JsonApi\Exceptions\MethodNotAllowedException;
-use MyParcelCom\JsonApi\Exceptions\MissingBillingInformationException;
 use MyParcelCom\JsonApi\Exceptions\MissingHeaderException;
 use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
@@ -141,15 +140,6 @@ class ExceptionsTest extends TestCase
         $exception = new InvalidSecretException(new Exception('welcome'));
 
         $this->assertEquals('welcome', $exception->getPrevious()->getMessage());
-    }
-
-    /** @test */
-    public function testMissingBillingInformationException()
-    {
-        $exception = new MissingBillingInformationException(['bil', 'ling'], new Exception('info'));
-
-        $this->assertStringContainsString('bil, ling', $exception->getMessage());
-        $this->assertEquals('info', $exception->getPrevious()->getMessage());
     }
 
     /** @test */
