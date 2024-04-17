@@ -22,6 +22,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Resource Not Found',
     ];
 
+    const RESOURCE_HANDLED_BY_3RD_PARTY = [
+        'code'  => '10014',
+        'title' => 'Resource Handled By 3rd Party',
+    ];
+
     const INVALID_JSON_SCHEMA = [
         'code'  => '10003',
         'title' => 'Invalid JSON Schema',

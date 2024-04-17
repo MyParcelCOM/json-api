@@ -31,6 +31,7 @@ use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Exceptions\RelationshipCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
 use MyParcelCom\JsonApi\Exceptions\ResourceConflictException;
+use MyParcelCom\JsonApi\Exceptions\ResourceHandledBy3rdPartyException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
@@ -335,5 +336,17 @@ class ExceptionsTest extends TestCase
             'This user cannot do this specific action that they are trying to do!',
             $exception->getMessage(),
         );
+    }
+
+    /** @test */
+    public function testResourceHandledBy3rdPartyException()
+    {
+        $exception = new ResourceHandledBy3rdPartyException('Order', 'Bol', new Exception('Previous error.'));
+
+        self::assertEquals('Previous error.', $exception->getPrevious()->getMessage());
+        self::assertEquals('One or more of the Order resource is handled by a 3rd party.', $exception->getMessage());
+        self::assertEquals('10014', $exception->getCode());
+        self::assertEquals(409, $exception->getStatus());
+        self::assertEquals(['3rd_party' => 'Bol'], $exception->getMeta());
     }
 }
