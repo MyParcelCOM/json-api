@@ -25,17 +25,11 @@ class TransformerStub extends AbstractTransformer
         return $this;
     }
 
-    /**
-     * @param mixed $model
-     */
     public function getId($model): string
     {
         return 'mockId';
     }
 
-    /**
-     * @param object $model
-     */
     public function validateModel($model): void
     {
     }
@@ -45,9 +39,6 @@ class TransformerStub extends AbstractTransformer
         return $this->urlGenerator;
     }
 
-    /**
-     * @param mixed $dependency
-     */
     public function setDependency($dependency): self
     {
         $this->dependency = $dependency;
@@ -55,9 +46,6 @@ class TransformerStub extends AbstractTransformer
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDependency()
     {
         return $this->dependency;
