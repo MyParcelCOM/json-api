@@ -29,6 +29,7 @@ use MyParcelCom\JsonApi\Exceptions\MissingScopeException;
 use MyParcelCom\JsonApi\Exceptions\MissingTokenException;
 use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Exceptions\ResourceCannotBeModifiedException;
+use MyParcelCom\JsonApi\Exceptions\ResourceHandledBy3rdPartyException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
@@ -72,6 +73,7 @@ class ExceptionHandler extends Handler
         NotFoundException::class,
         ResourceCannotBeModifiedException::class,
         ResourceNotFoundException::class,
+        ResourceHandledBy3rdPartyException::class,
         UnprocessableEntityException::class,
     ];
 
