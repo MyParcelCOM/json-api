@@ -25,6 +25,7 @@ use MyParcelCom\JsonApi\Exceptions\NotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -361,16 +362,16 @@ class ExceptionHandlerTest extends TestCase
     public function mockResponse(array $data, int $code): JsonResponse
     {
         return new class ($data, $code) extends JsonResponse {
-            protected $data;
+            protected mixed $data;
             protected $status;
-            public $headers;
+            public ResponseHeaderBag $headers;
             protected $options;
 
             public function __construct($data = null, $status = 200, array $headers = [], $options = 0)
             {
                 $this->data = $data;
                 $this->status = $status;
-                $this->headers = $headers;
+                $this->headers = new ResponseHeaderBag($headers);
                 $this->options = $options;
             }
 
