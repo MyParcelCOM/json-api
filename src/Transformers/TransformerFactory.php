@@ -56,9 +56,10 @@ class TransformerFactory
             return $this->transformers[$modelClass];
         }
 
-        foreach ($this->transformerMap as $class => $transformer) {
+        foreach ($this->transformerMap as $class => $transformerClass) {
             if (is_a($modelClass, $class, true)) {
-                return $this->transformers[$modelClass] = $this->injectDependencies(new $transformer($this));
+                $transformer = app()->make($transformerClass);
+                return $this->transformers[$modelClass] = $this->injectDependencies($transformer);
             }
         }
 

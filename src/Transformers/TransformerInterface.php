@@ -6,8 +6,6 @@ namespace MyParcelCom\JsonApi\Transformers;
 
 interface TransformerInterface
 {
-    public function __construct(TransformerFactory $transformerFactory);
-
     public function transform($model): array;
 
     public function transformIdentifier($model, bool $includeMeta = false): array;
