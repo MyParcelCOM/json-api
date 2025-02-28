@@ -6,6 +6,7 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use Illuminate\Support\Collection;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Resources\Interfaces\ResourcesInterface;
 use MyParcelCom\JsonApi\Tests\Mocks\Resources\FatherMock;
@@ -21,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerServiceTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     protected TransformerService $transformerService;
 
@@ -38,12 +39,11 @@ class TransformerServiceTest extends TestCase
         ]);
         $paginator->shouldReceive('addTotal')->andReturnSelf();
 
-        $transformerFactory = (new TransformerFactory())
-            ->setMapping([
-                PersonMock::class => PersonTransformerMock::class,
-                MotherMock::class => MotherTransformerMock::class,
-                FatherMock::class => FatherTransformerMock::class,
-            ]);
+        $transformerFactory = (new TransformerFactory())->setMapping([
+            PersonMock::class => PersonTransformerMock::class,
+            MotherMock::class => MotherTransformerMock::class,
+            FatherMock::class => FatherTransformerMock::class,
+        ]);
 
         $this->transformerService = new TransformerService($transformerFactory);
         $this->transformerService->setPaginator($paginator);
@@ -58,7 +58,7 @@ class TransformerServiceTest extends TestCase
         ]);
     }
 
-    public function testSetMaxPageSize()
+    public function testSetMaxPageSize(): void
     {
         $paginator = Mockery::mock(Paginator::class);
         $paginator->shouldReceive('setMaxPageSize')->andReturnUsing(function ($maxPageSize) use ($paginator) {
@@ -72,7 +72,7 @@ class TransformerServiceTest extends TestCase
         $transformerService->setMaxPageSize(3);
     }
 
-    public function testTransformEmptyResources()
+    public function testTransformEmptyResources(): void
     {
         $resources = Mockery::mock(ResourcesInterface::class, [
             'count' => 0,
@@ -96,7 +96,7 @@ class TransformerServiceTest extends TestCase
         );
     }
 
-    public function testTransformResource()
+    public function testTransformResource(): void
     {
         $resource = new PersonMock('1');
 
@@ -128,13 +128,13 @@ class TransformerServiceTest extends TestCase
         );
     }
 
-    public function testTransformResourceException()
+    public function testTransformResourceException(): void
     {
         $this->expectException(TransformerException::class);
         $this->transformerService->transformResource(null);
     }
 
-    public function testTransformResources()
+    public function testTransformResources(): void
     {
         $resources = Mockery::mock(ResourcesInterface::class, [
             'count' => 2,

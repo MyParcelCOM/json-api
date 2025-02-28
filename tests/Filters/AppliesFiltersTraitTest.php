@@ -16,7 +16,7 @@ class AppliesFiltersTraitTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function testApplyFiltersToQuery()
+    public function testApplyFiltersToQuery(): void
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
         $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) {
@@ -47,7 +47,7 @@ class AppliesFiltersTraitTest extends TestCase
         (new AppliesFiltersMock())->applyFilters($filters, $builderMock);
     }
 
-    public function testApplyDateFiltersDateString()
+    public function testApplyDateFiltersDateString(): void
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
         $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) {
@@ -73,7 +73,7 @@ class AppliesFiltersTraitTest extends TestCase
     /**
      * @dataProvider dateFilterProvider
      */
-    public function testApplyDateFiltersISO8601($expectation, $dateFrom)
+    public function testApplyDateFiltersISO8601($expectation, $dateFrom): void
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
         $queryMock->shouldReceive('where')->andReturnUsing(function ($closure) use ($expectation) {
@@ -110,7 +110,7 @@ class AppliesFiltersTraitTest extends TestCase
         ];
     }
 
-    public function testApplyDateFiltersException()
+    public function testApplyDateFiltersException(): void
     {
         $builderMock = Mockery::mock(Builder::class, [
             'getQuery' => Mockery::mock(QueryBuilder::class),

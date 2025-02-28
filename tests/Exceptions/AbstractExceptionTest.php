@@ -19,44 +19,44 @@ class AbstractExceptionTest extends TestCase
         };
     }
 
-    public function testId()
+    public function testId(): void
     {
         $this->assertEquals('1d', $this->exception->setId('1d')->getId());
     }
 
-    public function testLinks()
+    public function testLinks(): void
     {
         $this->exception->setLinks(['l' => 'ink', 'miami' => 'ink'])->addLink('tat', 'too');
 
         $this->assertEquals(['l' => 'ink', 'miami' => 'ink', 'tat' => 'too'], $this->exception->getLinks());
     }
 
-    public function testStatus()
+    public function testStatus(): void
     {
         $this->assertEquals(123, $this->exception->setStatus(123)->getStatus());
     }
 
-    public function testErrorCode()
+    public function testErrorCode(): void
     {
         $this->assertEquals('36606', $this->exception->setErrorCode('36606')->getErrorCode());
     }
 
-    public function testTitle()
+    public function testTitle(): void
     {
         $this->assertEquals('Señor', $this->exception->setTitle('Señor')->getTitle());
     }
 
-    public function testDetail()
+    public function testDetail(): void
     {
         $this->assertEquals('eye', $this->exception->setDetail('eye')->getDetail());
     }
 
-    public function testSource()
+    public function testSource(): void
     {
         $this->assertEquals(['Counter' => 'Strike'], $this->exception->setSource(['Counter' => 'Strike'])->getSource());
     }
 
-    public function testMeta()
+    public function testMeta(): void
     {
         $this->exception->setMeta(['m' => 'eta', 'b' => 'eta'])->addMeta('ta', 'da');
 

@@ -27,12 +27,12 @@ class TimestampsTraitTest extends TestCase
         };
     }
 
-    public function testGetUpdatedAt()
+    public function testGetUpdatedAt(): void
     {
         $this->assertInstanceOf(Carbon::class, $this->model->getUpdatedAt());
     }
 
-    public function testGetCreatedAt()
+    public function testGetCreatedAt(): void
     {
         $this->assertInstanceOf(Carbon::class, $this->model->getCreatedAt());
     }

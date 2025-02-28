@@ -9,12 +9,13 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Database\Query\Processors\PostgresProcessor;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Filters\QueryFilter;
 use PHPUnit\Framework\TestCase;
 
 class QueryFilterTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     private QueryFilter $queryFilter;
 
@@ -32,7 +33,7 @@ class QueryFilterTest extends TestCase
         $this->queryFilter = new QueryFilter($this->query);
     }
 
-    public function testApplyWhereValueIsNull()
+    public function testApplyWhereValueIsNull(): void
     {
         $this->queryFilter->apply(['column_a', 'column_b'], '!=', [null]);
         $this->queryFilter->apply('column_c', 'nOt', null); // Also tests capitalized operator.
@@ -44,7 +45,7 @@ class QueryFilterTest extends TestCase
         );
     }
 
-    public function testApplyWhereOperatorIsLike()
+    public function testApplyWhereOperatorIsLike(): void
     {
         $this->queryFilter->apply(['column_a', 'column_b'], 'LiKe', 'value_a');
         $this->queryFilter->apply('column_c', 'like', ['value_a', 'value_b']);
@@ -67,7 +68,7 @@ class QueryFilterTest extends TestCase
         ], $this->query->getBindings());
     }
 
-    public function testApplyWhereValuesIsArray()
+    public function testApplyWhereValuesIsArray(): void
     {
         $this->queryFilter->apply('column_a', '=', ['value_a', 'value_b']);
         $this->queryFilter->apply(['column_b', 'column_c'], '!=', ['value_c', 'value_d']);
@@ -90,7 +91,7 @@ class QueryFilterTest extends TestCase
         ], $this->query->getBindings());
     }
 
-    public function testFilterQuery()
+    public function testFilterQuery(): void
     {
         $this->queryFilter->apply('column_a', '>', '25');
         $this->queryFilter->apply(['column_b', 'column_c'], '=', 'value_a');

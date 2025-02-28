@@ -42,7 +42,7 @@ class TransformerStub extends AbstractTransformer
         return $this;
     }
 
-    public function getDependency()
+    public function getDependency(): mixed
     {
         return $this->dependency;
     }

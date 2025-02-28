@@ -39,7 +39,7 @@ use PHPUnit\Framework\TestCase;
 
 class ExceptionsTest extends TestCase
 {
-    public function testAuthException()
+    public function testAuthException(): void
     {
         $exception = new AuthException('Police', 90210, new Exception('Axel F'));
 
@@ -48,7 +48,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Axel F', $exception->getPrevious()->getMessage());
     }
 
-    public function testCarrierApiException()
+    public function testCarrierApiException(): void
     {
         $exception = new CarrierApiException(418, ['teapot'], new Exception('HTCPCP'));
 
@@ -60,7 +60,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('HTCPCP', $exception->getPrevious()->getMessage());
     }
 
-    public function testCarrierDataNotFoundException()
+    public function testCarrierDataNotFoundException(): void
     {
         $exception = new CarrierDataNotFoundException(['data'], 404, new Exception('carrier'));
 
@@ -69,7 +69,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('carrier', $exception->getPrevious()->getMessage());
     }
 
-    public function testExternalRequestException()
+    public function testExternalRequestException(): void
     {
         $exception = new ExternalRequestException(1, 2, ['3'], new Exception('4'));
 
@@ -78,7 +78,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('4', $exception->getPrevious()->getMessage());
     }
 
-    public function testInvalidAccessTokenException()
+    public function testInvalidAccessTokenException(): void
     {
         $exception = new InvalidAccessTokenException('Taken', new Exception('Liam'));
 
@@ -86,21 +86,21 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Liam', $exception->getPrevious()->getMessage());
     }
 
-    public function testInvalidClientException()
+    public function testInvalidClientException(): void
     {
         $exception = new InvalidClientException();
 
         $this->assertEquals(403, $exception->getStatus());
     }
 
-    public function testInvalidExternalErrorException()
+    public function testInvalidExternalErrorException(): void
     {
         $exception = new InvalidExternalErrorException(new Exception("It Wasn't Me"));
 
         $this->assertEquals("It Wasn't Me", $exception->getPrevious()->getMessage());
     }
 
-    public function testInvalidHeaderException()
+    public function testInvalidHeaderException(): void
     {
         $exception = new InvalidHeaderException('HEAD');
 
@@ -108,7 +108,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(406, $exception->getStatus());
     }
 
-    public function testInvalidJsonSchemaException()
+    public function testInvalidJsonSchemaException(): void
     {
         $exception = new InvalidJsonSchemaException(['fail'], new Exception('epic'));
 
@@ -117,7 +117,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(['specification' => 'https://api-specification.myparcel.com'], $exception->getLinks());
     }
 
-    public function testInvalidScopeException()
+    public function testInvalidScopeException(): void
     {
         $exception = new InvalidScopeException(['slug', 'slag'], new Exception('Eridium'));
 
@@ -125,14 +125,14 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
-    public function testInvalidSecretException()
+    public function testInvalidSecretException(): void
     {
         $exception = new InvalidSecretException(new Exception('welcome'));
 
         $this->assertEquals('welcome', $exception->getPrevious()->getMessage());
     }
 
-    public function testMissingHeaderException()
+    public function testMissingHeaderException(): void
     {
         $exception = new MissingHeaderException(['head', 'durr'], new Exception('hat'));
 
@@ -140,7 +140,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('hat', $exception->getPrevious()->getMessage());
     }
 
-    public function testMissingScopeException()
+    public function testMissingScopeException(): void
     {
         $exception = new MissingScopeException(['slug', 'slag'], new Exception('Eridium'));
 
@@ -148,14 +148,14 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
-    public function testMissingTokenException()
+    public function testMissingTokenException(): void
     {
         $exception = new MissingTokenException(new Exception('appreciation'));
 
         $this->assertEquals('appreciation', $exception->getPrevious()->getMessage());
     }
 
-    public function testModelTypeException()
+    public function testModelTypeException(): void
     {
         $exception1 = new ModelTypeException(new Exception(), 'Acception');
         $exception2 = new ModelTypeException(30931, '1337');
@@ -167,7 +167,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Invalid model of type `30931`, expected model of type `1337`', $exception2->getMessage());
     }
 
-    public function testNotFoundException()
+    public function testNotFoundException(): void
     {
         $exception = new NotFoundException('not found', new Exception('pants'));
 
@@ -175,7 +175,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('not found', $exception->getMessage());
     }
 
-    public function testTooManyRequestsException()
+    public function testTooManyRequestsException(): void
     {
         $exception = new TooManyRequestsException(
             'Too many requests.',
@@ -186,7 +186,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Too many requests.', $exception->getMessage());
     }
 
-    public function testResourceCannotBeModifiedException()
+    public function testResourceCannotBeModifiedException(): void
     {
         $exception = new ResourceCannotBeModifiedException('solid', new Exception('frozen'));
 
@@ -194,7 +194,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('solid', $exception->getMessage());
     }
 
-    public function testResourceConflictException()
+    public function testResourceConflictException(): void
     {
         $exception = new ResourceConflictException('Konflict', new Exception('Mortal'));
 
@@ -202,7 +202,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Mortal', $exception->getPrevious()->getMessage());
     }
 
-    public function testResourceNotFoundException()
+    public function testResourceNotFoundException(): void
     {
         $exception = new ResourceNotFoundException('API', new Exception('OMG'));
 
@@ -210,7 +210,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('One or more of the API resource could not be found.', $exception->getMessage());
     }
 
-    public function testUnprocessableEntityException()
+    public function testUnprocessableEntityException(): void
     {
         $exception = new UnprocessableEntityException('RAW', new Exception('G-Star'));
 
@@ -218,7 +218,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('RAW', $exception->getMessage());
     }
 
-    public function testMethodNotAllowedException()
+    public function testMethodNotAllowedException(): void
     {
         $exception = new MethodNotAllowedException('Put', new Exception('Previous exception'));
 
@@ -228,7 +228,7 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Previous exception', $exception->getPrevious()->getMessage());
     }
 
-    public function testGenericCarrierErrorException()
+    public function testGenericCarrierErrorException(): void
     {
         $errors = [
             Mockery::mock(JsonSchemaErrorInterface::class),
@@ -246,7 +246,7 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    public function testInvalidInputException()
+    public function testInvalidInputException(): void
     {
         $errors = [
             Mockery::mock(JsonSchemaErrorInterface::class),
@@ -264,7 +264,7 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    public function testRelationshipCannotBeModifiedException()
+    public function testRelationshipCannotBeModifiedException(): void
     {
         $relationshipType = 'shipments';
 
@@ -279,7 +279,7 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    public function testInvalidCredentialsException()
+    public function testInvalidCredentialsException(): void
     {
         $errors = [
             Mockery::mock(JsonSchemaErrorInterface::class),
@@ -297,7 +297,7 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    public function testForbiddenException()
+    public function testForbiddenException(): void
     {
         $exception = new ForbiddenException();
 
@@ -311,7 +311,7 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    public function testResourceHandledBy3rdPartyException()
+    public function testResourceHandledBy3rdPartyException(): void
     {
         $exception = new ResourceHandledBy3rdPartyException('Order', 'Bol', new Exception('Previous error.'));
 
