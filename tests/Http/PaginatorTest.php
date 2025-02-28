@@ -36,7 +36,6 @@ class PaginatorTest extends TestCase
         $this->paginator = new Paginator('https://link', $this->perPage, $this->curPage, $this->total);
     }
 
-    /** @test */
     public function testGetLinks()
     {
         $this->paginator->setBaseUrl('https://foo');
@@ -62,7 +61,6 @@ class PaginatorTest extends TestCase
         $this->assertEquals($links, $this->paginator->getLinks());
     }
 
-    /** @test */
     public function testCurrentPage()
     {
         $this->assertEquals($this->curPage, $this->paginator->getCurrentPage());
@@ -76,7 +74,6 @@ class PaginatorTest extends TestCase
         $this->assertEquals(1, $this->paginator->getCurrentPage());
     }
 
-    /** @test */
     public function testPerPage()
     {
         $this->assertEquals($this->perPage, $this->paginator->getPerPage());
@@ -90,7 +87,6 @@ class PaginatorTest extends TestCase
         $this->assertEquals(137, $this->paginator->getPerPage());
     }
 
-    /** @test */
     public function testTotal()
     {
         $this->paginator->setTotal(4);
@@ -102,32 +98,27 @@ class PaginatorTest extends TestCase
         $this->paginator->setTotal(-1337);
     }
 
-    /** @test */
     public function testGetLastPage()
     {
         $this->assertEquals($this->end, $this->paginator->getLastPage());
     }
 
-    /** @test */
     public function testMaxPageSize()
     {
         $this->paginator->setMaxPageSize(444);
         $this->assertEquals(444, $this->paginator->getMaxPageSize());
     }
 
-    /** @test */
     public function testGetCount()
     {
         $this->assertEquals($this->end, $this->paginator->getCount());
     }
 
-    /** @test */
     public function testGetStart()
     {
         $this->assertEquals($this->start, $this->paginator->getStart());
     }
 
-    /** @test */
     public function testGetEnd()
     {
         $this->assertEquals(($this->start + $this->perPage), $this->paginator->getEnd());

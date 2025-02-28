@@ -34,7 +34,6 @@ class AbstractTransformerTest extends TestCase
         $this->transformer = new TransformerStub($transformerFactory);
     }
 
-    /** @test */
     public function testTransform()
     {
         $this->assertEquals([
@@ -64,14 +63,12 @@ class AbstractTransformerTest extends TestCase
         $this->assertEmpty($this->transformer->getRelationLink($this->model));
     }
 
-    /** @test */
     public function testGetTypeException()
     {
         $this->expectException(TransformerException::class);
         $this->transformer->clearType()->getType();
     }
 
-    /** @test */
     public function testTransformRelationship()
     {
         $this->assertEquals(
@@ -88,7 +85,6 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetAttributesFromModel()
     {
         $this->assertNull($this->transformer->getAttributesFromModel(null));
@@ -100,7 +96,6 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetTimestamp()
     {
         $datetime = new DateTime();
@@ -109,7 +104,6 @@ class AbstractTransformerTest extends TestCase
         $this->assertEquals($datetime->getTimestamp(), $this->transformer->getTimestamp($datetime));
     }
 
-    /** @test */
     public function testTransformRelationshipForIdentifier()
     {
         $this->assertEquals(
@@ -126,7 +120,6 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
     public function testTransformRelationshipForIdentifiers()
     {
         $this->assertEquals(
@@ -173,7 +166,6 @@ class AbstractTransformerTest extends TestCase
         $this->assertEquals('gearbox/borderlands', $this->transformer->getLinkWithParentId($identifier));
     }
 
-    /** @test */
     public function testItAlsoPopulatesMetaInTransformingIdentifiers()
     {
         $this->assertEquals([

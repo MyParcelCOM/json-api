@@ -51,7 +51,6 @@ class TransformerFactoryTest extends TestCase
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
     }
 
-    /** @test */
     public function testCreateFromModel()
     {
         /** @var TransformerStub $transformer */
@@ -61,7 +60,6 @@ class TransformerFactoryTest extends TestCase
         $this->assertEquals($this->dependency, $transformer->getDependency());
     }
 
-    /** @test */
     public function testCreateFromModelIgnoresOtherMappedDependencies()
     {
         $this->transformerFactory->setMapping([get_class($this->modelMock) => OtherTransformerStub::class]);
@@ -73,14 +71,12 @@ class TransformerFactoryTest extends TestCase
         $this->assertNull($transformer->getDependency(), 'TransformerStub dependency should not be set');
     }
 
-    /** @test */
     public function testCreateFromModelWithInvalidModel()
     {
         $this->expectException(TransformerException::class);
         $this->transformerFactory->createFromModel(new stdClass());
     }
 
-    /** @test */
     public function testCreateTransformerItem()
     {
         $this->assertInstanceOf(
@@ -89,7 +85,6 @@ class TransformerFactoryTest extends TestCase
         );
     }
 
-    /** @test */
     public function testCreateTransformerCollection()
     {
         $collection = Mockery::mock(Collection::class, ['offsetExists' => false, 'offsetGet' => null]);

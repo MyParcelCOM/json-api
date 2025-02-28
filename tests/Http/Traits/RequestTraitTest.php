@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTraitTest extends TestCase
 {
-    /** @test */
     public function testGetPaginator()
     {
         $request = $this->createRequestTraitMock();
@@ -35,7 +34,6 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetIncludes()
     {
         $request = $this->createRequestTraitMock();
@@ -62,7 +60,6 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetSort()
     {
         $request = $this->createRequestTraitMock();
@@ -75,7 +72,6 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetFilter()
     {
         $request = $this->createRequestTraitMock();

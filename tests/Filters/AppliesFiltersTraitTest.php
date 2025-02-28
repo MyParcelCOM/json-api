@@ -16,7 +16,6 @@ class AppliesFiltersTraitTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    /** @test */
     public function testApplyFiltersToQuery()
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
@@ -48,7 +47,6 @@ class AppliesFiltersTraitTest extends TestCase
         (new AppliesFiltersMock())->applyFilters($filters, $builderMock);
     }
 
-    /** @test */
     public function testApplyDateFiltersDateString()
     {
         $queryMock = Mockery::mock(QueryBuilder::class);
@@ -73,7 +71,6 @@ class AppliesFiltersTraitTest extends TestCase
     }
 
     /**
-     * @test
      * @dataProvider dateFilterProvider
      */
     public function testApplyDateFiltersISO8601($expectation, $dateFrom)
@@ -113,7 +110,6 @@ class AppliesFiltersTraitTest extends TestCase
         ];
     }
 
-    /** @test */
     public function testApplyDateFiltersException()
     {
         $builderMock = Mockery::mock(Builder::class, [

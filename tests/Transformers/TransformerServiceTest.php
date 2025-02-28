@@ -58,7 +58,6 @@ class TransformerServiceTest extends TestCase
         ]);
     }
 
-    /** @test */
     public function testSetMaxPageSize()
     {
         $paginator = Mockery::mock(Paginator::class);
@@ -73,7 +72,6 @@ class TransformerServiceTest extends TestCase
         $transformerService->setMaxPageSize(3);
     }
 
-    /** @test */
     public function testTransformEmptyResources()
     {
         $resources = Mockery::mock(ResourcesInterface::class, [
@@ -98,7 +96,6 @@ class TransformerServiceTest extends TestCase
         );
     }
 
-    /** @test */
     public function testTransformResource()
     {
         $resource = new PersonMock('1');
@@ -131,14 +128,12 @@ class TransformerServiceTest extends TestCase
         );
     }
 
-    /** @test */
     public function testTransformResourceException()
     {
         $this->expectException(TransformerException::class);
         $this->transformerService->transformResource(null);
     }
 
-    /** @test */
     public function testTransformResources()
     {
         $resources = Mockery::mock(ResourcesInterface::class, [

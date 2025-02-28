@@ -54,7 +54,6 @@ class TransformerResourceTest extends TestCase
         ]);
     }
 
-    /** @test */
     public function testGetData()
     {
         $expectedResult = [
@@ -67,7 +66,6 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResource->GetData());
     }
 
-    /** @test */
     public function testGetDataEmpty()
     {
         $expectedResult = [
@@ -80,7 +78,6 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $emptyTransformerResource->GetData());
     }
 
-    /** @test */
     public function testGetDataWithNoIncludes()
     {
         $expectedResult = [
@@ -93,7 +90,6 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResourceNoIncluded->GetData());
     }
 
-    /** @test */
     public function testGetDataWithNoPaginator()
     {
         $expectedResult = [
@@ -106,7 +102,6 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResource->toArrayMultiple());
     }
 
-    /** @test */
     public function testAddMeta()
     {
         $this->transformerResource->addMeta(['x' => 'y']);
@@ -116,7 +111,6 @@ class TransformerResourceTest extends TestCase
         ], $this->transformerResource->toArraySingle());
     }
 
-    /** @test */
     public function testAddMetaException()
     {
         $this->expectException(TransformerException::class);

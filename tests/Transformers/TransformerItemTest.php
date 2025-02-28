@@ -81,13 +81,11 @@ class TransformerItemTest extends TestCase
         $this->transformerItem = new TransformerItem($this->transformerFactory, Mockery::mock(Model::class));
     }
 
-    /** @test */
     public function testGetData()
     {
         $this->assertEquals($this->transformerData, $this->transformerItem->getData());
     }
 
-    /** @test */
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], []));
@@ -106,7 +104,6 @@ class TransformerItemTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetIncludedCollection()
     {
         $transformerItem = new TransformerItem($this->transformerFactory, Mockery::mock(Collection::class));

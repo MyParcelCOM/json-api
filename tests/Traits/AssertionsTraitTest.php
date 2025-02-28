@@ -21,13 +21,11 @@ class AssertionsTraitTest extends TestCase
         $this->testClass = new AssertionsMock($this);
     }
 
-    /** @test */
     public function testAssertJsonSchema()
     {
         $this->testClass->assertJsonSchema('swag', 'human', ['head'], [], 'GET', 101);
     }
 
-    /** @test */
     public function testAssertJsonDataCount()
     {
         $this->testClass->assertJsonDataCount(2, 'human', ['head']);
@@ -35,7 +33,6 @@ class AssertionsTraitTest extends TestCase
         $this->testClass->assertJsonDataCount(0, 'human', ['horn']);
     }
 
-    /** @test */
     public function testAssertJsonDataContainsIds()
     {
         $this->testClass->assertJsonDataContainsIds('human', ['0', '1'], ['head']);

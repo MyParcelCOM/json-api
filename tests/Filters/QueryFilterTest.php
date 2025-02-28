@@ -32,7 +32,6 @@ class QueryFilterTest extends TestCase
         $this->queryFilter = new QueryFilter($this->query);
     }
 
-    /** @test */
     public function testApplyWhereValueIsNull()
     {
         $this->queryFilter->apply(['column_a', 'column_b'], '!=', [null]);
@@ -45,7 +44,6 @@ class QueryFilterTest extends TestCase
         );
     }
 
-    /** @test */
     public function testApplyWhereOperatorIsLike()
     {
         $this->queryFilter->apply(['column_a', 'column_b'], 'LiKe', 'value_a');
@@ -69,7 +67,6 @@ class QueryFilterTest extends TestCase
         ], $this->query->getBindings());
     }
 
-    /** @test */
     public function testApplyWhereValuesIsArray()
     {
         $this->queryFilter->apply('column_a', '=', ['value_a', 'value_b']);
@@ -93,7 +90,6 @@ class QueryFilterTest extends TestCase
         ], $this->query->getBindings());
     }
 
-    /** @test */
     public function testFilterQuery()
     {
         $this->queryFilter->apply('column_a', '>', '25');

@@ -62,7 +62,6 @@ class QueryResourcesTest extends TestCase
         $this->resultSet = new QueryResources($builder);
     }
 
-    /** @test */
     public function testGet()
     {
         $this->assertInstanceOf(
@@ -76,7 +75,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testCount()
     {
         $this->assertEquals(
@@ -85,7 +83,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testOffset()
     {
         $this->resultSet->offset(1);
@@ -101,7 +98,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testLimit()
     {
         $this->resultSet->limit(1);
@@ -117,7 +113,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testFirst()
     {
         $this->assertEquals(
@@ -126,7 +121,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetIds()
     {
         $this->assertEquals(
@@ -135,7 +129,6 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetQuery()
     {
         $builder = new Builder(Mockery::mock(QueryBuilder::class, ['id' => '123']));
@@ -144,7 +137,6 @@ class QueryResourcesTest extends TestCase
         $this->assertEquals($builder, $this->resultSet->getQuery());
     }
 
-    /** @test */
     public function testEach()
     {
         $called = false;

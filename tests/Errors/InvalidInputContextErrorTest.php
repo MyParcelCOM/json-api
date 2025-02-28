@@ -20,7 +20,6 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
     public function testItSetsPropertiesThroughConstructor()
     {
         $this->assertEquals('Invalid input context', $this->error->getTitle());
@@ -32,31 +31,26 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getSource());
     }
 
-    /** @test */
     public function testItSetsErrorCode()
     {
         $this->assertEquals('98765', $this->error->setErrorCode('98765')->getErrorCode());
     }
 
-    /** @test */
     public function testItSetsErrorDescription()
     {
         $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
-    /** @test */
     public function testItSetsTitle()
     {
         $this->assertEquals('Foo bar error title', $this->error->setTitle('Foo bar error title')->getTitle());
     }
 
-    /** @test */
     public function testItSetsStatus()
     {
         $this->assertEquals(422, $this->error->setStatus(422)->getStatus());
     }
 
-    /** @test */
     public function testItSetsLinks()
     {
         $this->assertEquals(
@@ -65,7 +59,6 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
     public function testItAddsALink()
     {
         $this->error->setLinks(['self' => 'https://foo.bar/com']);
@@ -79,7 +72,6 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
     public function testItSetsMeta()
     {
         $this->error->setMeta([
@@ -94,7 +86,6 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
     public function testItAddsMeta()
     {
         $this->error->setMeta([
@@ -111,7 +102,6 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
     public function testItSetsPointer()
     {
         $this->error->setPointer('data/attributes/foo-bar');

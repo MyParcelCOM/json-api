@@ -39,7 +39,6 @@ use PHPUnit\Framework\TestCase;
 
 class ExceptionsTest extends TestCase
 {
-    /** @test */
     public function testAuthException()
     {
         $exception = new AuthException('Police', 90210, new Exception('Axel F'));
@@ -49,7 +48,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Axel F', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testCarrierApiException()
     {
         $exception = new CarrierApiException(418, ['teapot'], new Exception('HTCPCP'));
@@ -62,7 +60,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('HTCPCP', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testCarrierDataNotFoundException()
     {
         $exception = new CarrierDataNotFoundException(['data'], 404, new Exception('carrier'));
@@ -72,7 +69,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('carrier', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testExternalRequestException()
     {
         $exception = new ExternalRequestException(1, 2, ['3'], new Exception('4'));
@@ -82,7 +78,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('4', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testInvalidAccessTokenException()
     {
         $exception = new InvalidAccessTokenException('Taken', new Exception('Liam'));
@@ -91,7 +86,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Liam', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testInvalidClientException()
     {
         $exception = new InvalidClientException();
@@ -99,7 +93,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(403, $exception->getStatus());
     }
 
-    /** @test */
     public function testInvalidExternalErrorException()
     {
         $exception = new InvalidExternalErrorException(new Exception("It Wasn't Me"));
@@ -107,7 +100,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals("It Wasn't Me", $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testInvalidHeaderException()
     {
         $exception = new InvalidHeaderException('HEAD');
@@ -116,7 +108,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(406, $exception->getStatus());
     }
 
-    /** @test */
     public function testInvalidJsonSchemaException()
     {
         $exception = new InvalidJsonSchemaException(['fail'], new Exception('epic'));
@@ -126,7 +117,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals(['specification' => 'https://api-specification.myparcel.com'], $exception->getLinks());
     }
 
-    /** @test */
     public function testInvalidScopeException()
     {
         $exception = new InvalidScopeException(['slug', 'slag'], new Exception('Eridium'));
@@ -135,7 +125,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testInvalidSecretException()
     {
         $exception = new InvalidSecretException(new Exception('welcome'));
@@ -143,7 +132,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('welcome', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testMissingHeaderException()
     {
         $exception = new MissingHeaderException(['head', 'durr'], new Exception('hat'));
@@ -152,7 +140,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('hat', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testMissingScopeException()
     {
         $exception = new MissingScopeException(['slug', 'slag'], new Exception('Eridium'));
@@ -161,7 +148,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Eridium', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testMissingTokenException()
     {
         $exception = new MissingTokenException(new Exception('appreciation'));
@@ -169,7 +155,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('appreciation', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testModelTypeException()
     {
         $exception1 = new ModelTypeException(new Exception(), 'Acception');
@@ -182,7 +167,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Invalid model of type `30931`, expected model of type `1337`', $exception2->getMessage());
     }
 
-    /** @test */
     public function testNotFoundException()
     {
         $exception = new NotFoundException('not found', new Exception('pants'));
@@ -191,7 +175,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('not found', $exception->getMessage());
     }
 
-    /** @test */
     public function testTooManyRequestsException()
     {
         $exception = new TooManyRequestsException(
@@ -203,7 +186,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Too many requests.', $exception->getMessage());
     }
 
-    /** @test */
     public function testResourceCannotBeModifiedException()
     {
         $exception = new ResourceCannotBeModifiedException('solid', new Exception('frozen'));
@@ -212,7 +194,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('solid', $exception->getMessage());
     }
 
-    /** @test */
     public function testResourceConflictException()
     {
         $exception = new ResourceConflictException('Konflict', new Exception('Mortal'));
@@ -221,7 +202,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Mortal', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testResourceNotFoundException()
     {
         $exception = new ResourceNotFoundException('API', new Exception('OMG'));
@@ -230,7 +210,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('One or more of the API resource could not be found.', $exception->getMessage());
     }
 
-    /** @test */
     public function testUnprocessableEntityException()
     {
         $exception = new UnprocessableEntityException('RAW', new Exception('G-Star'));
@@ -239,7 +218,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('RAW', $exception->getMessage());
     }
 
-    /** @test */
     public function testMethodNotAllowedException()
     {
         $exception = new MethodNotAllowedException('Put', new Exception('Previous exception'));
@@ -250,7 +228,6 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('Previous exception', $exception->getPrevious()->getMessage());
     }
 
-    /** @test */
     public function testGenericCarrierErrorException()
     {
         $errors = [
@@ -269,7 +246,6 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    /** @test */
     public function testInvalidInputException()
     {
         $errors = [
@@ -288,7 +264,6 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    /** @test */
     public function testRelationshipCannotBeModifiedException()
     {
         $relationshipType = 'shipments';
@@ -304,7 +279,6 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    /** @test */
     public function testInvalidCredentialsException()
     {
         $errors = [
@@ -323,7 +297,6 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    /** @test */
     public function testForbiddenException()
     {
         $exception = new ForbiddenException();
@@ -338,7 +311,6 @@ class ExceptionsTest extends TestCase
         );
     }
 
-    /** @test */
     public function testResourceHandledBy3rdPartyException()
     {
         $exception = new ResourceHandledBy3rdPartyException('Order', 'Bol', new Exception('Previous error.'));

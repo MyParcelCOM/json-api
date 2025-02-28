@@ -58,13 +58,11 @@ class TransformerCollectionTest extends TestCase
         );
     }
 
-    /** @test */
     public function testGetData()
     {
         $this->assertEquals([$this->transformerData], $this->transformerCollection->getData());
     }
 
-    /** @test */
     public function testGetIncluded()
     {
         $this->assertEquals([$this->includedResource], $this->transformerCollection->getIncluded(['resourceName'], []));

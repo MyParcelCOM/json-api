@@ -58,7 +58,6 @@ class ExceptionHandlerTest extends TestCase
             ->setAppName($this->appName);
     }
 
-    /** @test */
     public function testRenderNormalException()
     {
         $exception = Mockery::mock(Exception::class);
@@ -87,7 +86,6 @@ class ExceptionHandlerTest extends TestCase
         ]);
     }
 
-    /** @test */
     public function testRenderJsonApiException()
     {
         $response = $this->handler->render($this->request, $this->createExceptionMock());
@@ -96,7 +94,6 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /** @test */
     public function testRenderValidationException()
     {
         $exception = Mockery::mock(ValidationException::class, [
@@ -112,7 +109,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals('Something wrong with some-attribute', Arr::get($response->getData(), 'errors.0.detail'));
     }
 
-    /** @test */
     public function testRenderMultiErrorException()
     {
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
@@ -128,7 +124,6 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /** @test */
     public function testSetDebugShouldRenderMetaData()
     {
         $exception = new Exception();
@@ -152,7 +147,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertArrayHasKey('meta', $debugResponse->getData(), 'Response should have meta information');
     }
 
-    /** @test */
     public function testSetContactLink()
     {
         $exception = Mockery::mock(Exception::class);
@@ -176,7 +170,6 @@ class ExceptionHandlerTest extends TestCase
         );
     }
 
-    /** @test */
     public function testReport()
     {
         $exception = new Exception('an error occurred');
@@ -205,7 +198,6 @@ class ExceptionHandlerTest extends TestCase
         }
     }
 
-    /** @test */
     public function testReportMultiErrorException()
     {
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
@@ -228,7 +220,6 @@ class ExceptionHandlerTest extends TestCase
         $this->handler->setLogger($logger)->report($exception);
     }
 
-    /** @test */
     public function testReportShouldLogWarningsForStatusCodeBelow500()
     {
         $exception = new CarrierApiException(422, ['nono' => 'not good']);
@@ -260,7 +251,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
     public function testNotFoundException()
     {
         $exception = Mockery::mock(NotFoundHttpException::class);
@@ -271,7 +261,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(404, $response->getStatus());
     }
 
-    /** @test */
     public function testItMapsAMethodNotAllowedHttpExceptionToAMethodNotAllowedException()
     {
         $exception = Mockery::mock(MethodNotAllowedHttpException::class);
@@ -287,7 +276,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
     }
 
-    /** @test */
     public function testItMapsThrottleExceptionsToTooManyRequestsException()
     {
         $exception = Mockery::mock(ThrottleRequestsException::class);
@@ -299,7 +287,6 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(ExceptionInterface::TOO_MANY_REQUESTS['title'], $json['errors'][0]['title']);
     }
 
-    /** @test */
     public function testItSetsTraceToNoTraceIsAvailableWhenTraceIsInvalidForJsonEncode()
     {
         // The error we encountered was caused when binary data was passed to a method that tried to json_encode the
@@ -330,7 +317,7 @@ class ExceptionHandlerTest extends TestCase
     /**
      * Check if the json array is a valid jsonapi response.
      */
-    private function checkJson(array $json)
+    private function checkJson(array $json): void
     {
         $this->assertArrayNotHasKey('data', $json, 'Json error response should not contain data');
         $this->assertArrayNotHasKey('included', $json, 'Json error response should not contain included');
