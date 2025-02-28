@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class ErrorTransformerTest extends TestCase
 {
-    /** @test */
-    public function testTransform()
+    public function testTransform(): void
     {
         $exception = Mockery::mock(JsonSchemaErrorInterface::class, [
             'getId'        => '123',

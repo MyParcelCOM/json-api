@@ -8,6 +8,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Tests\Stubs\OtherTransformerStub;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
@@ -20,7 +21,7 @@ use stdClass;
 
 class TransformerFactoryTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     protected TransformerFactory $transformerFactory;
 
@@ -51,8 +52,7 @@ class TransformerFactoryTest extends TestCase
         $this->transformerFactory->setMapping([get_class($this->modelMock) => TransformerStub::class]);
     }
 
-    /** @test */
-    public function testCreateFromModel()
+    public function testCreateFromModel(): void
     {
         /** @var TransformerStub $transformer */
         $transformer = $this->transformerFactory->createFromModel($this->modelMock);
@@ -61,8 +61,7 @@ class TransformerFactoryTest extends TestCase
         $this->assertEquals($this->dependency, $transformer->getDependency());
     }
 
-    /** @test */
-    public function testCreateFromModelIgnoresOtherMappedDependencies()
+    public function testCreateFromModelIgnoresOtherMappedDependencies(): void
     {
         $this->transformerFactory->setMapping([get_class($this->modelMock) => OtherTransformerStub::class]);
 
@@ -73,15 +72,13 @@ class TransformerFactoryTest extends TestCase
         $this->assertNull($transformer->getDependency(), 'TransformerStub dependency should not be set');
     }
 
-    /** @test */
-    public function testCreateFromModelWithInvalidModel()
+    public function testCreateFromModelWithInvalidModel(): void
     {
         $this->expectException(TransformerException::class);
         $this->transformerFactory->createFromModel(new stdClass());
     }
 
-    /** @test */
-    public function testCreateTransformerItem()
+    public function testCreateTransformerItem(): void
     {
         $this->assertInstanceOf(
             TransformerItem::class,
@@ -89,8 +86,7 @@ class TransformerFactoryTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testCreateTransformerCollection()
+    public function testCreateTransformerCollection(): void
     {
         $collection = Mockery::mock(Collection::class, ['offsetExists' => false, 'offsetGet' => null]);
         $this->assertInstanceOf(

@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Collection;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Resources\QueryResources;
 use PHPUnit\Framework\TestCase;
 
 class QueryResourcesTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     private QueryResources $resultSet;
 
@@ -62,8 +63,7 @@ class QueryResourcesTest extends TestCase
         $this->resultSet = new QueryResources($builder);
     }
 
-    /** @test */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertInstanceOf(
             Collection::class,
@@ -76,8 +76,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(
             3,
@@ -85,8 +84,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testOffset()
+    public function testOffset(): void
     {
         $this->resultSet->offset(1);
         $this->assertEquals(
@@ -101,8 +99,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testLimit()
+    public function testLimit(): void
     {
         $this->resultSet->limit(1);
         $this->assertEquals(
@@ -117,8 +114,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testFirst()
+    public function testFirst(): void
     {
         $this->assertEquals(
             $this->data[0],
@@ -126,8 +122,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetIds()
+    public function testGetIds(): void
     {
         $this->assertEquals(
             [1, 2, 3],
@@ -135,8 +130,7 @@ class QueryResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetQuery()
+    public function testGetQuery(): void
     {
         $builder = new Builder(Mockery::mock(QueryBuilder::class, ['id' => '123']));
 
@@ -144,8 +138,7 @@ class QueryResourcesTest extends TestCase
         $this->assertEquals($builder, $this->resultSet->getQuery());
     }
 
-    /** @test */
-    public function testEach()
+    public function testEach(): void
     {
         $called = false;
         $this->resultSet->each(function () use (&$called) {

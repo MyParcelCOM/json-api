@@ -7,6 +7,7 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
@@ -16,7 +17,7 @@ use stdClass;
 
 class AbstractTransformerTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     private Model $model;
 
@@ -34,8 +35,7 @@ class AbstractTransformerTest extends TestCase
         $this->transformer = new TransformerStub($transformerFactory);
     }
 
-    /** @test */
-    public function testTransform()
+    public function testTransform(): void
     {
         $this->assertEquals([
             'id'   => 'mockId',
@@ -64,15 +64,13 @@ class AbstractTransformerTest extends TestCase
         $this->assertEmpty($this->transformer->getRelationLink($this->model));
     }
 
-    /** @test */
-    public function testGetTypeException()
+    public function testGetTypeException(): void
     {
         $this->expectException(TransformerException::class);
         $this->transformer->clearType()->getType();
     }
 
-    /** @test */
-    public function testTransformRelationship()
+    public function testTransformRelationship(): void
     {
         $this->assertEquals(
             [
@@ -88,8 +86,7 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetAttributesFromModel()
+    public function testGetAttributesFromModel(): void
     {
         $this->assertNull($this->transformer->getAttributesFromModel(null));
         $this->assertEquals(
@@ -100,8 +97,7 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetTimestamp()
+    public function testGetTimestamp(): void
     {
         $datetime = new DateTime();
 
@@ -109,8 +105,7 @@ class AbstractTransformerTest extends TestCase
         $this->assertEquals($datetime->getTimestamp(), $this->transformer->getTimestamp($datetime));
     }
 
-    /** @test */
-    public function testTransformRelationshipForIdentifier()
+    public function testTransformRelationshipForIdentifier(): void
     {
         $this->assertEquals(
             [
@@ -126,8 +121,7 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testTransformRelationshipForIdentifiers()
+    public function testTransformRelationshipForIdentifiers(): void
     {
         $this->assertEquals(
             [
@@ -166,15 +160,14 @@ class AbstractTransformerTest extends TestCase
         );
     }
 
-    public function testTransformLinkWithParentIdentifier()
+    public function testTransformLinkWithParentIdentifier(): void
     {
         $identifier = new ResourceIdentifier('borderlands', 'fps', 'gearbox');
 
         $this->assertEquals('gearbox/borderlands', $this->transformer->getLinkWithParentId($identifier));
     }
 
-    /** @test */
-    public function testItAlsoPopulatesMetaInTransformingIdentifiers()
+    public function testItAlsoPopulatesMetaInTransformingIdentifiers(): void
     {
         $this->assertEquals([
             'id'   => 'mockId',

@@ -21,21 +21,18 @@ class CollectionResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertInstanceOf(Collection::class, $this->resultSet->get());
         $this->assertEquals(['some', 'random', 'data'], $this->resultSet->get()->toArray());
     }
 
-    /** @test */
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(3, $this->resultSet->count());
     }
 
-    /** @test */
-    public function testOffset()
+    public function testOffset(): void
     {
         $this->resultSet->offset(1);
 
@@ -43,8 +40,7 @@ class CollectionResourcesTest extends TestCase
         $this->assertEquals(['random', 'data'], array_values($this->resultSet->get()->toArray()));
     }
 
-    /** @test */
-    public function testLimit()
+    public function testLimit(): void
     {
         $this->resultSet->limit(1);
 

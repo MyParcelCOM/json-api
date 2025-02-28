@@ -7,6 +7,7 @@ namespace MyParcelCom\JsonApi\Tests\Transformers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
 use MyParcelCom\JsonApi\Transformers\TransformerCollection;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerItemTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     protected array $transformerData;
 
@@ -81,14 +82,12 @@ class TransformerItemTest extends TestCase
         $this->transformerItem = new TransformerItem($this->transformerFactory, Mockery::mock(Model::class));
     }
 
-    /** @test */
-    public function testGetData()
+    public function testGetData(): void
     {
         $this->assertEquals($this->transformerData, $this->transformerItem->getData());
     }
 
-    /** @test */
-    public function testGetIncluded()
+    public function testGetIncluded(): void
     {
         $this->assertEquals([$this->includedResource], $this->transformerItem->getIncluded(['resourceName'], []));
         $this->assertEquals(
@@ -106,8 +105,7 @@ class TransformerItemTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetIncludedCollection()
+    public function testGetIncludedCollection(): void
     {
         $transformerItem = new TransformerItem($this->transformerFactory, Mockery::mock(Collection::class));
 

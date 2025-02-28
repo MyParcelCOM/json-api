@@ -18,40 +18,34 @@ class CarrierDataNotFoundErrorTest extends TestCase
         $this->error = new CarrierDataNotFoundError('-103', 'No carrier data was found for the given barcode');
     }
 
-    /** @test */
-    public function testItSetsPropertiesThroughConstructor()
+    public function testItSetsPropertiesThroughConstructor(): void
     {
         $this->assertEquals('Carrier data not found', $this->error->getTitle());
         $this->assertEquals('-103', $this->error->getErrorCode());
         $this->assertEquals('No carrier data was found for the given barcode', $this->error->getDetail());
     }
 
-    /** @test */
-    public function testItSetsErrorCode()
+    public function testItSetsErrorCode(): void
     {
         $this->assertEquals('98765', $this->error->setErrorCode('98765')->getErrorCode());
     }
 
-    /** @test */
-    public function testItSetsErrorDescription()
+    public function testItSetsErrorDescription(): void
     {
         $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
-    /** @test */
-    public function testItSetsTitle()
+    public function testItSetsTitle(): void
     {
         $this->assertEquals('Foo bar error title', $this->error->setTitle('Foo bar error title')->getTitle());
     }
 
-    /** @test */
-    public function testItSetsStatus()
+    public function testItSetsStatus(): void
     {
         $this->assertEquals(422, $this->error->setStatus(422)->getStatus());
     }
 
-    /** @test */
-    public function testItSetsLinks()
+    public function testItSetsLinks(): void
     {
         $this->assertEquals(
             ['self' => 'https://foo.bar/com'],
@@ -59,8 +53,7 @@ class CarrierDataNotFoundErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItAddsALink()
+    public function testItAddsALink(): void
     {
         $this->error->setLinks(['self' => 'https://foo.bar/com']);
         $this->error->addLink('next', 'https://next.page/page=next');
@@ -73,8 +66,7 @@ class CarrierDataNotFoundErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItSetsMeta()
+    public function testItSetsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -88,8 +80,7 @@ class CarrierDataNotFoundErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testItAddsMeta()
+    public function testItAddsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -105,8 +96,7 @@ class CarrierDataNotFoundErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testItSetsPointer()
+    public function testItSetsPointer(): void
     {
         $this->error->setPointer('data/attributes/foo-bar');
         $this->assertEquals('data/attributes/foo-bar', $this->error->getPointer());

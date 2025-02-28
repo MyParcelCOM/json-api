@@ -40,7 +40,7 @@ class AssertionsMock
         ]);
     }
 
-    public function json($method, $url, $body, $headers)
+    public function json($method, $url, $body, $headers): TestResponse
     {
         $responseMock = Mockery::mock(TestResponse::class);
         $responseMock->shouldReceive('assertStatus')->withArgs([101]);
@@ -57,22 +57,22 @@ class AssertionsMock
         return $responseMock;
     }
 
-    private function assertTrue($condition, $message = '')
+    private function assertTrue($condition, $message = ''): void
     {
         $this->testCase->assertTrue($condition, $message);
     }
 
-    private function assertEquals($expected, $actual, $message = '')
+    private function assertEquals($expected, $actual, $message = ''): void
     {
         $this->testCase->assertEquals($expected, $actual, $message);
     }
 
-    private function assertEqualsCanonicalizing($expected, $actual, $message = '')
+    private function assertEqualsCanonicalizing($expected, $actual, $message = ''): void
     {
         $this->testCase->assertEqualsCanonicalizing($expected, $actual, $message);
     }
 
-    private function assertCount($expectedCount, $haystack, $message = '')
+    private function assertCount($expectedCount, $haystack, $message = ''): void
     {
         $this->testCase->assertCount($expectedCount, $haystack, $message);
     }

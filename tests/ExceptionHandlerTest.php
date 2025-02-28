@@ -14,6 +14,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\ExceptionHandler;
 use MyParcelCom\JsonApi\Exceptions\AbstractException;
 use MyParcelCom\JsonApi\Exceptions\AbstractMultiErrorException;
@@ -32,7 +33,7 @@ use Throwable;
 
 class ExceptionHandlerTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     protected ExceptionHandler $handler;
 
@@ -58,8 +59,7 @@ class ExceptionHandlerTest extends TestCase
             ->setAppName($this->appName);
     }
 
-    /** @test */
-    public function testRenderNormalException()
+    public function testRenderNormalException(): void
     {
         $exception = Mockery::mock(Exception::class);
         $response = $this->handler->render($this->request, $exception);
@@ -68,7 +68,7 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    private function createExceptionMock()
+    private function createExceptionMock(): AbstractException
     {
         return Mockery::mock(AbstractException::class, [
             'getId'        => 'id',
@@ -87,8 +87,7 @@ class ExceptionHandlerTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testRenderJsonApiException()
+    public function testRenderJsonApiException(): void
     {
         $response = $this->handler->render($this->request, $this->createExceptionMock());
 
@@ -96,8 +95,7 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /** @test */
-    public function testRenderValidationException()
+    public function testRenderValidationException(): void
     {
         $exception = Mockery::mock(ValidationException::class, [
             'errors' => [
@@ -112,8 +110,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals('Something wrong with some-attribute', Arr::get($response->getData(), 'errors.0.detail'));
     }
 
-    /** @test */
-    public function testRenderMultiErrorException()
+    public function testRenderMultiErrorException(): void
     {
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
             'getErrors' => [
@@ -128,8 +125,7 @@ class ExceptionHandlerTest extends TestCase
         $this->checkJson($response->getData());
     }
 
-    /** @test */
-    public function testSetDebugShouldRenderMetaData()
+    public function testSetDebugShouldRenderMetaData(): void
     {
         $exception = new Exception();
 
@@ -152,8 +148,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertArrayHasKey('meta', $debugResponse->getData(), 'Response should have meta information');
     }
 
-    /** @test */
-    public function testSetContactLink()
+    public function testSetContactLink(): void
     {
         $exception = Mockery::mock(Exception::class);
         $response = $this->handler->render($this->request, $exception);
@@ -176,8 +171,7 @@ class ExceptionHandlerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testReport()
+    public function testReport(): void
     {
         $exception = new Exception('an error occurred');
 
@@ -205,8 +199,7 @@ class ExceptionHandlerTest extends TestCase
         }
     }
 
-    /** @test */
-    public function testReportMultiErrorException()
+    public function testReportMultiErrorException(): void
     {
         $exception = Mockery::mock(AbstractMultiErrorException::class, [
             'getErrors' => [
@@ -228,8 +221,7 @@ class ExceptionHandlerTest extends TestCase
         $this->handler->setLogger($logger)->report($exception);
     }
 
-    /** @test */
-    public function testReportShouldLogWarningsForStatusCodeBelow500()
+    public function testReportShouldLogWarningsForStatusCodeBelow500(): void
     {
         $exception = new CarrierApiException(422, ['nono' => 'not good']);
         $trace = array_slice($exception->getTrace(), 0, 5);
@@ -260,8 +252,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
-    public function testNotFoundException()
+    public function testNotFoundException(): void
     {
         $exception = Mockery::mock(NotFoundHttpException::class);
         $response = $this->handler->setDebug(true)->render($this->request, $exception);
@@ -271,8 +262,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(404, $response->getStatus());
     }
 
-    /** @test */
-    public function testItMapsAMethodNotAllowedHttpExceptionToAMethodNotAllowedException()
+    public function testItMapsAMethodNotAllowedHttpExceptionToAMethodNotAllowedException(): void
     {
         $exception = Mockery::mock(MethodNotAllowedHttpException::class);
         $response = $this->handler->setDebug(true)->render($this->request, $exception);
@@ -287,8 +277,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals("The 'GET' method is not allowed on this endpoint.", $responseData['errors'][0]['detail']);
     }
 
-    /** @test */
-    public function testItMapsThrottleExceptionsToTooManyRequestsException()
+    public function testItMapsThrottleExceptionsToTooManyRequestsException(): void
     {
         $exception = Mockery::mock(ThrottleRequestsException::class);
         $response = $this->handler->setDebug(true)->render($this->request, $exception);
@@ -299,8 +288,7 @@ class ExceptionHandlerTest extends TestCase
         $this->assertEquals(ExceptionInterface::TOO_MANY_REQUESTS['title'], $json['errors'][0]['title']);
     }
 
-    /** @test */
-    public function testItSetsTraceToNoTraceIsAvailableWhenTraceIsInvalidForJsonEncode()
+    public function testItSetsTraceToNoTraceIsAvailableWhenTraceIsInvalidForJsonEncode(): void
     {
         // The error we encountered was caused when binary data was passed to a method that tried to json_encode the
         // binary data and failed. It would then throw an exception. The exception would have a stack trace and part of
@@ -330,7 +318,7 @@ class ExceptionHandlerTest extends TestCase
     /**
      * Check if the json array is a valid jsonapi response.
      */
-    private function checkJson(array $json)
+    private function checkJson(array $json): void
     {
         $this->assertArrayNotHasKey('data', $json, 'Json error response should not contain data');
         $this->assertArrayNotHasKey('included', $json, 'Json error response should not contain included');
@@ -362,30 +350,29 @@ class ExceptionHandlerTest extends TestCase
     public function mockResponse(array $data, int $code): JsonResponse
     {
         return new class ($data, $code) extends JsonResponse {
-            protected mixed $data;
-            protected $status;
             public ResponseHeaderBag $headers;
-            protected $options;
 
-            public function __construct($data = null, $status = 200, array $headers = [], $options = 0)
-            {
-                $this->data = $data;
-                $this->status = $status;
+            public function __construct(
+                protected mixed $data = null,
+                protected int $status = 200,
+                array $headers = [],
+                protected int $options = 0,
+                protected bool $json = false,
+            ) {
                 $this->headers = new ResponseHeaderBag($headers);
-                $this->options = $options;
             }
 
-            public function getData($assoc = false, $depth = 512)
+            public function getData($assoc = false, $depth = 512): mixed
             {
                 return $this->data;
             }
 
-            public function getStatus()
+            public function getStatus(): int
             {
                 return $this->status;
             }
 
-            public function getOptions()
+            public function getOptions(): int
             {
                 return $this->options;
             }

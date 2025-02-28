@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class UrlBuilderTest extends TestCase
 {
-    /** @test */
-    public function testUrl()
+    public function testUrl(): void
     {
         $urlBuilder = new UrlBuilder();
 
@@ -22,8 +21,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('https://username@hostname:9090/path?arg=value#anchor', $urlBuilder->getUrl());
     }
 
-    /** @test */
-    public function testGetQuery()
+    public function testGetQuery(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertEquals(
@@ -44,8 +42,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testSetQuery()
+    public function testSetQuery(): void
     {
         $urlBuilder = new UrlBuilder('https://url?foo=bar');
 
@@ -57,8 +54,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testAddQuery()
+    public function testAddQuery(): void
     {
         $urlBuilder = new UrlBuilder('https://url?foo=bar');
 
@@ -77,8 +73,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetScheme()
+    public function testGetScheme(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getScheme());
@@ -88,8 +83,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('ftp', $urlBuilder->getScheme());
     }
 
-    /** @test */
-    public function testSetScheme()
+    public function testSetScheme(): void
     {
         $urlBuilder = new UrlBuilder('https://url?foo=bar');
         $urlBuilder->setScheme('https');
@@ -105,8 +99,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetHost()
+    public function testGetHost(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getHost());
@@ -116,8 +109,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('some.random-url.com', $urlBuilder->getHost());
     }
 
-    /** @test */
-    public function testSetHost()
+    public function testSetHost(): void
     {
         $urlBuilder = new UrlBuilder('https://url?foo=bar');
         $urlBuilder->setHost('some.random-url.com');
@@ -133,8 +125,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetPort()
+    public function testGetPort(): void
     {
         $urlBuilder = new UrlBuilder('https://some.random-url.com?foo=bar#yolo');
         $this->assertNull($urlBuilder->getPort());
@@ -142,8 +133,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals(9001, $urlBuilder->getPort());
     }
 
-    /** @test */
-    public function testSetPort()
+    public function testSetPort(): void
     {
         $urlBuilder = new UrlBuilder('https://url:9001?foo=bar');
         $urlBuilder->setPort(1337);
@@ -159,8 +149,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetUser()
+    public function testGetUser(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getUser());
@@ -170,8 +159,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('thomas', $urlBuilder->getUser());
     }
 
-    /** @test */
-    public function testSetUser()
+    public function testSetUser(): void
     {
         $urlBuilder = new UrlBuilder('https://fidel@url?foo=bar');
         $urlBuilder->setUser('patrick');
@@ -187,8 +175,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetPassword()
+    public function testGetPassword(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getPassword());
@@ -198,8 +185,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('martin', $urlBuilder->getPassword());
     }
 
-    /** @test */
-    public function testSetPassword()
+    public function testSetPassword(): void
     {
         $urlBuilder = new UrlBuilder('https://fidel:secret@url?foo=bar');
         $urlBuilder->setPassword('welkom123');
@@ -215,8 +201,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetPath()
+    public function testGetPath(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getPath());
@@ -226,8 +211,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('/some-other-path', $urlBuilder->getPath());
     }
 
-    /** @test */
-    public function testSetPath()
+    public function testSetPath(): void
     {
         $urlBuilder = new UrlBuilder('https://fidel:secret@url/to/narnia?foo=bar');
         $urlBuilder->setPath('/to/somwhere/else');
@@ -243,8 +227,7 @@ class UrlBuilderTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetFragment()
+    public function testGetFragment(): void
     {
         $urlBuilder = new UrlBuilder();
         $this->assertNull($urlBuilder->getFragment());
@@ -254,8 +237,7 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('yolo', $urlBuilder->getFragment());
     }
 
-    /** @test */
-    public function testSetFragment()
+    public function testSetFragment(): void
     {
         $urlBuilder = new UrlBuilder('https://url?foo=bar#hashtag');
         $urlBuilder->setFragment('mom');

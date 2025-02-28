@@ -30,10 +30,6 @@ class TransformerStub extends AbstractTransformer
         return 'mockId';
     }
 
-    public function validateModel($model): void
-    {
-    }
-
     public function getUrlGenerator(): UrlGenerator
     {
         return $this->urlGenerator;
@@ -46,7 +42,7 @@ class TransformerStub extends AbstractTransformer
         return $this;
     }
 
-    public function getDependency()
+    public function getDependency(): mixed
     {
         return $this->dependency;
     }

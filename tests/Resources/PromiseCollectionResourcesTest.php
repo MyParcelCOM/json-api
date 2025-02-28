@@ -7,12 +7,13 @@ namespace MyParcelCom\JsonApi\Tests\Resources;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Collection;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Resources\PromiseCollectionResources;
 use PHPUnit\Framework\TestCase;
 
 class PromiseCollectionResourcesTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     private PromiseCollectionResources $resultSet;
 
@@ -27,21 +28,18 @@ class PromiseCollectionResourcesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertInstanceOf(Collection::class, $this->resultSet->get());
         $this->assertEquals(['some', 'random', 'data'], $this->resultSet->get()->toArray());
     }
 
-    /** @test */
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(3, $this->resultSet->count());
     }
 
-    /** @test */
-    public function testOffset()
+    public function testOffset(): void
     {
         $this->resultSet->offset(1);
 
@@ -49,8 +47,7 @@ class PromiseCollectionResourcesTest extends TestCase
         $this->assertEquals(['random', 'data'], array_values($this->resultSet->get()->toArray()));
     }
 
-    /** @test */
-    public function testLimit()
+    public function testLimit(): void
     {
         $this->resultSet->limit(1);
 
@@ -58,8 +55,7 @@ class PromiseCollectionResourcesTest extends TestCase
         $this->assertEquals(['some'], $this->resultSet->get()->toArray());
     }
 
-    /** @test */
-    public function testAddPromise()
+    public function testAddPromise(): void
     {
         $this->resultSet->addPromise(
             Mockery::mock(PromiseInterface::class, [

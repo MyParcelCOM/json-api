@@ -18,8 +18,7 @@ class GenericCarrierErrorTest extends TestCase
         $this->error = new GenericCarrierError('12345', 'Some error description', 'data/attributes/some-attribute');
     }
 
-    /** @test */
-    public function testItSetsPropertiesThroughConstructor()
+    public function testItSetsPropertiesThroughConstructor(): void
     {
         $this->assertEquals('Generic carrier error', $this->error->getTitle());
         $this->assertEquals('12345', $this->error->getErrorCode());
@@ -30,38 +29,32 @@ class GenericCarrierErrorTest extends TestCase
         ], $this->error->getSource());
     }
 
-    /** @test */
-    public function testItSetsId()
+    public function testItSetsId(): void
     {
         $this->assertEquals('idea', $this->error->setId('idea')->getId());
     }
 
-    /** @test */
-    public function testItSetsErrorCode()
+    public function testItSetsErrorCode(): void
     {
         $this->assertEquals('98765', $this->error->setErrorCode('98765')->getErrorCode());
     }
 
-    /** @test */
-    public function testItSetsErrorDescription()
+    public function testItSetsErrorDescription(): void
     {
         $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
-    /** @test */
-    public function testItSetsTitle()
+    public function testItSetsTitle(): void
     {
         $this->assertEquals('Foo bar error title', $this->error->setTitle('Foo bar error title')->getTitle());
     }
 
-    /** @test */
-    public function testItSetsStatus()
+    public function testItSetsStatus(): void
     {
         $this->assertEquals(422, $this->error->setStatus(422)->getStatus());
     }
 
-    /** @test */
-    public function testItSetsLinks()
+    public function testItSetsLinks(): void
     {
         $this->assertEquals(
             ['self' => 'https://foo.bar/com'],
@@ -69,8 +62,7 @@ class GenericCarrierErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItAddsALink()
+    public function testItAddsALink(): void
     {
         $this->error->setLinks(['self' => 'https://foo.bar/com']);
         $this->error->addLink('next', 'https://next.page/page=next');
@@ -83,8 +75,7 @@ class GenericCarrierErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItSetsMeta()
+    public function testItSetsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -98,8 +89,7 @@ class GenericCarrierErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testItAddsMeta()
+    public function testItAddsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -115,8 +105,7 @@ class GenericCarrierErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testPointer()
+    public function testPointer(): void
     {
         $error = new GenericCarrierError('12345', 'Some error description');
         $this->assertNull($error->getPointer());

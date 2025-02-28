@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Tests\Transformers;
 
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Http\Paginator;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerItem;
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class TransformerResourceTest extends TestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     protected TransformerResource $transformerResource;
 
@@ -54,8 +55,7 @@ class TransformerResourceTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testGetData()
+    public function testGetData(): void
     {
         $expectedResult = [
             'data'     => [$this->data],
@@ -67,8 +67,7 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResource->GetData());
     }
 
-    /** @test */
-    public function testGetDataEmpty()
+    public function testGetDataEmpty(): void
     {
         $expectedResult = [
             'data' => [],
@@ -80,8 +79,7 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $emptyTransformerResource->GetData());
     }
 
-    /** @test */
-    public function testGetDataWithNoIncludes()
+    public function testGetDataWithNoIncludes(): void
     {
         $expectedResult = [
             'data' => [$this->data],
@@ -93,8 +91,7 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResourceNoIncluded->GetData());
     }
 
-    /** @test */
-    public function testGetDataWithNoPaginator()
+    public function testGetDataWithNoPaginator(): void
     {
         $expectedResult = [
             'data'     => [$this->data],
@@ -106,8 +103,7 @@ class TransformerResourceTest extends TestCase
         $this->assertEquals($expectedResult, $this->transformerResource->toArrayMultiple());
     }
 
-    /** @test */
-    public function testAddMeta()
+    public function testAddMeta(): void
     {
         $this->transformerResource->addMeta(['x' => 'y']);
         $this->assertEquals([
@@ -116,8 +112,7 @@ class TransformerResourceTest extends TestCase
         ], $this->transformerResource->toArraySingle());
     }
 
-    /** @test */
-    public function testAddMetaException()
+    public function testAddMetaException(): void
     {
         $this->expectException(TransformerException::class);
         $this->transformerResource->addMeta((object) []);

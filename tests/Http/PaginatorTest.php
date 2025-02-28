@@ -36,8 +36,7 @@ class PaginatorTest extends TestCase
         $this->paginator = new Paginator('https://link', $this->perPage, $this->curPage, $this->total);
     }
 
-    /** @test */
-    public function testGetLinks()
+    public function testGetLinks(): void
     {
         $this->paginator->setBaseUrl('https://foo');
         $lastPage = ceil($this->total / $this->perPage);
@@ -62,8 +61,7 @@ class PaginatorTest extends TestCase
         $this->assertEquals($links, $this->paginator->getLinks());
     }
 
-    /** @test */
-    public function testCurrentPage()
+    public function testCurrentPage(): void
     {
         $this->assertEquals($this->curPage, $this->paginator->getCurrentPage());
         $this->paginator->setCurrentPage(4);
@@ -76,8 +74,7 @@ class PaginatorTest extends TestCase
         $this->assertEquals(1, $this->paginator->getCurrentPage());
     }
 
-    /** @test */
-    public function testPerPage()
+    public function testPerPage(): void
     {
         $this->assertEquals($this->perPage, $this->paginator->getPerPage());
         $this->paginator->setPerPage(4);
@@ -90,8 +87,7 @@ class PaginatorTest extends TestCase
         $this->assertEquals(137, $this->paginator->getPerPage());
     }
 
-    /** @test */
-    public function testTotal()
+    public function testTotal(): void
     {
         $this->paginator->setTotal(4);
         $this->assertEquals(4, $this->paginator->getTotal());
@@ -102,33 +98,28 @@ class PaginatorTest extends TestCase
         $this->paginator->setTotal(-1337);
     }
 
-    /** @test */
-    public function testGetLastPage()
+    public function testGetLastPage(): void
     {
         $this->assertEquals($this->end, $this->paginator->getLastPage());
     }
 
-    /** @test */
-    public function testMaxPageSize()
+    public function testMaxPageSize(): void
     {
         $this->paginator->setMaxPageSize(444);
         $this->assertEquals(444, $this->paginator->getMaxPageSize());
     }
 
-    /** @test */
-    public function testGetCount()
+    public function testGetCount(): void
     {
         $this->assertEquals($this->end, $this->paginator->getCount());
     }
 
-    /** @test */
-    public function testGetStart()
+    public function testGetStart(): void
     {
         $this->assertEquals($this->start, $this->paginator->getStart());
     }
 
-    /** @test */
-    public function testGetEnd()
+    public function testGetEnd(): void
     {
         $this->assertEquals(($this->start + $this->perPage), $this->paginator->getEnd());
     }

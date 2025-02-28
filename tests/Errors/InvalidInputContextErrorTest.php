@@ -20,8 +20,7 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItSetsPropertiesThroughConstructor()
+    public function testItSetsPropertiesThroughConstructor(): void
     {
         $this->assertEquals('Invalid input context', $this->error->getTitle());
         $this->assertEquals('12345', $this->error->getErrorCode());
@@ -32,32 +31,27 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getSource());
     }
 
-    /** @test */
-    public function testItSetsErrorCode()
+    public function testItSetsErrorCode(): void
     {
         $this->assertEquals('98765', $this->error->setErrorCode('98765')->getErrorCode());
     }
 
-    /** @test */
-    public function testItSetsErrorDescription()
+    public function testItSetsErrorDescription(): void
     {
         $this->assertEquals('Other error description', $this->error->setDetail('Other error description')->getDetail());
     }
 
-    /** @test */
-    public function testItSetsTitle()
+    public function testItSetsTitle(): void
     {
         $this->assertEquals('Foo bar error title', $this->error->setTitle('Foo bar error title')->getTitle());
     }
 
-    /** @test */
-    public function testItSetsStatus()
+    public function testItSetsStatus(): void
     {
         $this->assertEquals(422, $this->error->setStatus(422)->getStatus());
     }
 
-    /** @test */
-    public function testItSetsLinks()
+    public function testItSetsLinks(): void
     {
         $this->assertEquals(
             ['self' => 'https://foo.bar/com'],
@@ -65,8 +59,7 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItAddsALink()
+    public function testItAddsALink(): void
     {
         $this->error->setLinks(['self' => 'https://foo.bar/com']);
         $this->error->addLink('next', 'https://next.page/page=next');
@@ -79,8 +72,7 @@ class InvalidInputContextErrorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testItSetsMeta()
+    public function testItSetsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -94,8 +86,7 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testItAddsMeta()
+    public function testItAddsMeta(): void
     {
         $this->error->setMeta([
             'carrier_response' => [
@@ -111,8 +102,7 @@ class InvalidInputContextErrorTest extends TestCase
         ], $this->error->getMeta());
     }
 
-    /** @test */
-    public function testItSetsPointer()
+    public function testItSetsPointer(): void
     {
         $this->error->setPointer('data/attributes/foo-bar');
         $this->assertEquals('data/attributes/foo-bar', $this->error->getPointer());

@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTraitTest extends TestCase
 {
-    /** @test */
-    public function testGetPaginator()
+    public function testGetPaginator(): void
     {
         $request = $this->createRequestTraitMock();
 
@@ -35,8 +34,7 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetIncludes()
+    public function testGetIncludes(): void
     {
         $request = $this->createRequestTraitMock();
         $this->assertEquals(
@@ -62,8 +60,7 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetSort()
+    public function testGetSort(): void
     {
         $request = $this->createRequestTraitMock();
         $this->assertEquals(
@@ -75,8 +72,7 @@ class RequestTraitTest extends TestCase
         );
     }
 
-    /** @test */
-    public function testGetFilter()
+    public function testGetFilter(): void
     {
         $request = $this->createRequestTraitMock();
         $this->assertEquals(
@@ -95,7 +91,7 @@ class RequestTraitTest extends TestCase
         return new class implements RequestInterface {
             use RequestTrait;
 
-            private $data = [
+            private array $data = [
                 'include' => 'all,the,things,nested.relationship,even.deeper.relationship,nested.merge,even.deeper.merge,even.nastier.merge',
                 'page'    => [
                     'number' => 3,
@@ -114,7 +110,7 @@ class RequestTraitTest extends TestCase
                 ],
             ];
 
-            public function query($key = null, $default = null)
+            public function query($key = null, $default = null): string|array
             {
                 return $this->data[$key] ?? $default;
             }
