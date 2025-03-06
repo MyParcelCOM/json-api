@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Tests\Filters;
 
+use Illuminate\Database\Connection;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
@@ -26,7 +27,7 @@ class QueryFilterTest extends TestCase
         parent::setUp();
 
         $connection = Mockery::mock(ConnectionInterface::class, [
-            'getQueryGrammar'  => new PostgresGrammar(),
+            'getQueryGrammar'  => new PostgresGrammar(Mockery::mock(Connection::class)),
             'getPostProcessor' => new PostgresProcessor(),
         ]);
         $this->query = new Builder($connection);
