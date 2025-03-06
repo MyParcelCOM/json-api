@@ -9,22 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
+use MyParcelCom\JsonApi\Tests\Enums\TestBackedEnum;
+use MyParcelCom\JsonApi\Tests\Enums\TestUnitEnum;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use UnitEnum;
-
-enum TestUnitEnum
-{
-    case test;
-}
-
-enum TestBackedEnum: string
-{
-    case TYPE = 'test';
-}
 
 class AbstractTransformerTest extends TestCase
 {
@@ -94,7 +86,7 @@ class AbstractTransformerTest extends TestCase
     {
         $transformer = new class extends TransformerStub {
             protected string $type = '';
-            protected UnitEnum $resourceType = TestBackedEnum::TYPE;
+            protected UnitEnum $resourceType = TestBackedEnum::TEST;
 
             public function __construct()
             {
