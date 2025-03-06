@@ -14,6 +14,17 @@ use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use UnitEnum;
+
+enum TestUnitEnum
+{
+    case test;
+}
+
+enum TestBackedEnum: string
+{
+    case TYPE = 'test';
+}
 
 class AbstractTransformerTest extends TestCase
 {
@@ -64,10 +75,49 @@ class AbstractTransformerTest extends TestCase
         $this->assertEmpty($this->transformer->getRelationLink($this->model));
     }
 
+    public function testTypeUsingUnitEnum(): void
+    {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+            protected UnitEnum $resourceType = TestUnitEnum::test;
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
+        $this->assertSame('test', $transformer->getType());
+    }
+
+    public function testTypeUsingBackedEnum(): void
+    {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+            protected UnitEnum $resourceType = TestBackedEnum::TYPE;
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
+        $this->assertSame('test', $transformer->getType());
+    }
+
     public function testGetTypeException(): void
     {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
         $this->expectException(TransformerException::class);
-        $this->transformer->clearType()->getType();
+        $transformer->getType();
     }
 
     public function testTransformRelationship(): void
