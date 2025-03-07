@@ -35,6 +35,7 @@ use MyParcelCom\JsonApi\Exceptions\ResourceHandledBy3rdPartyException;
 use MyParcelCom\JsonApi\Exceptions\ResourceNotFoundException;
 use MyParcelCom\JsonApi\Exceptions\TooManyRequestsException;
 use MyParcelCom\JsonApi\Exceptions\UnprocessableEntityException;
+use MyParcelCom\JsonApi\Tests\Enums\TestBackedEnum;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionsTest extends TestCase
@@ -210,6 +211,13 @@ class ExceptionsTest extends TestCase
         $this->assertEquals('One or more of the API resource could not be found.', $exception->getMessage());
     }
 
+    public function testResourceNotFoundExceptionUsingEnum(): void
+    {
+        $exception = new ResourceNotFoundException(TestBackedEnum::TEST);
+
+        $this->assertEquals('One or more of the test resource could not be found.', $exception->getMessage());
+    }
+
     public function testUnprocessableEntityException(): void
     {
         $exception = new UnprocessableEntityException('RAW', new Exception('G-Star'));
@@ -279,6 +287,16 @@ class ExceptionsTest extends TestCase
         );
     }
 
+    public function testRelationshipCannotBeModifiedExceptionUsingEnum(): void
+    {
+        $exception = new RelationshipCannotBeModifiedException(TestBackedEnum::TEST);
+
+        $this->assertEquals(
+            "The relationship of type 'test' cannot be modified on this resource.",
+            $exception->getMessage(),
+        );
+    }
+
     public function testInvalidCredentialsException(): void
     {
         $errors = [
@@ -320,5 +338,12 @@ class ExceptionsTest extends TestCase
         self::assertEquals('10014', $exception->getCode());
         self::assertEquals(409, $exception->getStatus());
         self::assertEquals(['3rd_party' => 'Bol'], $exception->getMeta());
+    }
+
+    public function testResourceHandledBy3rdPartyExceptionUsingEnum(): void
+    {
+        $exception = new ResourceHandledBy3rdPartyException(TestBackedEnum::TEST, 'Bol');
+
+        $this->assertEquals('One or more of the test resource is handled by a 3rd party.', $exception->getMessage());
     }
 }

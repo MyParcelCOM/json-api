@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace MyParcelCom\JsonApi\Exceptions;
 
-use BackedEnum;
+use MyParcelCom\JsonApi\Traits\EnumTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
-use UnitEnum;
 
 class MissingScopeException extends AbstractException
 {
+    use EnumTrait;
+
     public function __construct(array $scopeSlugs, Throwable $previous = null)
     {
         $scopeStrings = collect($scopeSlugs)
-            ->map(fn ($scope) => match (true) {
-                $scope instanceof BackedEnum => $scope->value,
-                $scope instanceof UnitEnum   => $scope->name,
-                default                      => $scope,
-            })
+            ->map(fn (mixed $scopeSlug) => $this->getEnumValue($scopeSlug))
             ->toArray();
 
         parent::__construct(

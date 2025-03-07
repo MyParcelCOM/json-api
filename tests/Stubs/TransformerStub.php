@@ -15,16 +15,6 @@ class TransformerStub extends AbstractTransformer
 
     protected string $type = 'test';
 
-    /**
-     * Helper function to reset the type for the abstract exception test.
-     */
-    public function clearType(): self
-    {
-        $this->type = '';
-
-        return $this;
-    }
-
     public function getId($model): string
     {
         return 'mockId';

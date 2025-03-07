@@ -6,17 +6,22 @@ namespace MyParcelCom\JsonApi\Transformers;
 
 use DateTime;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use MyParcelCom\JsonApi\Enums\NullResource;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Traits\ArrayFilterTrait;
+use MyParcelCom\JsonApi\Traits\EnumTrait;
+use UnitEnum;
 
 /** @template TModel */
 abstract class AbstractTransformer implements TransformerInterface
 {
     use ArrayFilterTrait;
+    use EnumTrait;
 
     protected UrlGenerator $urlGenerator;
 
     protected string $type = '';
+    protected UnitEnum $resourceType = NullResource::TYPE;
 
     public function __construct(
         protected TransformerFactory $transformerFactory,
@@ -132,11 +137,13 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function getType(): string
     {
-        if (empty($this->type)) {
-            throw new TransformerException('Error no transformer resource `type` set for model');
+        $type = empty($this->type) ? $this->getEnumValue($this->resourceType) : $this->type;
+
+        if (empty($type)) {
+            throw new TransformerException('Error no `resourceType` or `type` set on transformer');
         }
 
-        return $this->type;
+        return $type;
     }
 
     /**

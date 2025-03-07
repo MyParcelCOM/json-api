@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
+use MyParcelCom\JsonApi\Tests\Enums\TestBackedEnum;
+use MyParcelCom\JsonApi\Tests\Enums\TestUnitEnum;
 use MyParcelCom\JsonApi\Tests\Stubs\TransformerStub;
 use MyParcelCom\JsonApi\Transformers\TransformerException;
 use MyParcelCom\JsonApi\Transformers\TransformerFactory;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use UnitEnum;
 
 class AbstractTransformerTest extends TestCase
 {
@@ -64,10 +67,49 @@ class AbstractTransformerTest extends TestCase
         $this->assertEmpty($this->transformer->getRelationLink($this->model));
     }
 
+    public function testTypeUsingUnitEnum(): void
+    {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+            protected UnitEnum $resourceType = TestUnitEnum::test;
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
+        $this->assertSame('test', $transformer->getType());
+    }
+
+    public function testTypeUsingBackedEnum(): void
+    {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+            protected UnitEnum $resourceType = TestBackedEnum::TEST;
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
+        $this->assertSame('test', $transformer->getType());
+    }
+
     public function testGetTypeException(): void
     {
+        $transformer = new class extends TransformerStub {
+            protected string $type = '';
+
+            public function __construct()
+            {
+                parent::__construct(Mockery::mock(TransformerFactory::class));
+            }
+        };
+
         $this->expectException(TransformerException::class);
-        $this->transformer->clearType()->getType();
+        $transformer->getType();
     }
 
     public function testTransformRelationship(): void
