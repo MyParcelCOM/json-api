@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use MyParcelCom\JsonApi\Resources\ResourceIdentifier;
 use MyParcelCom\JsonApi\Transformers\AbstractTransformer;
+use UnitEnum;
 
 class TransformerStub extends AbstractTransformer
 {
@@ -84,14 +85,14 @@ class TransformerStub extends AbstractTransformer
 
     public function transformRelationshipForIdentifier(
         string $id,
-        string $type,
+        UnitEnum|string $type,
         string $class,
         string $parentId = null,
     ): array {
         return parent::transformRelationshipForIdentifier($id, $type, $class, $parentId);
     }
 
-    public function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
+    public function transformRelationshipForIdentifiers(array $ids, UnitEnum|string $type, array $links = []): array
     {
         return parent::transformRelationshipForIdentifiers($ids, $type, $links);
     }
