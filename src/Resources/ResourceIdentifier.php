@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace MyParcelCom\JsonApi\Resources;
 
 use JsonSerializable;
+use MyParcelCom\JsonApi\Traits\EnumTrait;
+use UnitEnum;
 
 class ResourceIdentifier implements JsonSerializable
 {
+    use EnumTrait;
+
     public function __construct(
         private string $id,
-        private string $type,
+        private UnitEnum|string $type,
         private ?string $parentId = null,
     ) {
     }
@@ -22,7 +26,7 @@ class ResourceIdentifier implements JsonSerializable
 
     public function getType(): string
     {
-        return $this->type;
+        return $this->getEnumValue($this->type);
     }
 
     public function getParentId(): ?string

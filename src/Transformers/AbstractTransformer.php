@@ -90,7 +90,7 @@ abstract class AbstractTransformer implements TransformerInterface
 
     protected function transformRelationshipForIdentifier(
         string $id,
-        string $type,
+        UnitEnum|string $type,
         string $class,
         string $parentId = null,
     ): array {
@@ -107,7 +107,7 @@ abstract class AbstractTransformer implements TransformerInterface
         return $relationship;
     }
 
-    protected function transformRelationshipForIdentifiers(array $ids, string $type, array $links = null): array
+    protected function transformRelationshipForIdentifiers(array $ids, UnitEnum|string $type, array $links = []): array
     {
         return array_filter([
             'data'  => array_map(fn ($id) => (new ResourceIdentifier($id, $type))->jsonSerialize(), $ids),
