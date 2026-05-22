@@ -12,7 +12,7 @@ class MissingScopeException extends AbstractException
 {
     use EnumTrait;
 
-    public function __construct(array $scopeSlugs, Throwable $previous = null)
+    public function __construct(array $scopeSlugs, ?Throwable $previous = null)
     {
         $scopeStrings = collect($scopeSlugs)
             ->map(fn (mixed $scopeSlug) => $this->getEnumValue($scopeSlug))

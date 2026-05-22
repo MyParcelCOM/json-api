@@ -12,7 +12,7 @@ use Throwable;
  */
 class InvalidAccessTokenException extends AbstractException
 {
-    public function __construct(string $detail, Throwable $previous = null)
+    public function __construct(string $detail, ?Throwable $previous = null)
     {
         parent::__construct(
             $detail,

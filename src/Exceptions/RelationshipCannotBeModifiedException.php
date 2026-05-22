@@ -13,7 +13,7 @@ class RelationshipCannotBeModifiedException extends AbstractException
 {
     use EnumTrait;
 
-    public function __construct(UnitEnum|string $relationshipType, Throwable $previous = null)
+    public function __construct(UnitEnum|string $relationshipType, ?Throwable $previous = null)
     {
         parent::__construct(
             sprintf(

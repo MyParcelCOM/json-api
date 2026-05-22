@@ -12,7 +12,7 @@ use Throwable;
  */
 class InvalidSecretException extends AbstractException
 {
-    public function __construct(Throwable $previous = null)
+    public function __construct(?Throwable $previous = null)
     {
         parent::__construct(
             'The provided secret is invalid. Please try again later. If the problem persists, contact customer support.',

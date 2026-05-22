@@ -12,7 +12,7 @@ use Throwable;
  */
 class InvalidExternalErrorException extends AbstractException
 {
-    public function __construct(Throwable $previous = null)
+    public function __construct(?Throwable $previous = null)
     {
         parent::__construct(
             'An error was thrown during the request to the external source. We cannot provide more information since the returned error was improperly formatted.',

@@ -13,7 +13,7 @@ use Throwable;
  */
 class ForbiddenException extends AbstractException
 {
-    public function __construct(string $message = null, Throwable $previous = null)
+    public function __construct(?string $message = null, ?Throwable $previous = null)
     {
         parent::__construct(
             $message ?? 'This user is not allowed to perform this action.',

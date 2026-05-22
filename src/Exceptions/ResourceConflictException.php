@@ -12,7 +12,7 @@ use Throwable;
  */
 class ResourceConflictException extends AbstractException
 {
-    public function __construct(string $field, Throwable $previous = null)
+    public function __construct(string $field, ?Throwable $previous = null)
     {
         parent::__construct(
             "The supplied resource `$field` is invalid.",
