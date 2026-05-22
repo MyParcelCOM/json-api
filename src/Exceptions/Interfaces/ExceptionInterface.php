@@ -121,7 +121,7 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
 
     const AUTH_MISSING_SCOPE = [
         'code'  => '14004',
-        'title' => 'Access Token Is Invalid',
+        'title' => 'Missing scope in access token',
     ];
 
     const AUTH_SERVER_EXCEPTION = [
