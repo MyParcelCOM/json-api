@@ -9,7 +9,7 @@ namespace MyParcelCom\JsonApi\Errors;
  */
 class GenericCarrierError extends AbstractCarrierError
 {
-    public function __construct(string $errorCode, string $detail, string $pointer = null)
+    public function __construct(string $errorCode, string $detail, ?string $pointer = null)
     {
         parent::__construct($errorCode, 'Generic carrier error', $detail, $pointer);
     }

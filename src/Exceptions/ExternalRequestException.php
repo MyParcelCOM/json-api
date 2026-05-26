@@ -11,7 +11,7 @@ use Throwable;
  */
 class ExternalRequestException extends AbstractException
 {
-    public function __construct(int $status, int $externalStatus, array $externalError = [], Throwable $previous = null)
+    public function __construct(int $status, int $externalStatus, array $externalError = [], ?Throwable $previous = null)
     {
         parent::__construct(
             'An error occurred while making a request to an external service. When available, details can be found in the meta of this request. If the problem persists, please contact support.',

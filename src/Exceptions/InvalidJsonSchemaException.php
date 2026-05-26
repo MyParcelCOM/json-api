@@ -12,7 +12,7 @@ use Throwable;
  */
 class InvalidJsonSchemaException extends AbstractException
 {
-    public function __construct(array $errors, Throwable $previous = null)
+    public function __construct(array $errors, ?Throwable $previous = null)
     {
         parent::__construct(
             'The supplied data is invalid according to our API Specification. See meta for details.',

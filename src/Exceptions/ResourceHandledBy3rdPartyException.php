@@ -13,7 +13,7 @@ class ResourceHandledBy3rdPartyException extends AbstractException
 {
     use EnumTrait;
 
-    public function __construct(UnitEnum|string $resourceType, string $platform, Throwable $previous = null)
+    public function __construct(UnitEnum|string $resourceType, string $platform, ?Throwable $previous = null)
     {
         parent::__construct(
             sprintf('One or more of the %s resource is handled by a 3rd party.', $this->getEnumValue($resourceType)),

@@ -17,7 +17,7 @@ class ResourceNotFoundException extends AbstractException
 {
     use EnumTrait;
 
-    public function __construct(UnitEnum|string $resourceType, Throwable $previous = null)
+    public function __construct(UnitEnum|string $resourceType, ?Throwable $previous = null)
     {
         parent::__construct(
             sprintf('One or more of the %s resource could not be found.', $this->getEnumValue($resourceType)),

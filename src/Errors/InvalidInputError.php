@@ -10,7 +10,7 @@ namespace MyParcelCom\JsonApi\Errors;
  */
 class InvalidInputError extends AbstractCarrierError
 {
-    public function __construct(string $errorCode, string $detail, string $pointer = null)
+    public function __construct(string $errorCode, string $detail, ?string $pointer = null)
     {
         parent::__construct($errorCode, 'Invalid input', $detail, $pointer);
     }

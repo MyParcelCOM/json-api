@@ -15,7 +15,7 @@ use Throwable;
  */
 class MethodNotAllowedException extends AbstractException
 {
-    public function __construct(string $httpMethod, Throwable $previous = null)
+    public function __construct(string $httpMethod, ?Throwable $previous = null)
     {
         $httpMethod = strtoupper($httpMethod);
         parent::__construct(

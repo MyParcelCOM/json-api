@@ -11,7 +11,7 @@ use Throwable;
  */
 class CarrierApiException extends AbstractException
 {
-    public function __construct(int $status, array $carrierApiResponse, Throwable $previous = null)
+    public function __construct(int $status, array $carrierApiResponse, ?Throwable $previous = null)
     {
         parent::__construct(
             'There was a problem with the request to the carrier. The original response can be found in the meta under `carrier_response`.',
