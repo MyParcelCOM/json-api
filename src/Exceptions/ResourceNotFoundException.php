@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use UnitEnum;
 
+/**
+ * This exception should be thrown when a user attempts to fetch a resource
+ * which he doesn't have access to based on his permissions
+ */
 class ResourceNotFoundException extends AbstractException
 {
     use EnumTrait;

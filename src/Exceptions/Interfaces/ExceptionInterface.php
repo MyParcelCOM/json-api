@@ -22,11 +22,6 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Resource Not Found',
     ];
 
-    const RESOURCE_HANDLED_BY_3RD_PARTY = [
-        'code'  => '10014',
-        'title' => 'Resource Handled By 3rd Party',
-    ];
-
     const INVALID_JSON_SCHEMA = [
         'code'  => '10003',
         'title' => 'Invalid JSON Schema',
@@ -82,6 +77,11 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
         'title' => 'Action not allowed.',
     ];
 
+    const RESOURCE_HANDLED_BY_3RD_PARTY = [
+        'code'  => '10014',
+        'title' => 'Resource Handled By 3rd Party',
+    ];
+
     // External API related errors 13000 - 13999
     const EXTERNAL_REQUEST_ERROR = [
         'code'  => '13001',
@@ -121,7 +121,7 @@ interface ExceptionInterface extends JsonSchemaErrorInterface
 
     const AUTH_MISSING_SCOPE = [
         'code'  => '14004',
-        'title' => 'Access Token Is Invalid',
+        'title' => 'Missing scope in access token',
     ];
 
     const AUTH_SERVER_EXCEPTION = [
