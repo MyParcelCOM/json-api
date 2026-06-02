@@ -27,7 +27,7 @@ abstract class AbstractException extends Exception implements ExceptionInterface
         protected string $detail,
         array $errorType,
         protected int $status,
-        Throwable $previous = null,
+        ?Throwable $previous = null,
     ) {
         $this->setErrorCode($errorType['code']);
         $this->setTitle($errorType['title']);

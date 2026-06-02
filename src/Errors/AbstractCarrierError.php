@@ -23,7 +23,7 @@ abstract class AbstractCarrierError implements JsonSchemaErrorInterface
         protected string $errorCode,
         protected string $title,
         protected string $detail,
-        string $pointer = null,
+        ?string $pointer = null,
     ) {
         if ($pointer !== null) {
             $this->setPointer($pointer);

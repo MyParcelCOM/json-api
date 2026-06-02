@@ -92,7 +92,7 @@ abstract class AbstractTransformer implements TransformerInterface
         string $id,
         UnitEnum|string $type,
         string $class,
-        string $parentId = null,
+        ?string $parentId = null,
     ): array {
         $resource = new ResourceIdentifier($id, $type, $parentId);
         $transformer = $this->transformerFactory->createFromModel($class);
